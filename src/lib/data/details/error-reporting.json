@@ -1,0 +1,78 @@
+{
+  "features": [
+    {
+      "name": "Unified Dashboarding",
+      "description": "Consolidates logs, CPU/memory performance metrics, and application traces in real-time dashboards."
+    },
+    {
+      "name": "Dynamic Alerting Rules",
+      "description": "Triggers email, Slack, or PagerDuty alerts automatically when metric thresholds are breached."
+    },
+    {
+      "name": "Distributed Trace Analysis",
+      "description": "Tracks request execution paths across multiple microservices to pinpoint latency bottlenecks."
+    }
+  ],
+  "iamRoles": [
+    {
+      "role": "roles/monitoring.admin",
+      "description": "Full access to configure monitoring dashboards, alerting policies, and uptime checks."
+    },
+    {
+      "role": "roles/logging.admin",
+      "description": "Permissions to configure log sinks, buckets, retention policies, and view all logs."
+    }
+  ],
+  "cliExamples": [
+    {
+      "description": "Create a log routing sink to export logs to a Cloud Storage bucket",
+      "command": "gcloud logging sinks create error-reporting-sink \\\n  storage.googleapis.com/my-log-bucket \\\n  --log-filter=\"severity>=ERROR\""
+    },
+    {
+      "description": "List all active alerting policies in the project",
+      "command": "gcloud alpha monitoring policies list"
+    }
+  ],
+  "keyPoints": {
+    "design": [
+      "Google Cloud Observability (formerly Stackdriver) provides logging, monitoring, tracing, and profiling.",
+      "Cloud Monitoring collects performance metrics from GCP services, VMs, and custom applications.",
+      "Cloud Logging ingests, filters, and routes log lines from applications and audit trails.",
+      "Log Sinks route filtered logs to Cloud Storage (archival), BigQuery (analytics), or Pub/Sub (real-time stream).",
+      "Cloud Trace analyses request latency across microservices, identifying performance bottlenecks.",
+      "Cloud Profiler continuously analyzes CPU and memory allocation patterns inside application code.",
+      "Uptime checks monitor external endpoints, alerting operators on availability failures.",
+      "Use MQL (Monitoring Query Language) to write advanced metric aggregation and filtering queries."
+    ],
+    "security": [
+      "Administrative changes and data access logs are recorded in immutable Admin Activity and Data Access Audit Logs.",
+      "Exclude sensitive PII or credentials from logs using Logging exclusions or Sensitive Data Protection.",
+      "Manage log access using IAM logging roles (`roles/logging.privateViewer` is required to view audit logs).",
+      "Encrypt log buckets at rest using Customer-Managed Encryption Keys (CMEK) via Cloud KMS.",
+      "Access to Cloud Monitoring dashboards can be restricted to security and operations teams.",
+      "Log sinks can export logs to a secure, isolated audit project bucket for compliance.",
+      "VPC Service Controls perimeters protect metrics and trace data from external exfiltration.",
+      "Set strict log bucket retention periods to comply with data privacy regulations (e.g. GDPR)."
+    ],
+    "reliability": [
+      "Cloud Logging is serverless, scaling instantly to absorb massive spikes in system logs.",
+      "Log routing sinks support automated retries to ensure log delivery to destinations (Storage, BigQuery).",
+      "Configure alert notifications to multiple channels (PagerDuty, SMS, Slack, Webhooks) to ensure response.",
+      "Uptime checks run from multiple geographical locations worldwide to prevent false positives.",
+      "Trace and Profiler agents run in the background with low overhead, ensuring application stability.",
+      "Replicate log buckets across regions to secure logs from regional disasters.",
+      "Store historical logs in Cloud Storage buckets with Object Lifecycle Lock for WORM compliance.",
+      "Create custom metric alerts to detect anomalies in log ingestion rates."
+    ],
+    "cost": [
+      "Cloud Logging charges per GB of logs ingested and for logs retained beyond the default 30 days.",
+      "Cloud Monitoring charges based on custom metrics ingested and API read/write operations.",
+      "Reduce logging costs by setting up Log Exclusions to drop high-volume, low-value debug logs.",
+      "Configure log sinks to only route warnings and errors to BigQuery, keeping debug logs in standard storage.",
+      "Shorten log bucket retention periods to the minimum required to avoid monthly log storage fees.",
+      "Monitor custom metric ingestion rates; avoid exporting high-cardinality metrics (like user IDs) to Monitoring.",
+      "Standard GCP service metrics are ingested at no cost; only custom or Prometheus metrics incur fees.",
+      "Use Cloud Storage Archive class for long-term log storage to minimize GB/month fees."
+    ]
+  }
+}

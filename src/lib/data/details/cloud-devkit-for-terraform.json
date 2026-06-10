@@ -1,0 +1,78 @@
+{
+  "features": [
+    {
+      "name": "Declarative Provisioning",
+      "description": "Automates the deployment of GCP infrastructure using declarative configuration files, ensuring repeatability."
+    },
+    {
+      "name": "Managed Terraform Engine",
+      "description": "Executes Terraform configurations in a fully managed cloud engine, maintaining state files securely."
+    },
+    {
+      "name": "Architectural Blueprints",
+      "description": "Deploys pre-configured, Google-supported blueprints to construct validated enterprise environments."
+    }
+  ],
+  "iamRoles": [
+    {
+      "role": "roles/config.admin",
+      "description": "Full access to administer and run managed infrastructure configurations."
+    },
+    {
+      "role": "roles/resourcemanager.projectCreator",
+      "description": "Permissions to create projects required during infrastructure runs."
+    }
+  ],
+  "cliExamples": [
+    {
+      "description": "Initialize a managed infrastructure configuration run",
+      "command": "gcloud beta infra-manager deployments apply cloud-devkit-for-terraform-infra \\\n  --location=us-central1 \\\n  --git-source-repo=\"https://github.com/my-org/gcp-infra\" \\\n  --git-source-directory=\"terraform/dev\""
+    },
+    {
+      "description": "Describe the details and state of a managed deployment",
+      "command": "gcloud beta infra-manager deployments describe cloud-devkit-for-terraform-infra --location=us-central1"
+    }
+  ],
+  "keyPoints": {
+    "design": [
+      "Infrastructure as Code (IaC) ensures repeatable, documented, and audited cloud deployments.",
+      "Terraform is the industry-standard declarative tool for managing GCP resource lifecycles.",
+      "Infrastructure Manager is a managed engine that runs Terraform configurations, managing state files.",
+      "Deployment Manager is Google's native declarative template engine using YAML, Python, or Jinja2.",
+      "Use Terraform modules to bundle resource configurations (VPC, VMs) into reusable blocks.",
+      "Terraform state files must be stored in a remote backend (Cloud Storage) to enable collaboration.",
+      "Use state locking (native in Cloud Storage) to prevent parallel executions from corrupting state.",
+      "Application Design Center (ADC) drafts visual architecture designs, converting them to IaC scripts."
+    ],
+    "security": [
+      "Do not hardcode service account keys or passwords in IaC scripts; pull them from Secret Manager.",
+      "Enforce access controls on the Cloud Storage bucket hosting the remote Terraform state file.",
+      "Enable object versioning on the state bucket to recover from accidental state corruptions.",
+      "Run IaC pipelines using a dedicated Service Account with the least privilege needed to create resources.",
+      "Audit every infrastructure deployment, change, and destroy operation in Cloud Audit Logs.",
+      "Use policy-as-code tools (like terraform-validator) to scan templates for security violations before runs.",
+      "VPC Service Controls protect state storage buckets from unauthorized cross-project access.",
+      "Implement branch protection on Git repositories hosting infrastructure code, requiring approvals."
+    ],
+    "reliability": [
+      "Remote state files stored in Cloud Storage inherit 11 9s durability and multi-regional replication.",
+      "Terraform supports rolling back to a previous infrastructure version by reverting git commits.",
+      "Infrastructure Manager handles execution resources, preventing local connection drops from halting runs.",
+      "Always execute a 'terraform plan' to verify resource changes before running 'terraform apply'.",
+      "Enable logging on state buckets to audit which tools and users are accessing states.",
+      "Configure resource lifecycle rules in Terraform (e.g. prevent_destroy) to block accidental deletions of databases.",
+      "Store infrastructure code in a Git repository to ensure business continuity during disaster recovery.",
+      "Monitor deployment outcomes, errors, and apply statuses using Cloud Monitoring."
+    ],
+    "cost": [
+      "Terraform is open-source and free; you pay only for the GCP resources provisioned.",
+      "Infrastructure Manager charges based on deployment runs and active state management operations.",
+      "Use dry-run options ('terraform plan') to preview resources, avoiding unwanted billing from typos.",
+      "Consolidate multiple state files where appropriate to reduce Cloud Storage bucket fees.",
+      "Automate the destruction of temporary test environments using cron triggers and pipelines.",
+      "Review provisioned resources in state files to identify oversized VM shapes and idle disks.",
+      "Use Terraform local-exec commands sparingly to avoid spun-up VM resource overhead.",
+      "Analyze cost differences between regional and multi-regional state storage buckets."
+    ]
+  }
+}

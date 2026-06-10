@@ -1,0 +1,78 @@
+{
+  "features": [
+    {
+      "name": "Full OS Control",
+      "description": "Provides root-level administrative access to configure, patch, and run custom operating systems and legacy applications."
+    },
+    {
+      "name": "Custom Hardware Allocation",
+      "description": "Allows tailoring vCPUs, RAM, persistent disks, and GPUs to match precise application workload profiles."
+    },
+    {
+      "name": "Preemptible & Spot Discounts",
+      "description": "Supports using short-lived instances for batch workloads, offering up to 91% pricing discounts."
+    }
+  ],
+  "iamRoles": [
+    {
+      "role": "roles/compute.admin",
+      "description": "Full access to administer all Compute Engine VM instances, disks, networks, and configurations."
+    },
+    {
+      "role": "roles/compute.instanceAdmin.v1",
+      "description": "Permissions to create, modify, start, stop, and delete virtual machine instances."
+    }
+  ],
+  "cliExamples": [
+    {
+      "description": "Create a virtual machine instance in a specific subnet",
+      "command": "gcloud compute instances create my-vm \\\n  --zone=us-central1-a \\\n  --machine-type=e2-standard-4 \\\n  --subnet=ai-hypercomputer-subnet"
+    },
+    {
+      "description": "Attach a zonal persistent disk to an existing VM",
+      "command": "gcloud compute instances attach-disk my-vm --disk=my-disk --zone=us-central1-a"
+    }
+  ],
+  "keyPoints": {
+    "design": [
+      "Infrastructure-as-a-Service (Compute Engine) is chosen for legacy applications requiring root OS control.",
+      "Custom machine types allow specifying precise numbers of vCPUs and GBs of memory to prevent over-allocation.",
+      "Sole-tenant nodes run virtual machines on dedicated physical hardware for compliance and license requirements.",
+      "Shielded VMs protect virtual instances against boot-level rootkits using vTPM and secure boot checks.",
+      "Local SSDs offer high IOPS and low latency, but data is lost when the instance is stopped or terminated.",
+      "Managed Instance Groups (MIGs) automate the scaling, repair, and deployment of identical virtual machines.",
+      "Startup and shutdown scripts automate software installs and cleanup processes on instance boots.",
+      "Use VM templates to maintain standard golden machine configurations across the enterprise."
+    ],
+    "security": [
+      "Do not use default Service Accounts with editor roles; assign custom service accounts with minimal roles.",
+      "Manage VM access using OS Login, which binds SSH keys directly to users' GCP IAM credentials.",
+      "Block all external SSH access by using Identity-Aware Proxy (IAP) SSH tunneling.",
+      "Firewall rules are stateful and applied to VMs using target network tags.",
+      "Configure Private Google Access on subnets to allow VMs without public IPs to connect to Google APIs.",
+      "Enable UEFI Secure Boot on Shielded VMs to validate operating system kernel signatures.",
+      "Encrypt VM disks using Customer-Managed Encryption Keys (CMEK) managed via Cloud KMS.",
+      "Audit operating system access and console administrative changes using Cloud Audit Logs."
+    ],
+    "reliability": [
+      "Live Migration automatically moves running instances to another host during Google host maintenance.",
+      "Regional Managed Instance Groups distribute instances across zones, protecting against single-zone failures.",
+      "Configure MIG Autohealing using HTTP health checks to automatically recreate crashed VMs.",
+      "Schedule regular persistent disk snapshots, storing copies in Cloud Storage for disaster recovery.",
+      "Spot VMs have no SLA and are subject to immediate reclaim with a 30-second preemption notice.",
+      "Configure VM shutdown scripts to run for up to 90 seconds, saving state before termination.",
+      "Zonal persistent disks are replicated across physical drives in a zone; regional disks replicate across two zones.",
+      "Utilize regional load balancers to route traffic to healthy virtual machines in different zones."
+    ],
+    "cost": [
+      "Compute Engine charges for virtual machine vCPU/RAM allocation, persistent disk size, and network egress.",
+      "Resource-based Committed Use Discounts (CUDs) offer deep savings for predictable 1 or 3-year commitments.",
+      "Spot/Preemptible VMs offer up to 91% discount, ideal for batch, testing, or stateless workloads.",
+      "Use MIG Autoscaling to scale down instance counts during off-peak hours, saving compute costs.",
+      "Identify and delete orphaned persistent disks and unassigned static external IP addresses.",
+      "Use Recommender insights to downsize VM machine types with low historical CPU and memory utilization.",
+      "Stop non-production development VMs automatically overnight using Cloud Scheduler and Cloud Functions.",
+      "Local SSDs are billed based on capacity; delete them when compute tasks are complete."
+    ]
+  }
+}

@@ -1,0 +1,296 @@
+{
+  "Artificial Intelligence and Machine Learning Ecosystem": {
+    "design": [
+      "Integrates with Vertex AI to construct scalable machine learning and autonomous agent workflows.",
+      "Designed to operate on unstructured and structured data sources grounded in private enterprise context.",
+      "Utilizes modular, REST-first APIs supporting JSON payloads for easy integration with standard applications.",
+      "Enables rapid prototyping through visual interfaces, low-code frameworks, or client libraries.",
+      "Leverages Google's foundation models (like Gemini 3.5 Pro/Flash) to power cognitive and reasoning tasks.",
+      "Supports custom model deployment, fine-tuning, and grounding using retrieval-augmented generation (RAG).",
+      "Designed with modular APIs to allow model-agnostic development and collaborative notebook workflows.",
+      "Exposes metrics to Cloud Monitoring to track response latency, token throughput, and model predictions."
+    ],
+    "security": [
+      "Access is managed strictly via Identity and Access Management (IAM) permissions and roles.",
+      "Supports VPC Service Controls to prevent data exfiltration by enclosing the service inside a secure perimeter.",
+      "All inputs and outputs can be audited and screened for PII leaks using Sensitive Data Protection.",
+      "Data encryption at rest is managed using Google default keys, with options to configure CMEK.",
+      "Supports Private Google Access to enable virtual machines without public IPs to trigger the API.",
+      "Adheres to Google Cloud's AI safety filters, with adjustable thresholds for content moderation.",
+      "API keys can be restricted to specific referrers, IPs, and services to prevent unauthorized billing.",
+      "Enforces transport-level security (TLS 1.3) for all API endpoints and data transmission."
+    ],
+    "reliability": [
+      "A serverless architecture that scales automatically to meet unpredictable processing demands.",
+      "Protected by standard Google Cloud SLAs offering high availability and regional failover capabilities.",
+      "Data is replicated across multiple zones in the region to protect against hardware failures.",
+      "Supports automated retries with exponential backoff on client libraries to handle transient errors.",
+      "Configured with built-in rate limiters and quota systems to prevent backend service exhaustion.",
+      "Stateful layers cache representations to reduce operational latency and speed up recovery times.",
+      "Logs all API activities, failures, and latency metrics to Cloud Logging for audit trailing.",
+      "Maintains backward compatibility of API versions to prevent breaking changes during runtime upgrades."
+    ],
+    "cost": [
+      "Billed on a pay-as-you-go model based on operations, API calls, or token counts.",
+      "Free tiers are available for developmental usage (e.g. initial token limits per month).",
+      "Monitor API consumption using Cloud Billing alerts and budget thresholds to prevent surprises.",
+      "Optimize token lengths and context size to minimize inference costs during model generation.",
+      "Leverage caching mechanisms where possible to avoid redundant API processing charges.",
+      "Establish quota limits in the console to restrict developers from spinning up expensive resources.",
+      "Choose regional endpoints that minimize network cross-region egress fees during large transactions.",
+      "Review pricing sheets regularly as newer, more cost-efficient model versions are introduced."
+    ]
+  },
+  "DevOps Continuous Integration and Application Delivery": {
+    "design": [
+      "Supports declarative configurations (YAML/JSON) to define pipelines and infrastructure as code (IaC).",
+      "Integrates with popular version control systems (GitHub, GitLab, Bitbucket) via webhooks.",
+      "Designed to build, package, and deploy containerized applications and serverless functions.",
+      "Promotes a modular, automated release cycle to ensure fast and repeatable deployments.",
+      "Provides unified visibility into the software delivery pipeline, from source commit to production.",
+      "Supports progressive delivery models, including canary rollouts and blue-green deployments.",
+      "Maintains version history of all deployment configurations to enable easy rollback and auditing.",
+      "Integrates with Slack, Pub/Sub, and emails to send notifications on build/deployment status."
+    ],
+    "security": [
+      "Integrates with Secret Manager to inject API keys and build credentials at runtime securely.",
+      "IAM permissions enforce segregation of duties (e.g., developers build, release managers deploy).",
+      "All pipeline activity, build logs, and access logs are recorded for security auditing.",
+      "Enforces secure private connections to repositories using proxies and developer connections.",
+      "Build containers run in isolated sandbox environments to prevent project infrastructure compromise.",
+      "Validates container image signatures before deployment using Binary Authorization controls.",
+      "Supports Customer-Managed Encryption Keys (CMEK) to encrypt pipeline metadata and code.",
+      "Uses IAM Service Accounts with least privilege principles to execute build and release jobs."
+    ],
+    "reliability": [
+      "Built on serverless execution backends that scale automatically to handle multiple builds in parallel.",
+      "Regional distribution of build pipelines ensures high availability and resilience during local failures.",
+      "Supports automated fallback and rollbacks when deployment health checks fail in target clusters.",
+      "Pipeline states are managed in highly reliable, distributed backends.",
+      "Caches intermediate build artifacts in Cloud Storage to accelerate subsequent pipeline steps.",
+      "Monitors container runtimes and application health post-deployment to ensure system stability.",
+      "Failed builds and pipeline exceptions trigger immediate alerts to operational teams.",
+      "Maintains high durability of build history, logs, and compiled packages."
+    ],
+    "cost": [
+      "Billed on actual execution usage (e.g. build minutes, machine size) or registry storage capacity.",
+      "Offers a free tier for basic usage (e.g. initial build minutes or storage limits).",
+      "Configure build timeouts to terminate hanging builds and prevent run-away billing.",
+      "Optimize container build processes (caching, multi-stage builds) to minimize build duration.",
+      "Clean up old container images and build artifacts in the registry using lifecycle policies.",
+      "Choose appropriately sized build VMs matching the project size to avoid paying for idle CPU/RAM.",
+      "Use Cloud Billing dashboards to analyze which pipeline stages consume the most budget.",
+      "Coordinate automated schedules to clean up temporary sandbox environments post-test."
+    ]
+  },
+  "Application Hosting and Compute Infrastructure": {
+    "design": [
+      "Provides on-demand scalable compute resources ranging from virtual machines to serverless runtimes.",
+      "Supports custom sizing of resources (CPU, Memory, GPU) to optimize workload performance.",
+      "Integrates with virtual networking (VPCs) and cloud load balancers to route external traffic.",
+      "Supports containerized, serverless, or legacy monolithic application hosting architectures.",
+      "Enables horizontal and vertical autoscaling to adapt to changing runtime traffic patterns.",
+      "Designed to host modern microservices, batch processing, and enterprise application software.",
+      "Supports metadata injection, environment variables, and startup configurations on boot.",
+      "Integrates with logging and monitoring suites to export compute metrics and error states."
+    ],
+    "security": [
+      "Secured using Identity and Access Management (IAM) controls for administrative access.",
+      "Supports network segmentation and firewall configurations to control ingress and egress traffic.",
+      "Enables integration with Identity-Aware Proxy (IAP) to enforce zero-trust access to hosted apps.",
+      "Data-at-rest is encrypted by default, with configurations for customer-managed encryption (CMEK).",
+      "Hosted environments run under dedicated service accounts with specific IAM role permissions.",
+      "Supports Private Google Access to enable backend components to connect to APIs privately.",
+      "Protects hosted endpoints using Cloud Armor against web application attacks and DDoS.",
+      "Regularly audits configuration states, VM boots, and operating system access logs."
+    ],
+    "reliability": [
+      "Deployable across multiple zones and regions to achieve high availability and failover.",
+      "Integrates with managed health checks to detect and replace unhealthy instances automatically.",
+      "Supports persistent block storage with automated snapshots and recovery protocols.",
+      "Autoscaling groups distribute compute instances dynamically across available zonal infrastructure.",
+      "Ensures business continuity through automated backups, VM migration, or multi-region routing.",
+      "Serverless compute runtimes handle physical machine failures transparently without downtime.",
+      "Logs system performance, runtime logs, and application diagnostics to Cloud Logging.",
+      "Establishes redundant network pathways (HA VPN, Interconnect) to connect to on-premises systems."
+    ],
+    "cost": [
+      "Offers committed use discounts (CUDs) in exchange for contract agreements.",
+      "Autoscales resources down during off-peak hours to save operational compute costs.",
+      "Allows using spot or preemptible instances for fault-tolerant, non-production workloads.",
+      "Billed on actual resource allocation (CPU/RAM per second) or active execution times.",
+      "Clean up idle disks, unused external IP allocations, and orphan snapshots to avoid leak billing.",
+      "Optimize container image sizes to reduce cold-start compute resource overhead.",
+      "Establish alert budgets in Cloud Billing to monitor infrastructure spending in real-time.",
+      "Right-size compute shapes based on historical utilization recommendations from Recommender."
+    ]
+  },
+  "Databases, Analytics, and Data Lakes": {
+    "design": [
+      "Serverless or fully managed data solutions designed to ingest, process, and query massive datasets.",
+      "Supports relational (SQL) or non-relational (NoSQL) storage models matching application logic.",
+      "Designed to scale horizontally or vertically without causing application disruption or downtime.",
+      "Integrates with data pipelines (Dataflow, Pub/Sub) and business intelligence dashboards.",
+      "Enables real-time data analytical queries across petabytes of structured or semi-structured data.",
+      "Supports decoupled storage and compute architectures to optimize performance and data processing.",
+      "Provides schema flexibility, partitioning, and clustering to organize large data tables.",
+      "Exposes REST endpoints, client drivers, and SQL interfaces to query data."
+    ],
+    "security": [
+      "Supports fine-grained access control down to database tables, columns, or individual rows.",
+      "Data in transit and at rest is encrypted, supporting customer-managed keys (CMEK).",
+      "Database connections are secured using SSL/TLS, client proxy tools, and IP whitelists.",
+      "Integrates with IAM to manage database login and administrative action permissions.",
+      "VPC Service Controls protect databases from unauthorized network access and exfiltration.",
+      "Integrates with Cloud Auditing to trace every database query, administration task, and login.",
+      "Sensitive data inside tables can be masked or de-identified using Sensitive Data Protection.",
+      "Restricts database ingress using Private Service Connect and internal IP networking."
+    ],
+    "reliability": [
+      "Provides high availability (HA) options using synchronous replication to passive standby instances.",
+      "Supports read replicas across zones or regions to offload read traffic and protect database health.",
+      "Enables point-in-time recovery (PITR) to restore data state back to a specific millisecond.",
+      "Automates daily, weekly, or manual backups stored in highly durable storage buckets.",
+      "Provides strong or eventual consistency models, conforming to CAP theorem architectural decisions.",
+      "Maintains high availability SLA (up to 99.999% for global services like Cloud Spanner).",
+      "Monitors database memory, CPU utilization, and query lock times to trigger operational alerts.",
+      "Automatically resizes database storage to prevent database crashes when disk capacity is reached."
+    ],
+    "cost": [
+      "Decouples storage billing from query execution/compute resource pricing models.",
+      "Allows setting maximum slot limits or querying caps to prevent run-away expensive queries.",
+      "Storage costs are discounted for long-term data that is not modified (e.g. BigQuery).",
+      "Autoscales storage and compute instances to align database resources with actual active demand.",
+      "Utilize read replicas to handle spikes instead of scaling up the primary database server.",
+      "Establish budget limits and partition tables to prune data scanned during query execution.",
+      "Leverage committed use discounts (CUDs) for database engines (Cloud SQL, Spanner) running 24/7.",
+      "Delete temporary tables and clean up staging data lakes using automated object lifecycle rules."
+    ]
+  },
+  "Enterprise Networking and Security Architecture": {
+    "design": [
+      "Constructs virtual network topologies, routing policies, and firewalls across Google Cloud.",
+      "Enables secure hybrid connectivity between on-premises datacenters and Google Cloud VPCs.",
+      "Distributes incoming user traffic globally or regionally using managed cloud load balancers.",
+      "Designed with non-overlapping IP spaces and regional subnets to structure enterprise networks.",
+      "Integrates DNS, content caching (CDN), and private service mapping inside the network.",
+      "Supports single-host or multi-host shared network resources managed by central networking teams.",
+      "Uses API-driven routing and Border Gateway Protocol (BGP) to exchange routes dynamically.",
+      "Enables private connections to Google APIs without exposing network traffic to the internet."
+    ],
+    "security": [
+      "Firewall rules enforce ingress and egress policies based on IP ranges, network tags, or service accounts.",
+      "Protects internet-facing endpoints from Layer 3/4 and Layer 7 DDoS attacks using Cloud Armor.",
+      "Enforces secure boundaries between services using VPC Service Controls security perimeters.",
+      "Integrates TLS termination, SSL certificate management, and cipher suites at the load balancer.",
+      "VPC flow logs capture network metadata to audit connections and detect security anomalies.",
+      "Restricts external access to private networks using Cloud NAT and Identity-Aware Proxy (IAP).",
+      "Secures DNS queries against spoofing attacks using Domain Name System Security Extensions (DNSSEC).",
+      "Encrypts inter-region and hybrid network traffic by default or via IPsec VPN tunnels."
+    ],
+    "reliability": [
+      "Load balancers route user traffic to healthy instances in other zones or regions during failures.",
+      "High Availability VPN configuration deploys multiple active tunnels to guarantee connection SLAs.",
+      "Cloud Interconnect provides dedicated physical fiber lines with 99.9% or 99.99% reliability SLA.",
+      "Cloud Router uses dynamic BGP routing to automate failover between network pathways.",
+      "Distributes load balancer configurations globally to achieve low latency and regional resilience.",
+      "DNS is hosted on Google's global, highly redundant nameserver infrastructure.",
+      "Network monitoring alerts operators on packet drop rates, bandwidth utilization, and routing changes.",
+      "Supports failover routing policies (e.g. geo-routing or active-passive DNS routing)."
+    ],
+    "cost": [
+      "Network pricing is based on ingress (free), egress (cross-region/internet), and load balancer rules.",
+      "Direct Interconnect reduces outbound data transfer fees compared to standard internet VPN routing.",
+      "Select regional load balancers instead of global ones if traffic is confined to a single region.",
+      "Optimize CDN configurations to cache static data at the edge, reducing backend traffic egress costs.",
+      "Delete unused static external IP addresses to avoid hourly idle reservation charges.",
+      "Monitor network billing using VPC Flow Logs and Cost Management dashboards.",
+      "Implement Cloud NAT with appropriate timeouts and gateway sizing to avoid over-provisioning.",
+      "Minimize cross-zone traffic within the same region to reduce intra-GCP network fees."
+    ]
+  },
+  "Security, Governance, and Platform Management": {
+    "design": [
+      "Provides identity, access management, encryption keys, and policy governance tools.",
+      "Enforces organizational hierarchy (Org -> Folders -> Projects) to manage resource access.",
+      "Centralizes security posture management, compliance reports, and threat detection.",
+      "Designed to store and rotate credentials, API keys, and certificates securely.",
+      "Enables continuous monitoring, auditing, and log consolidation across the organization.",
+      "Supports declarative policies that restrict resource creation types and locations.",
+      "Integrates with external identity providers (Active Directory, Okta) using single sign-on (SSO).",
+      "Provides actionable recommendations to patch vulnerabilities and optimize project security."
+    ],
+    "security": [
+      "Enforces segregation of duties and least privilege access across all cloud projects.",
+      "All administrative modifications and data accesses are logged to immutable audit logs.",
+      "Protects API keys and database credentials in Secret Manager, avoiding plaintext in code.",
+      "Customer-Managed Encryption Keys (CMEK) give complete ownership of cryptographic key lifecycles.",
+      "Security Command Center detects anomalies, malware, and exposed keys in real-time.",
+      "IAM conditions restrict role assignment based on time, resource naming, or network IP.",
+      "VPC Service Controls prevent unauthorized resource interaction outside project boundaries.",
+      "Organisations can disable service account key creation via Organization Policies."
+    ],
+    "reliability": [
+      "Governance and access configurations are globally replicated to ensure high availability.",
+      "IAM authorization checks are highly optimized, low-latency, and highly resilient.",
+      "Immutable audit logs are stored securely in durable buckets, protected from deletions.",
+      "Key management servers deploy keys across regional or multi-regional HSM partitions.",
+      "SSO and directory synchronization processes run on managed, redundant backends.",
+      "Alerts security teams immediately on policy violations or root account logins.",
+      "Backs up secret metadata and KMS configurations to enable recovery in disasters.",
+      "Maintains high SLA uptime for authentication, key rotation, and secret access APIs."
+    ],
+    "cost": [
+      "Most policy, IAM, and resource manager governance services are offered free of charge.",
+      "Charged based on keys stored, secrets managed, or logs analyzed per month.",
+      "Audit logs can be filtered and routed to cheaper storage classes (Archive) to save costs.",
+      "Automate the deletion of expired secrets and inactive KMS key versions to reduce overhead.",
+      "Monitor active service accounts and prune unused permissions using Recommender suggestions.",
+      "Free tiers are available for Secret Manager API transactions and log analysis volume.",
+      "Consolidate multiple logs into a single centralized project sink to avoid double billing.",
+      "Set appropriate retention limits on Cloud Logging buckets (e.g. reduce from default if not needed)."
+    ]
+  },
+  "Storage, Backup, and Disaster Recovery Catalog": {
+    "design": [
+      "Fully managed file, block, and object storage systems optimized for diverse workloads.",
+      "Supports migration and backup of data from on-premises systems or other cloud providers.",
+      "Provides backup-as-a-service to schedule, execute, and monitor backup policies.",
+      "Designed to store archival, structured, or unstructured data in highly durable formats.",
+      "Decoupled from compute instances to enable flexible scaling of storage capacity.",
+      "Integrates with database and application hosting resources to store persistent snapshots.",
+      "Supports file share protocols (NFS, SMB) for hybrid legacy application access.",
+      "Exposes metrics to track read/write throughput, latency, and storage growth."
+    ],
+    "security": [
+      "Storage access is protected by Identity and Access Management (IAM) controls.",
+      "Supports encryption of backup copies and storage partitions using customer-managed keys (CMEK).",
+      "VPC Service Controls protect storage environments from unauthorized external requests.",
+      "Enforces immutable, indelible backups inside air-gapped vaults to protect against ransomware.",
+      "Restricts network ingress to storage shares using private IPs and security groups.",
+      "Logs every backup creation, restoration request, and file access event to Cloud Logging.",
+      "PAP (Public Access Prevention) prevents public exposures of storage items.",
+      "Regularly scans backups for malware and unauthorized permission changes."
+    ],
+    "reliability": [
+      "Provides high durability (up to 11 9s) to ensure data is never lost or corrupted.",
+      "Replicates backup data synchronously or asynchronously across zones and regions.",
+      "Supports incremental-forever backups to minimize network load and backup durations.",
+      "Automates cross-region disaster recovery replication to enable quick failover.",
+      "Backups are stored in separate, isolated project sandboxes to survive project deletion.",
+      "Maintains strict SLA commitments for data availability and file share uptimes.",
+      "Performs automated verification checks to ensure backup integrity before restoring.",
+      "Monitors storage health, replicating data on healthy nodes during physical drive failures."
+    ],
+    "cost": [
+      "Storage is billed per GB/month based on storage classes, network transfer, and retrieval rates.",
+      "Archive and backup storage classes offer lower monthly costs for long-term data.",
+      "Configure lifecycle policies to automatically delete old backups after retention periods expire.",
+      "Incremental backups reduce storage consumption and network transfer billing.",
+      "Select standard file shares or zonal volumes to avoid regional replication cost overhead.",
+      "Utilize data deduplication and compression to minimize stored backup footprints.",
+      "Establish alerts for unexpected storage growth to prevent billing surprises.",
+      "Right-size provisioned block storage capacity to match active application demands."
+    ]
+  }
+}

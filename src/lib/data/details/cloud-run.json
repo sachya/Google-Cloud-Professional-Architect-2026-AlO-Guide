@@ -1,0 +1,86 @@
+{
+  "features": [
+    {
+      "name": "Serverless Container Execution",
+      "description": "Runs stateless HTTP containers on a fully managed Knative-based infrastructure, scaling up instantly and down to zero."
+    },
+    {
+      "name": "Concurrency Tuning",
+      "description": "Allows configuring the maximum number of concurrent requests sent to a single container instance, reducing cold starts."
+    },
+    {
+      "name": "Serverless VPC Access",
+      "description": "Enables Cloud Run services to securely connect to resources inside a VPC (like Cloud SQL, Memorystore) using private IPs."
+    },
+    {
+      "name": "Traffic Splitting",
+      "description": "Supports routing percentages of incoming traffic across multiple revisions for canary deployments or A/B testing."
+    }
+  ],
+  "iamRoles": [
+    {
+      "role": "roles/run.admin",
+      "description": "Full access to create, update, delete, and manage Cloud Run services, traffic, and configurations."
+    },
+    {
+      "role": "roles/run.invoker",
+      "description": "Permissions to send requests and trigger public or private Cloud Run services."
+    },
+    {
+      "role": "roles/run.viewer",
+      "description": "Read-only access to service definitions, revisions, and configurations."
+    }
+  ],
+  "cliExamples": [
+    {
+      "description": "Deploy a container image to Cloud Run with internal-only ingress and VPC connector",
+      "command": "gcloud run deploy my-service \\\n  --image=gcr.io/my-project/my-app:v1 \\\n  --platform=managed \\\n  --region=us-central1 \\\n  --ingress=internal \\\n  --vpc-connector=my-connector"
+    },
+    {
+      "description": "Grant public unauthenticated access to a Cloud Run service",
+      "command": "gcloud run services add-iam-policy-binding my-service \\\n  --member=allUsers \\\n  --role=roles/run.invoker \\\n  --region=us-central1"
+    }
+  ],
+  "keyPoints": {
+    "design": [
+      "Cloud Run executes containerized code serverlessly, supporting any programming language, binary, or library.",
+      "Services scale dynamically from zero to thousands of instances based on incoming request traffic.",
+      "A single container instance can handle up to 250 concurrent requests, reducing cold starts compared to FaaS.",
+      "Revisions are immutable snapshots of code and configuration; deploying changes creates a new revision.",
+      "Integrates directly with Eventarc to trigger container invocations based on events from 90+ GCP services.",
+      "Cloud Run jobs run batch workloads that perform finite execution tasks to completion instead of web endpoints.",
+      "Connect to databases using Cloud SQL Auth Proxy built-in integration or Serverless VPC Access connector.",
+      "Supports custom domains with automated SSL/TLS certificate provisioning and renewal."
+    ],
+    "security": [
+      "By default, Cloud Run services require authenticated requests; grant public access using roles/run.invoker for allUsers.",
+      "Use IAM service accounts to give Cloud Run containers specific permissions to other GCP resources (e.g. Secret Manager).",
+      "Integrate Cloud Run with Cloud Armor by placing it behind an external HTTP(S) Load Balancer and limiting direct ingress.",
+      "Secret Manager variables can be mounted as volumes or environment variables, avoiding storing secrets in the container image.",
+      "Ingress control settings allow restricting access to internal traffic or internal plus load balancer traffic only.",
+      "Use VPC Service Controls perimeters to protect Cloud Run workloads from data exfiltration risks.",
+      "VPC egress settings let you route all outbound traffic from Cloud Run through your VPC network to apply firewall rules.",
+      "Enforce Binary Authorization policies on Cloud Run to restrict deployments to approved images."
+    ],
+    "reliability": [
+      "Cloud Run automatically replicates containers across multiple zones within the deployed region for high availability.",
+      "Min instances setting keeps a specified number of containers active, eliminating cold starts for latency-sensitive apps.",
+      "Max instances setting acts as a safety limit to prevent run-away autoscaling and protect backend systems from overload.",
+      "HTTP health checks can be configured to verify instance readiness before routing traffic to them.",
+      "Configure automatic retries and custom timeouts for backend container HTTP requests (up to 60 minutes).",
+      "Traffic splitting allows safe canary rollouts, routing e.g. 5% of traffic to a new revision and monitoring error rates.",
+      "Integrates with Cloud Logging out of the box; standard stdout/stderr logs are collected automatically.",
+      "Utilize Cloud Monitoring metrics to trigger alerts on container errors, request latency, and CPU usage."
+    ],
+    "cost": [
+      "Charged on a pay-as-you-go basis, billed to the nearest 100 milliseconds of actual CPU and memory utilization.",
+      "Idle resources cost zero when a service scales down to zero instances, which is the default behavior.",
+      "Choose CPU allocation mode: 'CPU allocated only during request processing' (default) vs 'CPU always allocated'.",
+      "Always-allocated CPU is more expensive but reduces latency by allowing background tasks and faster warm starts.",
+      "Tune container concurrency limits to maximize CPU utilization per container instance, minimizing cost.",
+      "Set max instances to prevent high billing spikes from unexpected traffic bursts or DDoS attacks.",
+      "Optimize container startup times (smaller images, fast boot) to reduce billing during cold-start scaling.",
+      "Free tier offers 180,000 vCPU-seconds and 360,000 GiB-seconds of memory free per month."
+    ]
+  }
+}

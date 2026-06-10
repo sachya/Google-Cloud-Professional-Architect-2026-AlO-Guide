@@ -1,0 +1,90 @@
+{
+  "features": [
+    {
+      "name": "Spot & Preemptible VMs",
+      "description": "Highly discounted (up to 91%) compute instances that Google can reclaim with a 30-second warning; Spot has no max duration while Preemptible is capped at 24 hours."
+    },
+    {
+      "name": "Live Migration",
+      "description": "GCP technology that automatically migrates running VM instances to another host in the same zone during host maintenance, ensuring zero downtime."
+    },
+    {
+      "name": "Sole-Tenant Nodes",
+      "description": "Dedicated physical compute servers running only your VMs, crucial for security, compliance, and custom hardware/licensing requirements."
+    },
+    {
+      "name": "Committed Use Discounts (CUDs)",
+      "description": "Deep discounts (resource-based or flexible vCPU/RAM commitments) in exchange for signing a 1-year or 3-year contract."
+    },
+    {
+      "name": "Persistent Disk Snapshots",
+      "description": "Zonal or regional block storage snapshots stored in Cloud Storage, supporting incremental backups and scheduling."
+    }
+  ],
+  "iamRoles": [
+    {
+      "role": "roles/compute.admin",
+      "description": "Full control over all Compute Engine resources, network, and security."
+    },
+    {
+      "role": "roles/compute.instanceAdmin.v1",
+      "description": "Permission to create, modify, and delete virtual machine instances, disks, and images."
+    },
+    {
+      "role": "roles/compute.networkAdmin",
+      "description": "Permissions to configure networking, firewalls, and routing, but not VM creation."
+    }
+  ],
+  "cliExamples": [
+    {
+      "description": "Create a custom-sized VM with startup script and cloud-platform scope",
+      "command": "gcloud compute instances create my-vm \\\n  --zone=us-central1-a \\\n  --machine-type=e2-custom-4-8192 \\\n  --metadata-from-file=startup-script=script.sh \\\n  --scopes=https://www.googleapis.com/auth/cloud-platform"
+    },
+    {
+      "description": "SSH into an instance through Identity-Aware Proxy (IAP) without public IP",
+      "command": "gcloud compute ssh my-vm --zone=us-central1-a --tunnel-through-iap"
+    }
+  ],
+  "keyPoints": {
+    "design": [
+      "Compute Engine virtual machines run on KVM virtualization and support custom vCPU and memory configurations.",
+      "Zonal persistent disks are replicated across multiple physical disks in a single zone to prevent data loss.",
+      "Regional persistent disks replicate data synchronously across two zones in the same region, providing an RPO of zero.",
+      "Local SSDs are physically attached to the server hosting the VM, offering extremely high IOPS and low latency.",
+      "Data on Local SSDs is ephemeral and is lost when the VM instance is stopped, deleted, or undergoes host failure.",
+      "Sole-tenant nodes allow you to run instances on dedicated physical hardware for compliance and software licensing.",
+      "Custom metadata can be queried by the VM from the metadata server at http://169.254.169.254/computeMetadata/v1/.",
+      "Managed Instance Groups (MIGs) support autoscaling, autohealing, and multi-zone deployment of identical VM templates."
+    ],
+    "security": [
+      "Access scopes set the default authorization scopes for API requests made from the VM's service account.",
+      "Best practice is to assign the 'cloud-platform' scope to the VM and restrict permissions using IAM roles on the service account.",
+      "OS Login allows managing SSH access to VM instances using IAM credentials, replacing metadata-based SSH keys.",
+      "Service Account User role (roles/iam.serviceAccountUser) is required to attach a service account to a VM.",
+      "Shielded VMs protect instances from boot-level malware and rootkits by validating boot state using UEFI and vTPM.",
+      "Firewall rules are applied at the network level but evaluated at the individual VM instance level using network tags.",
+      "Compute instances without external IP addresses can access Google APIs using Private Google Access in the subnet.",
+      "Disk encryption defaults to Google-managed keys, but can be configured with CMEK or Customer-Supplied Keys (CSEK)."
+    ],
+    "reliability": [
+      "Live Migration is enabled by default, allowing VMs to move automatically to other hardware during infrastructure updates.",
+      "VM shutdown scripts are guaranteed to run on a best-effort basis for up to 90 seconds (longer on request).",
+      "Regional MIGs distribute VM instances across multiple zones in a region, protecting against single-zone outages.",
+      "Autohealing uses HTTP(S) health checks to automatically recreate unhealthy VM instances in a Managed Instance Group.",
+      "Backup VM configurations using custom images or machine images, which capture disk state, metadata, and configuration.",
+      "Spot VMs have an SLA of 0% and are subject to termination at any time, requiring stateless, fault-tolerant workloads.",
+      "Always design instances to be stateless; configure startup scripts to pull configuration from Cloud Storage on boot.",
+      "Zonal outages do not affect regional persistent disks, allowing prompt recovery by attaching disks to a VM in another zone."
+    ],
+    "cost": [
+      "Resource-based Committed Use Discounts (CUDs) apply to vCPUs and memory for predictable workloads over a 1 or 3-year term.",
+      "Flexible CUDs provide spending-based discounts across VM families and regions, offering greater architectural flexibility.",
+      "Spot VMs offer a 60% to 91% discount compared to on-demand pricing, ideal for batch jobs and testing.",
+      "Custom machine types allow matching resources exactly to application needs, avoiding cost overhead from over-provisioning.",
+      "Persistent disks are billed based on provisioned capacity, not used capacity, so size them carefully.",
+      "Delete unattached persistent disks and unused static external IP addresses to avoid idle resource charges.",
+      "Enable autoscaling in MIGs to scale down instance counts during low-demand periods and save compute costs.",
+      "Configure VM scheduling (using Cloud Scheduler and Cloud Functions) to shut down dev/test VMs overnight."
+    ]
+  }
+}

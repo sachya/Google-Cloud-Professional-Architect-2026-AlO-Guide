@@ -1,0 +1,78 @@
+{
+  "features": [
+    {
+      "name": "Serverless Message Ingestion",
+      "description": "Ingests millions of streaming messages per second with global anycast routing and low-latency storage."
+    },
+    {
+      "name": "Unified Stream/Batch Processing",
+      "description": "Executes data transformations across streaming or batch sources using Apache Beam pipelines."
+    },
+    {
+      "name": "Data Lake Governance",
+      "description": "Centralizes metadata cataloging, data lineage tracking, and compliance scanning across storage resources."
+    }
+  ],
+  "iamRoles": [
+    {
+      "role": "roles/pubsub.admin",
+      "description": "Full access to create, publish, and subscribe to Pub/Sub topics and subscriptions."
+    },
+    {
+      "role": "roles/dataflow.admin",
+      "description": "Permissions to execute, monitor, and cancel Dataflow pipeline jobs."
+    }
+  ],
+  "cliExamples": [
+    {
+      "description": "Create a Pub/Sub topic with schema validation",
+      "command": "gcloud pubsub topics create pub-sub-lite-topic"
+    },
+    {
+      "description": "Create a Pub/Sub pull subscription with a 7-day retention period",
+      "command": "gcloud pubsub subscriptions create pub-sub-lite-sub \\\n  --topic=pub-sub-lite-topic \\\n  --message-retention-duration=7d"
+    }
+  ],
+  "keyPoints": {
+    "design": [
+      "Data pipelines ingest, transform, and load massive data streams for real-time analytics.",
+      "Pub/Sub is a serverless, global messaging queue, routing messages from publishers to subscribers.",
+      "Dataflow runs managed Apache Beam pipelines for unified stream and batch data processing.",
+      "Dataplex manages logical data lakes, consolidating metadata and enforcing governance across storage.",
+      "Pub/Sub Lite offers lower cost partitions for predictable, high-volume zonal streaming.",
+      "Configure dead-letter topics to route unparseable stream messages for debug analysis.",
+      "Dataflow templates allow running standard data transformations without compiling code.",
+      "Use Pub/Sub push subscriptions to invoke serverless runtimes directly on message arrivals."
+    ],
+    "security": [
+      "Manage publisher and subscriber access separately using specific IAM roles (`roles/pubsub.publisher`).",
+      "VPC Service Controls perimeters protect data pipelines from exfiltrating data to external topics.",
+      "Data in transit and at rest is encrypted, supporting customer-managed keys (CMEK) via Cloud KMS.",
+      "Restrict database ingress by executing Dataflow workers on internal subnets with private IPs.",
+      "Enable Pub/Sub message schemas to validate message structures before ingestion, blocking corrupt payloads.",
+      "Audit data lineage, pipeline edits, and message publishing metrics in Cloud Logging.",
+      "Deploy Dataflow workers inside dedicated service accounts with least privilege roles.",
+      "Enforce sensitive data masking inside streaming pipelines using Sensitive Data Protection API."
+    ],
+    "reliability": [
+      "Pub/Sub replicates messages across multiple zones in the region to guarantee high availability.",
+      "Pub/Sub guarantees at-least-once message delivery; write downstream systems to be idempotent.",
+      "Dataflow autoscales worker nodes dynamically based on pipeline backlog (backpressure).",
+      "Configure message retention periods in Pub/Sub (up to 7 days) to preserve streams during subscriber outages.",
+      "Dead-letter queues isolate failing messages, preventing pipeline crashes.",
+      "Enable snapshotting on Pub/Sub subscriptions to replay historical messages for recovery.",
+      "Dataplex automatically runs data quality and compliance checks on data lakes.",
+      "Dataflow streaming jobs store state in local SSDs, resuming execution during worker failover."
+    ],
+    "cost": [
+      "Pub/Sub charges based on volume of data ingested (GB) and message storage duration.",
+      "Dataflow bills for compute resource workers (vCPUs/RAM/Disk per hour) used in job execution.",
+      "Dataplex billing is based on metadata storage and data processing units consumed.",
+      "Use Pub/Sub Lite for predictable, high-volume pipelines to reduce ingestion charges by up to 80%.",
+      "Configure Dataflow pipeline autoscaling limits to prevent runaway compute resource billing.",
+      "Set appropriate message retention limits; do not store message histories longer than necessary.",
+      "Optimize Dataflow worker machine sizes, selecting memory-optimized shapes only when necessary.",
+      "Reduce data transfer cost by deploying pipelines, topics, and databases in the same region."
+    ]
+  }
+}

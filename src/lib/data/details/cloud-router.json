@@ -1,0 +1,78 @@
+{
+  "features": [
+    {
+      "name": "Global VPC Topologies",
+      "description": "Constructs virtual network topologies globally across GCP, organizing regional subnets in a private boundary."
+    },
+    {
+      "name": "High-Speed Interconnect",
+      "description": "Connects on-premises datacenters directly to GCP networks via Dedicated or Partner fiber lines (up to 100 Gbps)."
+    },
+    {
+      "name": "Dynamic BGP Routing",
+      "description": "Exchanges route tables dynamically between Cloud Routers and on-premises networks using dynamic routing."
+    }
+  ],
+  "iamRoles": [
+    {
+      "role": "roles/compute.networkAdmin",
+      "description": "Full access to create, modify, and delete networking resources, VPCs, subnets, and firewalls."
+    },
+    {
+      "role": "roles/compute.networkViewer",
+      "description": "Read-only access to VPC topologies, routing configurations, and IP allocations."
+    }
+  ],
+  "cliExamples": [
+    {
+      "description": "Create a custom Virtual Private Cloud (VPC) network",
+      "command": "gcloud compute networks create my-custom-vpc --subnet-mode=custom"
+    },
+    {
+      "description": "Create a regional subnet inside a VPC network",
+      "command": "gcloud compute networks subnets create cloud-router-subnet \\\n  --network=my-custom-vpc \\\n  --region=us-central1 \\\n  --range=10.10.1.0/24 \\\n  --enable-private-ip-google-access"
+    }
+  ],
+  "keyPoints": {
+    "design": [
+      "VPC networks are global resources; subnets are regional resources hosting virtual machines and network interfaces.",
+      "Shared VPC allows a host project to share subnets with service projects, centralizing network control.",
+      "VPC Network Peering connects two VPCs securely with low latency; routing is non-transitive.",
+      "Cloud Router uses Border Gateway Protocol (BGP) to exchange routes dynamically between VPCs and external systems.",
+      "HA VPN deploys two active tunnels with dynamic routing to guarantee a 99.99% connection uptime SLA.",
+      "Cloud Interconnect provides physical fiber connections; Dedicated connects directly, Partner connects via providers.",
+      "VPC network peering requires that IP CIDR blocks do not overlap between the peered networks.",
+      "Configure Private Google Access on subnets to allow VMs with only internal IPs to access Google APIs."
+    ],
+    "security": [
+      "Firewall rules are stateful and applied to VM instances using network tags, service accounts, or IP ranges.",
+      "Hierarchical firewall policies apply network rules at the Organization or Folder levels, enforcing corporate standards.",
+      "Cloud NAT allows private VMs to access the internet for updates while blocking incoming connections.",
+      "Audit network connections, blocked ports, and packets using VPC Flow Logs.",
+      "Enable Firewall Rules Logging to audit which rules are actively blocking or allowing traffic.",
+      "Secure hybrid connections by encrypting Cloud Interconnect traffic using MACsec or IPsec VPN tunnels.",
+      "Use Private Service Connect to expose internal services to other VPCs privately without IP peering.",
+      "Restrict administrative network changes using the networkAdmin IAM role."
+    ],
+    "reliability": [
+      "HA VPN requires deploying two tunnels from different gateway interfaces to distinct public peer IPs.",
+      "Cloud Router automatically handles path failover by dynamically updating routing paths via BGP.",
+      "Dedicated Interconnect offers 99.99% availability when deployed with dual circuits across two edge locations.",
+      "Replicate subnets across multiple zones in a region to ensure high availability for compute nodes.",
+      "Configure health checks on load balancers to route traffic away from unhealthy network zones.",
+      "VPC networks support automatic subnet routing, which propagates routes globally.",
+      "Monitor network latency and packet drops using Network Intelligence Center.",
+      "Dynamic routing mode must be set to 'Global' to allow routers to propagate routes across all regions."
+    ],
+    "cost": [
+      "VPC networks do not charge for network creation; billing is based on network data transfer (egress).",
+      "Data transfer within the same zone is free, but cross-zone transfer within the region incurs network fees.",
+      "Cross-region data egress is billed based on source and destination region rates; design zones carefully.",
+      "Cloud NAT charges per gateway hour and for data processed; do not deploy NAT gateways in idle subnets.",
+      "Dedicated Interconnect reduces overall cross-region egress billing compared to standard internet egress.",
+      "Prune unused static external IP addresses to avoid hourly idle reservation fees.",
+      "VPC Flow Logs generate large volumes of metadata; configure sampling rates to control logging costs.",
+      "Use Shared VPC to consolidate network infrastructure, reducing the number of VPN gateways and NATs needed."
+    ]
+  }
+}

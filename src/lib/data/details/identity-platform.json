@@ -1,0 +1,78 @@
+{
+  "features": [
+    {
+      "name": "Resource Hierarchy Governance",
+      "description": "Enforces resource hierarchy access policies from Organization to Project, inheriting permissions downwards."
+    },
+    {
+      "name": "Least Privilege Role Controls",
+      "description": "Assigns fine-grained, predefined roles to user groups, preventing over-privileged credentials."
+    },
+    {
+      "name": "Zero-Trust Remote Access",
+      "description": "Secures web applications and administrative consoles without VPNs using Identity-Aware Proxy."
+    }
+  ],
+  "iamRoles": [
+    {
+      "role": "roles/iam.securityAdmin",
+      "description": "Full access to create, modify, and delete IAM policies across resources."
+    },
+    {
+      "role": "roles/resourcemanager.projectCreator",
+      "description": "Permissions to create and manage projects within folders or organizations."
+    }
+  ],
+  "cliExamples": [
+    {
+      "description": "Grant a service account the Storage Object Viewer role",
+      "command": "gcloud projects add-iam-policy-binding my-project \\\n  --member=serviceAccount:identity-platform-sa@my-project.iam.gserviceaccount.com \\\n  --role=roles/storage.objectViewer"
+    },
+    {
+      "description": "List all IAM role bindings configured on a project",
+      "command": "gcloud projects get-iam-policy-binding my-project"
+    }
+  ],
+  "keyPoints": {
+    "design": [
+      "Identity and Access Management (IAM) defines who (identity) has what access (role) on which resource.",
+      "Resource hierarchy (Organization -> Folders -> Projects -> Resources) enforces inherited policy controls.",
+      "Permissions inherit downwards; policy restrictions cannot deny permissions granted at higher resource levels.",
+      "Assign roles to Google Groups instead of individual users to simplify access administration.",
+      "Service Accounts are identities for applications; they do not have passwords and use public/private key pairs.",
+      "User-managed service account keys are a security risk; rotate them regularly or use Workload Identity.",
+      "IAM Conditions grant access to resources only when conditions match (e.g., specific date, IP, resource naming).",
+      "Directory Sync syncs identities from external providers (Active Directory, Azure AD) into Cloud Identity."
+    ],
+    "security": [
+      "Enforce least privilege by avoiding primitive roles (Owner, Editor, Viewer) in production environments.",
+      "Enable Service Account Impersonation, letting developers generate short-lived credentials instead of downloading JSON keys.",
+      "Workload Identity Federation allows external workloads (AWS, Azure, GitHub Actions) to authenticate without static keys.",
+      "Use Identity-Aware Proxy (IAP) to enforce access controls on administrative web apps.",
+      "Audit administrative access and role assignments by regularly scanning Cloud Audit Logs.",
+      "Enable Organization Policies to block the creation of external service account keys entirely.",
+      "Use IAM Recommender to identify over-privileged users and automatically strip unused permissions.",
+      "Configure Multi-Factor Authentication (MFA) in Cloud Identity for all enterprise users."
+    ],
+    "reliability": [
+      "IAM authorization checks are globally distributed and cached at edge points, ensuring sub-millisecond evaluation.",
+      "Identity metadata is replicated globally across Google Cloud datacenters for high availability.",
+      "If external identity syncing fails, cached credentials in Cloud Identity allow continued operation.",
+      "Design critical service accounts with backup permissions to ensure automation pipelines do not fail.",
+      "SSO (Single Sign-On) configuration supports automated failover across redundant identity endpoints.",
+      "IAM modifications propagate globally within seconds, minimizing access delay.",
+      "System authentication errors and access denials are logged to Cloud Logging automatically.",
+      "Maintain IAM policy configurations as Code (IaC) in git to enable quick restore from policy errors."
+    ],
+    "cost": [
+      "IAM, Cloud Identity Free, and basic Resource Manager services are provided at no cost.",
+      "Syncing external identities and using basic IAM authorization check APIs is free.",
+      "Audit log storage is billed based on retention; route logs to Cloud Storage Archive to save cost.",
+      "Use IAM Recommender suggestions to downsize roles, reducing operational risk and management audit fees.",
+      "Consolidate multiple projects into shared folders to simplify policy management, reducing admin overhead.",
+      "Automate the identification and deletion of inactive service accounts to save audit processing costs.",
+      "Cloud Identity Premium is billed per user; allocate premium licenses only to users requiring advanced device controls.",
+      "Minimize cross-project service account access requests to reduce audit log size and related storage billing."
+    ]
+  }
+}

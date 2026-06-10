@@ -1,0 +1,1339 @@
+[
+  {
+    "id": "gemini-enterprise-agent-platform",
+    "name": "Gemini Enterprise Agent Platform",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Autonomous AI Orchestration",
+    "description": "A comprehensive platform designed to rapidly construct, scale, govern, and optimize enterprise-grade agents grounded in private corporate data."
+  },
+  {
+    "id": "vertex-ai",
+    "name": "Vertex AI",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Machine Learning Platforms",
+    "description": "A unified machine learning platform that supports custom model training, model registries, and production-scale prediction pipelines."
+  },
+  {
+    "id": "gemini-enterprise-app",
+    "name": "Gemini Enterprise App",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Autonomous AI Orchestration",
+    "description": "A secure, agentic application space where users can discover, build, share, and execute conversational AI agents."
+  },
+  {
+    "id": "agent-development-kit--adk-",
+    "name": "Agent Development Kit (ADK)",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Application Frameworks",
+    "description": "An open-source, modular, and model-agnostic development framework to construct, debug, and execute multi-agent collaborative workflows."
+  },
+  {
+    "id": "agent-studio",
+    "name": "Agent Studio",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Low-Code UI Development",
+    "description": "A visual low-code canvas interface used to design, prototype, evaluate, and tune multi-agent reasoning loops."
+  },
+  {
+    "id": "model-garden",
+    "name": "Model Garden",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Model Discovery & Testing",
+    "description": "A centralized repository to browse, test, and deploy proprietary frontier models, open-weight architectures, and third-party APIs."
+  },
+  {
+    "id": "agent-garden",
+    "name": "Agent Garden",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Prebuilt Agent Templates",
+    "description": "A library of prebuilt operational agents and pre-configured templates designed to accelerate development."
+  },
+  {
+    "id": "managed-agents-api",
+    "name": "Managed Agents API",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Autonomous AI Orchestration",
+    "description": "A configuration-driven, REST-first API designed for deploying and running autonomous agents within a fully managed sandbox."
+  },
+  {
+    "id": "agent-gateway",
+    "name": "Agent Gateway",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "API Security & Routing",
+    "description": "A centralized control plane for securing, routing, and monitoring input-output traffic across multiple deployed agents."
+  },
+  {
+    "id": "agent-platform-memory-bank",
+    "name": "Agent Platform Memory Bank",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "State & Context Management",
+    "description": "A stateful storage system that allows agents to write, extract, and retrieve long-term memories to retain context during multi-turn interactions."
+  },
+  {
+    "id": "agent-platform-sessions",
+    "name": "Agent Platform Sessions",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "State & Context Management",
+    "description": "An orchestration component used to manage live conversational sessions and state retention for complex user-agent interactions."
+  },
+  {
+    "id": "rag-engine",
+    "name": "RAG Engine",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Context Retrieval Systems",
+    "description": "A secure system that connects private enterprise databases and documents to large language models to prevent hallucinated responses."
+  },
+  {
+    "id": "enterprise-knowledge-graph",
+    "name": "Enterprise Knowledge Graph",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Context Retrieval Systems",
+    "description": "An advanced system designed to map and connect semantic entities across disparate enterprise data sources to power downstream AI applications."
+  },
+  {
+    "id": "vector-search",
+    "name": "Vector Search",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Context Retrieval Systems",
+    "description": "A highly scalable, low-latency search engine designed to execute vector similarity and nearest-neighbor matches across millions of embeddings."
+  },
+  {
+    "id": "colab-enterprise",
+    "name": "Colab Enterprise",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Collaborative Notebooks",
+    "description": "A managed development environment combining the collaborative ease of Jupyter notebooks with enterprise-grade security and scale."
+  },
+  {
+    "id": "vertex-ai-workbench",
+    "name": "Vertex AI Workbench",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Collaborative Notebooks",
+    "description": "A unified, Jupyter-based environment for data scientists to manage the entire data-to-model workflow."
+  },
+  {
+    "id": "tensorflow-enterprise",
+    "name": "TensorFlow Enterprise",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Collaborative Notebooks",
+    "description": "Customized support, optimized binaries, and enterprise scaling mechanisms tailored for high-performance TensorFlow workloads."
+  },
+  {
+    "id": "neural-architecture-search--nas-",
+    "name": "Neural Architecture Search (NAS)",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Model Training Tools",
+    "description": "An automated engine designed to optimize model parameters and discover highly efficient neural architectures for specific tasks."
+  },
+  {
+    "id": "ray-on-gemini-enterprise",
+    "name": "Ray on Gemini Enterprise",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Model Training Tools",
+    "description": "A managed execution environment designed to scale Python applications and machine learning training workloads using Ray."
+  },
+  {
+    "id": "model-armor",
+    "name": "Model Armor",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "AI Firewall & Security",
+    "description": "An inline runtime security firewall that monitors AI prompts and responses to block malicious injections, malware, and PII leaks."
+  },
+  {
+    "id": "agent-assist",
+    "name": "Agent Assist",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Customer Service AI",
+    "description": "An AI-powered assistant that delivers real-time recommendations, document summaries, and next-step actions to customer service agents."
+  },
+  {
+    "id": "dialogflow-cx",
+    "name": "Dialogflow CX",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Conversational Interfaces",
+    "description": "A advanced development platform for building enterprise-grade, state-based, and virtual conversational agents."
+  },
+  {
+    "id": "dialogflow-es",
+    "name": "Dialogflow ES",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Conversational Interfaces",
+    "description": "A standard conversational design interface optimized for building lightweight virtual assistants and chat interfaces."
+  },
+  {
+    "id": "document-ai",
+    "name": "Document AI",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Document Processing",
+    "description": "A machine learning suite designed to extract, classify, and analyze structured data from unstructured document formats."
+  },
+  {
+    "id": "speech-to-text",
+    "name": "Speech-to-Text",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Voice & Language Services",
+    "description": "An API that converts live or recorded audio files into highly accurate textual transcripts across multiple languages."
+  },
+  {
+    "id": "text-to-speech",
+    "name": "Text-to-Speech",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Voice & Language Services",
+    "description": "An API that synthesizes natural-sounding, studio-quality speech from text inputs using deep learning algorithms."
+  },
+  {
+    "id": "cloud-translation",
+    "name": "Cloud Translation",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Voice & Language Services",
+    "description": "A dynamic language translation service that automatically converts text across thousands of language pairs."
+  },
+  {
+    "id": "cloud-vision-api",
+    "name": "Cloud Vision API",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Image & Video Processing",
+    "description": "An image intelligence API that provides automated labeling, optical character recognition (OCR), object localization, and explicit content filtering."
+  },
+  {
+    "id": "live-stream-api",
+    "name": "Live Stream API",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Image & Video Processing",
+    "description": "A video processing service designed to ingest, transcode, and package live-streamed video content for global distribution."
+  },
+  {
+    "id": "transcoder-api",
+    "name": "Transcoder API",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Image & Video Processing",
+    "description": "A service designed to convert video files into optimized formats tailored for multi-screen playback environments."
+  },
+  {
+    "id": "video-intelligence-api",
+    "name": "Video Intelligence API",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Image & Video Processing",
+    "description": "An API that detects objects, scene transitions, explicit content, and textual metadata within video files."
+  },
+  {
+    "id": "anti-money-laundering-ai",
+    "name": "Anti Money Laundering AI",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Financial Industry Solutions",
+    "description": "A specialized machine learning pipeline built specifically to detect financial crimes and transaction-cleansing behaviors."
+  },
+  {
+    "id": "healthcare-natural-language-api",
+    "name": "Healthcare Natural Language API",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Medical Industry Solutions",
+    "description": "A domain-specific NLP API designed to extract insights, relationships, and medical terminology from clinical notes."
+  },
+  {
+    "id": "ai-commerce-search",
+    "name": "AI Commerce Search",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Retail Industry Solutions",
+    "description": "A personalized search and recommendation API designed to improve product discovery on e-commerce platforms."
+  },
+  {
+    "id": "vision-api-product-search",
+    "name": "Vision API Product Search",
+    "category": "Artificial Intelligence and Machine Learning Ecosystem",
+    "architecturalCategory": "Retail Industry Solutions",
+    "description": "An image-to-product search engine that allows mobile users to search for matching items using visual uploads."
+  },
+  {
+    "id": "secure-source-manager",
+    "name": "Secure Source Manager",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "Source Code Management",
+    "description": "Managed, single-tenant Git repository hosting featuring branch protection, customer-managed encryption (CMEK), and IAM integration."
+  },
+  {
+    "id": "developer-connect",
+    "name": "Developer Connect",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "Connection Management",
+    "description": "An API connection manager that establishes secure Git proxies and private network access between GCP services and repositories."
+  },
+  {
+    "id": "cloud-build",
+    "name": "Cloud Build",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "Continuous Integration (CI)",
+    "description": "A serverless CI engine that compiles, tests, and packages software artifacts in isolated container environments."
+  },
+  {
+    "id": "cloud-deploy",
+    "name": "Cloud Deploy",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "Continuous Delivery (CD)",
+    "description": "An automated delivery manager designed to orchestrate progressive, multi-stage application releases to GKE and Cloud Run."
+  },
+  {
+    "id": "artifact-registry",
+    "name": "Artifact Registry",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "Artifact Management",
+    "description": "A secure repository designed to store, manage, and govern container images, helm charts, and language packages."
+  },
+  {
+    "id": "artifact-analysis",
+    "name": "Artifact Analysis",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "Supply Chain Security",
+    "description": "An automated metadata vulnerability scanner that catalogs dependencies and monitors container images for threats."
+  },
+  {
+    "id": "binary-authorization",
+    "name": "Binary Authorization",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "Supply Chain Security",
+    "description": "A deploy-time security control that ensures only trusted container images signed by authorized builders are deployed to run environments."
+  },
+  {
+    "id": "cloud-source-repositories",
+    "name": "Cloud Source Repositories",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "Source Code Management",
+    "description": "A hosted private Git repository environment integrated directly with Google Cloud debugging and logging tools."
+  },
+  {
+    "id": "apigee-api-management",
+    "name": "Apigee API Management",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "API Gateway & Governance",
+    "description": "An enterprise API management platform designed to design, secure, deploy, and analyze APIs across multi-cloud environments."
+  },
+  {
+    "id": "apigee-hybrid",
+    "name": "Apigee Hybrid",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "API Gateway & Governance",
+    "description": "A hybrid deployment model that places the API runtime gateway on-premises or in a customer's private Kubernetes clusters."
+  },
+  {
+    "id": "api-gateway",
+    "name": "API Gateway",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "API Gateway & Governance",
+    "description": "A managed gateway designed to secure and control access to backend services, cloud functions, and API endpoints."
+  },
+  {
+    "id": "api-keys",
+    "name": "API Keys",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "API Gateway & Governance",
+    "description": "A simple credential management system designed to authenticate and track API consumer consumption rates."
+  },
+  {
+    "id": "cloud-endpoints",
+    "name": "Cloud Endpoints",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "API Gateway & Governance",
+    "description": "An API management tool designed to secure, monitor, and configure distributed HTTP, gRPC, and OpenAPI endpoints."
+  },
+  {
+    "id": "application-integration",
+    "name": "Application Integration",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "Workflow Integration",
+    "description": "An enterprise-grade integration platform designed to connect cloud databases, SaaS applications, and legacy systems via visual maps."
+  },
+  {
+    "id": "integration-connectors",
+    "name": "Integration Connectors",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "Workflow Integration",
+    "description": "A pre-configured library of connectivity adaptors built to interface with popular third-party systems and protocols."
+  },
+  {
+    "id": "cloud-workstations",
+    "name": "Cloud Workstations",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "Managed Developer Environments",
+    "description": "Fully managed, highly secure virtual developer IDE instances running in private VPC networks."
+  },
+  {
+    "id": "cloud-code",
+    "name": "Cloud Code",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "Developer IDE Extensions",
+    "description": "IDE extensions (supporting IntelliJ and VS Code) designed to facilitate rapid local Kubernetes and serverless development."
+  },
+  {
+    "id": "cloud-shell",
+    "name": "Cloud Shell",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "Online Terminals",
+    "description": "A web-based administrative environment featuring a pre-provisioned command line terminal, SDKs, and a built-in code editor."
+  },
+  {
+    "id": "app-hub",
+    "name": "App Hub",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "Application Governance",
+    "description": "A unified registry designed to map, categorize, and track operational cloud applications and their underlying infrastructure components."
+  },
+  {
+    "id": "application-design-center--adc-",
+    "name": "Application Design Center (ADC)",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "Application Governance",
+    "description": "A blueprint designer that converts high-level architecture designs into valid Terraform and gcloud CLI commands."
+  },
+  {
+    "id": "appsheet",
+    "name": "AppSheet",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "No-Code Development",
+    "description": "A visual development platform that allows business users to build and extend customized mobile and web applications without writing code."
+  },
+  {
+    "id": "workflows",
+    "name": "Workflows",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "Serverless Orchestration",
+    "description": "A managed workflow engine that executes multi-step HTTP and API-driven application logic in reliable state machines."
+  },
+  {
+    "id": "cloud-scheduler",
+    "name": "Cloud Scheduler",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "Serverless Orchestration",
+    "description": "A fully managed cron job scheduler designed to trigger recurring virtual tasks, API requests, and pub/sub events."
+  },
+  {
+    "id": "cloud-tasks",
+    "name": "Cloud Tasks",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "Serverless Orchestration",
+    "description": "An asynchronous task execution queue designed to manage rate control, retry logic, and operational worker backpressure."
+  },
+  {
+    "id": "eventarc",
+    "name": "Eventarc",
+    "category": "DevOps Continuous Integration and Application Delivery",
+    "architecturalCategory": "Serverless Orchestration",
+    "description": "An event routing engine that ingests, filters, and delivers system events from GCP services to serverless runtimes."
+  },
+  {
+    "id": "compute-engine",
+    "name": "Compute Engine",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Virtual Machines",
+    "description": "On-demand virtual machines running in Google data centers, featuring custom sizing, persistent storage, and automatic live migration."
+  },
+  {
+    "id": "google-kubernetes-engine--gke-",
+    "name": "Google Kubernetes Engine (GKE)",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Container Orchestration",
+    "description": "A highly automated, managed Kubernetes environment designed to run, scale, and secure complex containerized applications."
+  },
+  {
+    "id": "gke-fleet-management",
+    "name": "GKE Fleet Management",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Container Orchestration",
+    "description": "A control plane designed to manage, secure, configure, and monitor multi-cluster container deployments at global scale."
+  },
+  {
+    "id": "cloud-run",
+    "name": "Cloud Run",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Serverless Compute",
+    "description": "A fully managed, serverless execution platform that automatically scales containerized HTTP endpoints up or down to zero."
+  },
+  {
+    "id": "cloud-run-functions",
+    "name": "Cloud Run functions",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Serverless Compute",
+    "description": "A lightweight, event-driven function-as-a-service (FaaS) platform designed to run small snippets of code without server management."
+  },
+  {
+    "id": "app-engine",
+    "name": "App Engine",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Serverless Compute",
+    "description": "A fully managed platform-as-a-service (PaaS) tailored for building and deploying scalable web applications in standard languages."
+  },
+  {
+    "id": "cloud-tpus",
+    "name": "Cloud TPUs",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Specialized Hardware",
+    "description": "High-performance, custom-built Tensor Processing Units designed specifically to accelerate deep learning and AI models."
+  },
+  {
+    "id": "cloud-gpus",
+    "name": "Cloud GPUs",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Specialized Hardware",
+    "description": "High-performance NVIDIA graphic processors attached to virtual machines to accelerate computational chemistry, modeling, and AI."
+  },
+  {
+    "id": "ai-hypercomputer",
+    "name": "AI Hypercomputer",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Compute Architectures",
+    "description": "A coordinated hardware-software design combining TPUs, GPUs, parallel file systems, and scheduling software to run massive AI workloads."
+  },
+  {
+    "id": "cluster-director",
+    "name": "Cluster Director",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Compute Architectures",
+    "description": "An advanced scheduling and orchestration coordinator designed to manage physical resource allocation across AI hypercomputers."
+  },
+  {
+    "id": "batch",
+    "name": "Batch",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Compute Architectures",
+    "description": "A fully managed scheduling service designed to run mass batch-processing workloads, simulations, and data transformations."
+  },
+  {
+    "id": "capacity-planner",
+    "name": "Capacity Planner",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Compute Architectures",
+    "description": "An infrastructure planning tool designed to analyze historical compute consumption and reserve hardware capacity for future growth."
+  },
+  {
+    "id": "vmware-engine",
+    "name": "VMware Engine",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Hybrid Environments",
+    "description": "A highly secure bare-metal environment that allows organizations to run legacy VMware workloads on Google Cloud data centers."
+  },
+  {
+    "id": "bare-metal-solution",
+    "name": "Bare Metal Solution",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Hybrid Environments",
+    "description": "Dedicated enterprise-grade hardware instances designed to run specialized legacy workloads (such as Oracle databases) near GCP zones."
+  },
+  {
+    "id": "sap-on-google-cloud",
+    "name": "SAP on Google Cloud",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Enterprise Workloads",
+    "description": "A certified infrastructure suite designed to securely execute, scale, and analyze business operations run on SAP HANA environments."
+  },
+  {
+    "id": "oracle-on-google-cloud",
+    "name": "Oracle on Google Cloud",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Enterprise Workloads",
+    "description": "Customized hardware, storage, and database support designed to run legacy Oracle databases with minimal architectural changes."
+  },
+  {
+    "id": "workload-manager",
+    "name": "Workload Manager",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Enterprise Workloads",
+    "description": "A diagnostic and compliance tool that assesses workloads (such as SAP) against configuration best practices and security baselines."
+  },
+  {
+    "id": "cluster-toolkit",
+    "name": "Cluster Toolkit",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Enterprise Workloads",
+    "description": "An open-source automation library used to build and configure high-performance computing (HPC) clusters on Google Cloud."
+  },
+  {
+    "id": "shielded-vms",
+    "name": "Shielded VMs",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Virtualized Security",
+    "description": "Specialized virtual machines hardened with cryptographic verification, UEFI firmware, and a virtual Trusted Platform Module (vTPM)."
+  },
+  {
+    "id": "vm-manager",
+    "name": "VM Manager",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Infrastructure Operations",
+    "description": "A suite of automated patch management, software compliance, and OS configuration tools designed to govern virtual machine fleets."
+  },
+  {
+    "id": "container-optimized-os",
+    "name": "Container-Optimized OS",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Specialized Operating Systems",
+    "description": "A minimal, highly secure, Chromium-based Linux operating system image pre-configured to run containerized workloads."
+  },
+  {
+    "id": "blockchain-node-engine",
+    "name": "Blockchain Node Engine",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Distributed Ledger",
+    "description": "A fully managed node hosting service designed to simplify the development, scaling, and execution of Web3 applications."
+  },
+  {
+    "id": "blockchain-rpc",
+    "name": "Blockchain RPC",
+    "category": "Application Hosting and Compute Infrastructure",
+    "architecturalCategory": "Distributed Ledger",
+    "description": "A high-availability remote procedure call (RPC) endpoint service designed to interface with blockchain networks."
+  },
+  {
+    "id": "spanner",
+    "name": "Spanner",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Relational Databases",
+    "description": "A relational database providing up to 99.999% SLA availability, global transaction consistency, and unlimited horizontal scaling."
+  },
+  {
+    "id": "alloydb-for-postgresql",
+    "name": "AlloyDB for PostgreSQL",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Relational Databases",
+    "description": "A high-performance, PostgreSQL-compatible relational database designed for analytical acceleration and enterprise transaction processing."
+  },
+  {
+    "id": "alloydb-omni",
+    "name": "AlloyDB Omni",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Relational Databases",
+    "description": "A local, downloadable software edition of AlloyDB designed to run inside private datacenters or on edge computing hardware."
+  },
+  {
+    "id": "cloud-sql",
+    "name": "Cloud SQL",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Relational Databases",
+    "description": "A fully managed database engine supporting MySQL, PostgreSQL, and SQL Server with automated backups, replicas, and updates."
+  },
+  {
+    "id": "spanner-graph",
+    "name": "Spanner Graph",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Relational Databases",
+    "description": "A multi-model graph database engine built on Spanner to run highly integrated network queries at global scale."
+  },
+  {
+    "id": "bigtable",
+    "name": "Bigtable",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "NoSQL Databases",
+    "description": "A low-latency NoSQL wide-column database with built-in nearest neighbor (k-NN) vector search for analytical and operational workloads."
+  },
+  {
+    "id": "firestore",
+    "name": "Firestore",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "NoSQL Databases",
+    "description": "A serverless NoSQL document store with native vector similarity search, automated scaling, and point-in-time recovery (PITR)."
+  },
+  {
+    "id": "datastore",
+    "name": "Datastore",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "NoSQL Databases",
+    "description": "A highly scalable, document-based NoSQL database optimized for high-performance application querying."
+  },
+  {
+    "id": "memorystore-for-redis",
+    "name": "Memorystore for Redis",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Caching & In-Memory",
+    "description": "Fully managed Redis caching service that optimizes read-heavy application workloads with sub-millisecond data delivery."
+  },
+  {
+    "id": "memorystore-for-redis-cluster",
+    "name": "Memorystore for Redis Cluster",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Caching & In-Memory",
+    "description": "A fully managed clustering service designed to scale in-memory cache data sets horizontally into multi-terabyte pools."
+  },
+  {
+    "id": "memorystore-for-valkey",
+    "name": "Memorystore for Valkey",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Caching & In-Memory",
+    "description": "A fully managed in-memory cache supporting Valkey 7.2 & 9.0, vector search, JSON documents, and custom CA certificates."
+  },
+  {
+    "id": "memorystore-for-memcached",
+    "name": "Memorystore for Memcached",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Caching & In-Memory",
+    "description": "A simple, highly automated caching service designed to store and query temporary web application key-value blocks."
+  },
+  {
+    "id": "database-center",
+    "name": "Database Center",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Database Governance",
+    "description": "An AI-assisted unified console designed to manage, secure, and optimize databases across an organization-wide fleet."
+  },
+  {
+    "id": "database-migration-service",
+    "name": "Database Migration Service",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Database Migration",
+    "description": "An automated database migration service that converts schema structures and replicates live data using Gemini guidance."
+  },
+  {
+    "id": "oracle-database-google-cloud",
+    "name": "Oracle Database@Google Cloud",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Database Migration",
+    "description": "Direct deployment of native Oracle database systems running inside Google Cloud datacenters on OCI hardware."
+  },
+  {
+    "id": "bigquery",
+    "name": "BigQuery",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Analytics & Warehousing",
+    "description": "A serverless, highly parallel data warehouse designed to analyze petabytes of structured data using SQL syntax."
+  },
+  {
+    "id": "bigquery-lakehouse",
+    "name": "BigQuery Lakehouse",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Analytics & Warehousing",
+    "description": "An architectural design pattern that combines the analytical capabilities of BigQuery with open-source object storage pools."
+  },
+  {
+    "id": "knowledge-catalog",
+    "name": "Knowledge Catalog",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Analytics & Warehousing",
+    "description": "A semantic registry that catalogues, indexes, and describes analytical assets and corporate datasets across GCP."
+  },
+  {
+    "id": "data-agent-kit-extension",
+    "name": "Data Agent Kit extension",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Analytics & Warehousing",
+    "description": "An analytical development module designed to let autonomous agents execute complex data queries and reports in BigQuery."
+  },
+  {
+    "id": "looker",
+    "name": "Looker",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Business Intelligence",
+    "description": "An enterprise platform for modeling data, exploring trends, and embedding interactive analytical dashboards into web applications."
+  },
+  {
+    "id": "looker-studio",
+    "name": "Looker Studio",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Business Intelligence",
+    "description": "A lightweight reporting tool designed to transform analytical data sources into customizable visual reports."
+  },
+  {
+    "id": "data-catalog",
+    "name": "Data Catalog",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Data Governance",
+    "description": "A secure metadata management catalog designed to search, tag, and discover datasets across multiple analytics engines."
+  },
+  {
+    "id": "dataform",
+    "name": "Dataform",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Data Pipeline Orchestration",
+    "description": "A development environment designed to model, test, and execute complex SQL workflows inside analytical data warehouses."
+  },
+  {
+    "id": "datastream",
+    "name": "Datastream",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Data Pipeline Orchestration",
+    "description": "A serverless change data capture (CDC) and replication engine that continuously syncs operational databases with BigQuery."
+  },
+  {
+    "id": "cloud-data-fusion",
+    "name": "Cloud Data Fusion",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Data Pipeline Orchestration",
+    "description": "A visual ETL tool designed to design, manage, and execute complex data integration pipelines."
+  },
+  {
+    "id": "managed-airflow",
+    "name": "Managed Airflow",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Data Pipeline Orchestration",
+    "description": "A fully managed orchestrator based on Apache Airflow designed to run, schedule, and monitor workflows."
+  },
+  {
+    "id": "dataproc-metastore",
+    "name": "Dataproc Metastore",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Processing & Streaming",
+    "description": "A metadata repository service designed to catalog, govern, and coordinate open-source Hive and Spark database tables."
+  },
+  {
+    "id": "managed-spark",
+    "name": "Managed Spark",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Processing & Streaming",
+    "description": "A fully managed, serverless execution model designed to execute Spark processing scripts without clustering overhead."
+  },
+  {
+    "id": "dataflow",
+    "name": "Dataflow",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Processing & Streaming",
+    "description": "A stream and batch data-processing pipeline executor based on the unified Apache Beam programming model."
+  },
+  {
+    "id": "managed-kafka",
+    "name": "Managed Kafka",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Processing & Streaming",
+    "description": "A managed cluster hosting service designed to capture, stream, and process real-time event logs using Apache Kafka."
+  },
+  {
+    "id": "pub-sub",
+    "name": "Pub/Sub",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Processing & Streaming",
+    "description": "A highly reliable, horizontally scaling event-messaging bus designed to ingest real-time operational streams."
+  },
+  {
+    "id": "pub-sub-lite",
+    "name": "Pub/Sub Lite",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Processing & Streaming",
+    "description": "A high-volume, cost-optimized messaging queue designed for applications that do not require global delivery routing."
+  },
+  {
+    "id": "bigquery-data-transfer",
+    "name": "BigQuery Data Transfer",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Data Pipeline Orchestration",
+    "description": "A service that automates database loading schedules to copy data from external SaaS applications into BigQuery."
+  },
+  {
+    "id": "bigquery-migration",
+    "name": "BigQuery Migration",
+    "category": "Databases, Analytics, and Data Lakes",
+    "architecturalCategory": "Database Migration",
+    "description": "A suite of translation and execution tools designed to speed up migration from legacy database architectures to BigQuery."
+  },
+  {
+    "id": "cloud-storage",
+    "name": "Cloud Storage",
+    "category": "Storage, Backup, and Disaster Recovery Catalog",
+    "architecturalCategory": "Object Storage",
+    "description": "A highly secure, durable, and globally scalable object storage platform offering multiple tier classes based on access frequency."
+  },
+  {
+    "id": "persistent-disk",
+    "name": "Persistent Disk",
+    "category": "Storage, Backup, and Disaster Recovery Catalog",
+    "architecturalCategory": "Block Storage",
+    "description": "Highly reliable, network-attached block storage volumes designed for Compute Engine and GKE workloads."
+  },
+  {
+    "id": "hyperdisk",
+    "name": "Hyperdisk",
+    "category": "Storage, Backup, and Disaster Recovery Catalog",
+    "architecturalCategory": "Block Storage",
+    "description": "Next-generation block storage designed to scale IOPS and throughput dynamically, independent of compute engine size."
+  },
+  {
+    "id": "local-ssd",
+    "name": "Local SSD",
+    "category": "Storage, Backup, and Disaster Recovery Catalog",
+    "architecturalCategory": "Block Storage",
+    "description": "High-performance, transient physical SSD storage drives attached directly to VM host servers to minimize latency."
+  },
+  {
+    "id": "filestore",
+    "name": "Filestore",
+    "category": "Storage, Backup, and Disaster Recovery Catalog",
+    "architecturalCategory": "Network Storage",
+    "description": "Fully managed, high-performance Network Attached Storage (NAS) devices supporting standardized NFS file access protocols."
+  },
+  {
+    "id": "netapp-volumes",
+    "name": "NetApp Volumes",
+    "category": "Storage, Backup, and Disaster Recovery Catalog",
+    "architecturalCategory": "Network Storage",
+    "description": "A fully managed enterprise-grade storage service delivering NetApp ONTAP file systems natively in Google Cloud."
+  },
+  {
+    "id": "managed-lustre",
+    "name": "Managed Lustre",
+    "category": "Storage, Backup, and Disaster Recovery Catalog",
+    "architecturalCategory": "Network Storage",
+    "description": "A specialized, high-throughput parallel file system designed to meet the performance needs of HPC and AI training workloads."
+  },
+  {
+    "id": "backup-and-dr-service",
+    "name": "Backup and DR Service",
+    "category": "Storage, Backup, and Disaster Recovery Catalog",
+    "architecturalCategory": "Business Continuity",
+    "description": "A centralized data protection service providing application-consistent backups, immutability, and rapid recovery."
+  },
+  {
+    "id": "backup-for-gke",
+    "name": "Backup for GKE",
+    "category": "Storage, Backup, and Disaster Recovery Catalog",
+    "architecturalCategory": "Business Continuity",
+    "description": "A specialized service designed to back up, restore, and migrate stateful Kubernetes container storage volumes and application resources."
+  },
+  {
+    "id": "storage-transfer-service",
+    "name": "Storage Transfer Service",
+    "category": "Storage, Backup, and Disaster Recovery Catalog",
+    "architecturalCategory": "Data Migration",
+    "description": "A managed transfer service designed to scale and accelerate online file migrations from external clouds or on-premises servers to Cloud Storage."
+  },
+  {
+    "id": "transfer-appliance",
+    "name": "Transfer Appliance",
+    "category": "Storage, Backup, and Disaster Recovery Catalog",
+    "architecturalCategory": "Data Migration",
+    "description": "A secure, high-capacity physical hardware storage device sent to client locations to transfer petabytes of data offline."
+  },
+  {
+    "id": "virtual-private-cloud--vpc-",
+    "name": "Virtual Private Cloud (VPC)",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Core Networking",
+    "description": "Globally routed virtual networks providing logical isolation, custom routing tables, and private network interconnectivity."
+  },
+  {
+    "id": "cloud-nat",
+    "name": "Cloud NAT",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Core Networking",
+    "description": "A serverless NAT service that allows internal instances without public IPs to securely fetch external resources."
+  },
+  {
+    "id": "network-service-tiers",
+    "name": "Network Service Tiers",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Core Networking",
+    "description": "A tiered routing model that lets organizations optimize cost and performance using either the Premium global network or Standard internet routing."
+  },
+  {
+    "id": "cloud-number-registry",
+    "name": "Cloud Number Registry",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Core Networking",
+    "description": "A centralized administrative registry designed to request, allocate, and assign public IPv4 addresses to cloud endpoints."
+  },
+  {
+    "id": "network-connectivity-center",
+    "name": "Network Connectivity Center",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Connectivity Hubs",
+    "description": "A unified connection hub that manages transit networking paths between VPCs, SD-WAN devices, and on-premises routers."
+  },
+  {
+    "id": "cloud-vpn",
+    "name": "Cloud VPN",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Connectivity Hubs",
+    "description": "An IPSec VPN service that securely connects on-premises networks to GCP VPCs over public internet channels."
+  },
+  {
+    "id": "cloud-interconnect",
+    "name": "Cloud Interconnect",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Connectivity Hubs",
+    "description": "Dedicated, enterprise-grade physical fiber connections between external core networks and Google Cloud data centers."
+  },
+  {
+    "id": "cloud-router",
+    "name": "Cloud Router",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Connectivity Hubs",
+    "description": "A dynamic routing service that exchanges border gateway protocol (BGP) routing tables between GCP and customer endpoints."
+  },
+  {
+    "id": "cloud-dns",
+    "name": "Cloud DNS",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Performance & Scalability",
+    "description": "A highly reliable, low-latency global Domain Name System (DNS) designed to manage internal and public domains."
+  },
+  {
+    "id": "cloud-load-balancing",
+    "name": "Cloud Load Balancing",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Performance & Scalability",
+    "description": "High-performance, distributed load balancers designed to scale traffic across regions and enforce health checks."
+  },
+  {
+    "id": "service-extensions",
+    "name": "Service Extensions",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Performance & Scalability",
+    "description": "A customization interface that runs custom WebAssembly filters inside Google Cloud load-balancing pipelines."
+  },
+  {
+    "id": "cloud-domains",
+    "name": "Cloud Domains",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Performance & Scalability",
+    "description": "A domain registration and management service integrated with Cloud DNS to handle domain lifecycles."
+  },
+  {
+    "id": "cloud-cdn",
+    "name": "Cloud CDN",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Content Delivery",
+    "description": "A low-latency content delivery network designed to cache static assets and web applications at edge points of presence."
+  },
+  {
+    "id": "media-cdn",
+    "name": "Media CDN",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Content Delivery",
+    "description": "A highly optimized global streaming and media storage delivery system built on YouTube's underlying network."
+  },
+  {
+    "id": "cloud-ngfw",
+    "name": "Cloud NGFW",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Perimeter Security",
+    "description": "A cloud-native, next-generation firewall providing intrusion detection (IPS), deep packet inspection, and protocol analysis."
+  },
+  {
+    "id": "secure-access-connect",
+    "name": "Secure Access Connect",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Perimeter Security",
+    "description": "A secure access service designed to establish zero-trust connections from corporate end-user machines to cloud networks."
+  },
+  {
+    "id": "vpc-service-controls",
+    "name": "VPC Service Controls",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Perimeter Security",
+    "description": "Cryptographic perimeter zones that restrict data and API access to authorized IP ranges and designated networks."
+  },
+  {
+    "id": "google-cloud-armor",
+    "name": "Google Cloud Armor",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Perimeter Security",
+    "description": "A global security engine that provides WAF defenses and DDoS mitigation for HTTP/S edge targets."
+  },
+  {
+    "id": "network-intelligence-center",
+    "name": "Network Intelligence Center",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Observability & Diagnostics",
+    "description": "A network diagnostics dashboard designed to run reachability analyses, track packet flows, and verify connectivity paths."
+  },
+  {
+    "id": "vpc-flow-logs",
+    "name": "VPC Flow Logs",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Observability & Diagnostics",
+    "description": "Detailed network event logs that record IP traffic flows passing through virtual network interfaces."
+  },
+  {
+    "id": "gemini-cloud-assist",
+    "name": "Gemini Cloud Assist",
+    "category": "Enterprise Networking and Security Architecture",
+    "architecturalCategory": "Operational Assistance",
+    "description": "An AI-assisted co-pilot designed to help administrators design architecture, troubleshoot, and optimize costs across the app lifecycle."
+  },
+  {
+    "id": "advisory-notifications",
+    "name": "Advisory Notifications",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Security Operations",
+    "description": "A centralized notification panel that displays security vulnerability alerts and administrative warnings."
+  },
+  {
+    "id": "cyber-insurance-hub",
+    "name": "Cyber Insurance Hub",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Security Operations",
+    "description": "An assessment portal designed to generate verified security posture profiles to secure favorable cyber insurance policies."
+  },
+  {
+    "id": "google-security-operations",
+    "name": "Google Security Operations",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Security Operations",
+    "description": "An integrated threat intelligence, analysis, and security event platform designed to ingest and parse security logs."
+  },
+  {
+    "id": "security-command-center",
+    "name": "Security Command Center",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Security Operations",
+    "description": "A unified posture-management engine that analyzes configurations, detects active attacks, and maps compliance gaps."
+  },
+  {
+    "id": "access-context-manager",
+    "name": "Access Context Manager",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Identity & Access Management",
+    "description": "A security engine that enforces context-aware access rules based on IP address, device state, and user location."
+  },
+  {
+    "id": "certificate-authority-service",
+    "name": "Certificate Authority Service",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Identity & Access Management",
+    "description": "A highly available private CA service designed to manage, issue, and rotate custom digital certificates."
+  },
+  {
+    "id": "identity-and-access-management",
+    "name": "Identity and Access Management",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Identity & Access Management",
+    "description": "A security framework designed to define granular user and service-account resource access permissions."
+  },
+  {
+    "id": "certificate-manager",
+    "name": "Certificate Manager",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Application Security",
+    "description": "A control plane designed to acquire, manage, distribute, and rotate public SSL certificates for load balancers."
+  },
+  {
+    "id": "identity-aware-proxy--iap-",
+    "name": "Identity-Aware Proxy (IAP)",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Application Security",
+    "description": "A reverse proxy that authenticates and verifies user state before granting access to web apps, without requiring a traditional VPN."
+  },
+  {
+    "id": "fraud-defense",
+    "name": "Fraud Defense",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Application Security",
+    "description": "A fraud mitigation engine designed to identify anomalous programmatic attempts, credential abuse, and transactional risk."
+  },
+  {
+    "id": "web-risk",
+    "name": "Web Risk",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Application Security",
+    "description": "A security API that compares URLs against a centralized, constantly updated index of known phishing and malware sites."
+  },
+  {
+    "id": "access-transparency",
+    "name": "Access Transparency",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Compliance & Auditing",
+    "description": "A logging service that records administrative interventions, verifying when Google Support access is authorized on customer environments."
+  },
+  {
+    "id": "audit-manager",
+    "name": "Audit Manager",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Compliance & Auditing",
+    "description": "An automated governance tool designed to capture access logs and compile evidence records for regulatory audits."
+  },
+  {
+    "id": "cloud-audit-logs",
+    "name": "Cloud Audit Logs",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Compliance & Auditing",
+    "description": "Immutable system logs that record all administrative changes and data read/write accesses made across GCP."
+  },
+  {
+    "id": "endpoint-verification",
+    "name": "Endpoint Verification",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Compliance & Auditing",
+    "description": "A security extension designed to collect, verify, and report hardware security characteristics of connecting end-user devices."
+  },
+  {
+    "id": "assured-workloads",
+    "name": "Assured Workloads",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Governance & Compliance",
+    "description": "Pre-configured environment templates that apply strict regulatory compliance constraints (such as FedRAMP or HIPAA)."
+  },
+  {
+    "id": "cloud-asset-inventory",
+    "name": "Cloud Asset Inventory",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Governance & Compliance",
+    "description": "A highly consistent database catalog that records all active cloud resources and their historic configurations."
+  },
+  {
+    "id": "organization-policy-service",
+    "name": "Organization Policy Service",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Governance & Compliance",
+    "description": "A declarative governance tool that allows administrators to apply strict operational rules across an enterprise hierarchy."
+  },
+  {
+    "id": "cloud-external-key-manager",
+    "name": "Cloud External Key Manager",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Encryption & Key Management",
+    "description": "An encryption interface that allows GCP to use cryptographic keys hosted outside of Google's network."
+  },
+  {
+    "id": "cloud-hsm",
+    "name": "Cloud HSM",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Encryption & Key Management",
+    "description": "A highly secure cloud-hosted hardware security module (HSM) designed to store and manage cryptographic keys."
+  },
+  {
+    "id": "cloud-key-management-service",
+    "name": "Cloud Key Management Service",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Encryption & Key Management",
+    "description": "A key management service designed to generate, rotate, and control cryptographic keys used to encrypt cloud data."
+  },
+  {
+    "id": "confidential-computing",
+    "name": "Confidential Computing",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Encryption & Key Management",
+    "description": "Hardware-isolated virtual machines that encrypt customer data in memory while it is being processed by the CPU."
+  },
+  {
+    "id": "secret-manager",
+    "name": "Secret Manager",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Encryption & Key Management",
+    "description": "A centralized vault designed to securely store API keys, database passwords, and private certificates."
+  },
+  {
+    "id": "sensitive-data-protection",
+    "name": "Sensitive Data Protection",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Encryption & Key Management",
+    "description": "A suite of tools to discover, classify, and redact sensitive database rows and text files, preventing PII leaks."
+  },
+  {
+    "id": "cloud-logging",
+    "name": "Cloud Logging",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Observability & Diagnostics",
+    "description": "A highly scalable log ingestion and query engine designed to store and analyze operational logs from application components."
+  },
+  {
+    "id": "cloud-monitoring",
+    "name": "Cloud Monitoring",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Observability & Diagnostics",
+    "description": "An infrastructure monitoring service that collects operational metrics, displays dashboards, and triggers alerting policies."
+  },
+  {
+    "id": "cloud-trace",
+    "name": "Cloud Trace",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Observability & Diagnostics",
+    "description": "A distributed tracing system that collects latency data from microservices, helping developers optimize application response times."
+  },
+  {
+    "id": "error-reporting",
+    "name": "Error Reporting",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Observability & Diagnostics",
+    "description": "A diagnostics service that automatically clusters, reports, and notifies developers of runtime application crashes and exceptions."
+  },
+  {
+    "id": "cloud-profiler",
+    "name": "Cloud Profiler",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Observability & Diagnostics",
+    "description": "A low-overhead profiling tool that continually analyzes CPU and memory consumption across production codebases."
+  },
+  {
+    "id": "cloud-identity",
+    "name": "Cloud Identity",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Cross-Product Operations",
+    "description": "A directory service that acts as the core identity provider (IdP) for employees, applications, and service accounts."
+  },
+  {
+    "id": "identity-platform",
+    "name": "Identity Platform",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Cross-Product Operations",
+    "description": "A developer-focused customer identity and access management (CIAM) platform designed to secure user sign-in flows."
+  },
+  {
+    "id": "managed-active-directory",
+    "name": "Managed Active Directory",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Cross-Product Operations",
+    "description": "A highly available Microsoft Active Directory environment hosted on Google Cloud infrastructure."
+  },
+  {
+    "id": "service-catalog",
+    "name": "Service Catalog",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Cross-Product Operations",
+    "description": "An internal portal that allows administrators to curate and distribute pre-approved cloud configurations to internal teams."
+  },
+  {
+    "id": "cloud-billing",
+    "name": "Cloud Billing",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Cost Management",
+    "description": "A billing system that tracks service consumption, forecasts expenditures, and exports billing data to analytical endpoints."
+  },
+  {
+    "id": "committed-use-discounts",
+    "name": "Committed Use Discounts",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Cost Management",
+    "description": "A programmatic discount model offering lower resource pricing in exchange for committing to stable consumption limits over a fixed term."
+  },
+  {
+    "id": "finops-hub",
+    "name": "FinOps Hub",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Cost Management",
+    "description": "A central dashboard designed to monitor cloud spend, analyze anomalies, and suggest resource right-sizing strategies."
+  },
+  {
+    "id": "cloud-quotas",
+    "name": "Cloud Quotas",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Cost Management",
+    "description": "An administrative interface designed to monitor, track, and request modifications to operational service usage limits."
+  },
+  {
+    "id": "carbon-footprint",
+    "name": "Carbon Footprint",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Cost Management",
+    "description": "A sustainability dashboard that calculates and reports the carbon emissions associated with an organization's cloud infrastructure."
+  },
+  {
+    "id": "infrastructure-manager",
+    "name": "Infrastructure Manager",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Infrastructure as Code (IaC)",
+    "description": "A fully managed execution engine designed to deploy cloud environments using declarative Terraform configurations."
+  },
+  {
+    "id": "terraform-on-google-cloud",
+    "name": "Terraform on Google Cloud",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Infrastructure as Code (IaC)",
+    "description": "Pre-configured, Google-supported providers and blueprints designed to automate the deployment of cloud infrastructure."
+  },
+  {
+    "id": "cloud-devkit-for-terraform",
+    "name": "Cloud DevKit for Terraform",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Infrastructure as Code (IaC)",
+    "description": "A developer framework designed to write declarative Terraform infrastructure modules using standard programming languages."
+  },
+  {
+    "id": "pulumi-provider",
+    "name": "Pulumi Provider",
+    "category": "Security, Governance, and Platform Management",
+    "architecturalCategory": "Infrastructure as Code (IaC)",
+    "description": "An API wrapper that allows engineers to deploy and govern Google Cloud resources using Pulumi modules."
+  }
+]

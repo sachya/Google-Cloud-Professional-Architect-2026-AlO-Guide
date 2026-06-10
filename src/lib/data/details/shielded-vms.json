@@ -1,0 +1,78 @@
+{
+  "features": [
+    {
+      "name": "Web Application Firewall (WAF)",
+      "description": "Filters Layer 7 traffic to block SQL injection, cross-site scripting (XSS), and malicious bots at the edge."
+    },
+    {
+      "name": "VPC Service Controls",
+      "description": "Creates secure cryptographic perimeters around GCP APIs, blocking unauthorized data movement and access."
+    },
+    {
+      "name": "Source IP Whitelisting",
+      "description": "Enforces strict source IP whitelisting and geo-blocking policies on public endpoints."
+    }
+  ],
+  "iamRoles": [
+    {
+      "role": "roles/compute.securityAdmin",
+      "description": "Full access to configure security policies, firewalls, and Cloud Armor rules."
+    },
+    {
+      "role": "roles/accesscontextmanager.policyAdmin",
+      "description": "Permissions to manage VPC Service Controls perimeters and access levels."
+    }
+  ],
+  "cliExamples": [
+    {
+      "description": "Create a Cloud Armor security policy",
+      "command": "gcloud compute security-policies create shielded-vms-policy"
+    },
+    {
+      "description": "Add a rate limiting rule to a Cloud Armor policy",
+      "command": "gcloud compute security-policies rules create 1000 \\\n  --security-policy=shielded-vms-policy \\\n  --action=rate-based-ban \\\n  --rate-limit-threshold-count=100 \\\n  --rate-limit-threshold-interval-sec=60 \\\n  --ban-duration-sec=300 \\\n  --expression=\"true\""
+    }
+  ],
+  "keyPoints": {
+    "design": [
+      "Perimeter security services block threat vectors before they reach your internal application hosts.",
+      "Google Cloud Armor provides DDoS defense and WAF rules, filtering traffic at the edge of the load balancer.",
+      "VPC Service Controls (VPC SC) isolate Google APIs, preventing data exfiltration outside the project.",
+      "Access Context Manager defines access levels based on device state, user identity, and source IP.",
+      "Secure remote connections using Identity-Aware Proxy (IAP) to enforce zero-trust access control.",
+      "Hierarchical firewall policies allow organization admins to apply firewall rules across all child projects.",
+      "Private Google Access allows instances on private subnets to connect to APIs inside the VPC SC perimeter.",
+      "Use Cloud NAT to translate private IPs to public IPs for outbound updates without allowing inbound connections."
+    ],
+    "security": [
+      "VPC Service Controls prevent copying data from a secure project bucket to an external public bucket.",
+      "Cloud Armor preconfigured rules protect against the OWASP Top 10 web vulnerabilities (e.g. SQLi, XSS).",
+      "Enable rate limiting in Cloud Armor to block brute-force login attempts and scraping bots.",
+      "IAP checks credentials and device policies (using context-aware access) before granting web access.",
+      "Secure SSH/RDP ports on VM instances by removing public IPs and routing through IAP tunnels.",
+      "Use bridge perimeters in VPC SC to allow secure, explicit database communication between separate perimeters.",
+      "Cloud Armor Threat Intelligence blocks requests originating from known malicious IP lists (tor exit nodes, bots).",
+      "Regularly review security violations in the VPC SC dry-run mode to audit perimeter health."
+    ],
+    "reliability": [
+      "Cloud Armor is deployed across Google's edge locations, absorbing massive volumetric DDoS attacks.",
+      "VPC Service Controls configurations are replicated globally, ensuring authorization checks do not fail during local outages.",
+      "Access Context Manager policies are highly available and evaluated in real-time at the edge.",
+      "VPC SC dry-run mode allows testing perimeters without blocking active application traffic.",
+      "Configure Cloud Armor to redirect blocked traffic to a honeypot or custom warning page.",
+      "Enforce fail-close policies on security perimeters to prioritize data safety during misconfigurations.",
+      "System alerts, security blocks, and perimeter attempts are logged in real-time to Cloud Logging.",
+      "Establish redundant IAP access pathways (e.g., bastion host backup) to prevent operator lockout."
+    ],
+    "cost": [
+      "Cloud Armor charges per security policy, per rule, and per million queries evaluated.",
+      "VPC Service Controls and Access Context Manager are core platform services offered at no charge.",
+      "Identify and optimize Cloud Armor rule complexity, as evaluating complex custom regex rules is billed higher.",
+      "Enable Cloud Armor Standard tier for basic application defense; upgrade to Cloud Armor Enterprise for high-traffic environments.",
+      "Dry-run configurations in VPC SC help avoid costly production downtime from blocked APIs during setups.",
+      "Reduce Cloud Armor costs by filtering simple traffic at the firewall level before edge evaluation.",
+      "Analyze Cloud Armor logs using Cloud Logging sink filters to minimize Log storage billing.",
+      "Consolidate security perimeters across multiple projects to reduce management overhead and complexity costs."
+    ]
+  }
+}

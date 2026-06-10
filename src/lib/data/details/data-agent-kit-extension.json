@@ -1,0 +1,78 @@
+{
+  "features": [
+    {
+      "name": "Serverless Data Warehouse",
+      "description": "Executes SQL queries across petabytes of structured data without managing servers, indexes, or clusters."
+    },
+    {
+      "name": "Separated Storage & Compute",
+      "description": "Decouples query processing slots from physical data storage, optimizing performance and budget allocations."
+    },
+    {
+      "name": "Real-Time Machine Learning",
+      "description": "Enables training and running machine learning models directly inside the data warehouse using standard SQL."
+    }
+  ],
+  "iamRoles": [
+    {
+      "role": "roles/bigquery.admin",
+      "description": "Full access to Data Agent Kit extension resources, datasets, tables, queries, and security settings."
+    },
+    {
+      "role": "roles/bigquery.dataViewer",
+      "description": "Read-only access to datasets, tables, views, and execution results."
+    }
+  ],
+  "cliExamples": [
+    {
+      "description": "Load a CSV file from Cloud Storage into a BigQuery table",
+      "command": "bq load --source_format=CSV my-dataset.my-table gs://my-bucket/data.csv"
+    },
+    {
+      "description": "Run a SQL query and save output to a destination table",
+      "command": "bq query --destination_table=my-dataset.results-table \\\n  --use_legacy_sql=false \\\n  'SELECT user_id, SUM(amount) FROM `my-project.my-dataset.sales` GROUP BY user_id'"
+    }
+  ],
+  "keyPoints": {
+    "design": [
+      "BigQuery is a serverless, highly scalable cloud data warehouse for structured and semi-structured data.",
+      "Decoupled architecture scales storage and compute slots independently based on active queries.",
+      "Partitioning tables (by ingestion time, date/timestamp, or integer range) limits data scanned during queries.",
+      "Clustering tables orders data based on column values, working with partitioning to speed up query execution.",
+      "BigQuery Omni allows running queries across multi-cloud environments (AWS S3, Azure Blob Storage).",
+      "Dataproc runs managed Hadoop and Spark clusters, migrating legacy on-premises big data systems to GCP.",
+      "BigQuery BI Engine caches query states in memory to accelerate dashboard and report rendering.",
+      "Use materialized views to cache the results of complex queries and speed up downstream analytics."
+    ],
+    "security": [
+      "Authorize views to share query results with users without giving them access to the underlying tables.",
+      "Enforce row-level security and column-level security using policy tags to restrict access to sensitive fields.",
+      "Manage BigQuery access using IAM dataset roles (`roles/bigquery.dataViewer`, `roles/bigquery.admin`).",
+      "Encrypt analytical datasets at rest using Customer-Managed Encryption Keys (CMEK) via Cloud KMS.",
+      "VPC Service Controls perimeters protect analytical databases from data exfiltration and public queries.",
+      "Audit data-access logs to monitor which service accounts and users are running queries on datasets.",
+      "Mask sensitive PII fields inside table columns automatically using Sensitive Data Protection integrations.",
+      "Secure connection access by disabling public datasets whitelisting on internal project datasets."
+    ],
+    "reliability": [
+      "BigQuery replicates datasets across multiple physical data centers in the selected region.",
+      "Datasets can be configured as multi-regional (e.g. US or EU) for geographical redundancy and failover.",
+      "Time travel enables recovering deleted or modified table states up to 7 days in the past.",
+      "Dataproc clusters can be configured as high availability, deploying three master nodes to prevent control plane failures.",
+      "Write queries using standard SQL with built-in query optimization and syntax verification.",
+      "System metrics, query execution logs, and load jobs are logged automatically to Cloud Logging.",
+      "Failed query jobs due to transient errors support automated client retries with backoff.",
+      "Export datasets to Cloud Storage regularly to create offline historical database backups."
+    ],
+    "cost": [
+      "BigQuery storage is billed per GB/month; active storage transitions to long-term storage (50% discount) if unmodified for 90 days.",
+      "Query billing has two models: On-demand (billed per TB of data scanned) and Capacity (flat-rate billing using slots).",
+      "Prune scanned data and reduce costs by always including partitioning columns in query WHERE clauses.",
+      "Avoid using SELECT *; always query only the specific columns needed to minimize TB scan size.",
+      "Use slots reservations to allocate query budgets across development, staging, and production teams.",
+      "Set maximum query billing limits in the console to block run-away queries from running.",
+      "Clean up temporary tables and query outputs by configuring table expiration policies.",
+      "Review cost optimization recommendation logs to identify infrequently queried tables to archive."
+    ]
+  }
+}

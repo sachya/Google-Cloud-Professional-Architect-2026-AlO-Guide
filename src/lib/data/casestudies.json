@@ -1,0 +1,416 @@
+[
+  {
+    "id": "altostrat-media",
+    "name": "Altostrat Media",
+    "industry": "Media & Content Delivery",
+    "overview": "Altostrat is a prominent player in the media industry, with an extensive collection of audio and video content that comprises podcasts, interviews, news broadcasts, and documentaries. Delivering premium content to a diverse global audience requires a modernized content management system that can scale dynamically with user consumption trends.",
+    "concept": "Altostrat seeks to modernize its content management and user engagement strategies using Google Cloud's generative AI. They want to empower customers with personalized recommendations, natural language interactions, and seamless self-service support. Simultaneously, they seek to drive revenue growth through dynamic pricing, targeted marketing, and personalized product suggestions.",
+    "existingEnv": [
+      "Hybrid setup: Content delivery leverages Google Kubernetes Engine (GKE) for scalability and high availability.",
+      "Media library (documents, audio, video formats) is stored in Cloud Storage buckets.",
+      "BigQuery serves as the primary data warehouse for user behavior analytics, content consumption patterns, and demographics.",
+      "Cloud Run functions execute serverless, event-driven tasks (video transcoding, metadata extraction, recommendations).",
+      "Legacy on-premises systems are maintained for specific workflows like content ingestion and archival (slated for migration).",
+      "User authentication is managed via a combination of Google Identity and third-party identity providers.",
+      "Monitoring combines native Google Cloud Monitoring with open-source Prometheus, alerting primarily via email."
+    ],
+    "businessRequirements": [
+      {
+        "id": "B1",
+        "req": "Accelerate and enhance the reliability of operational workflows across all environments (Google Cloud + On-premises).",
+        "solution": "Establish consistent management and pipelines across hybrid sites using GKE Enterprise (Anthos) to govern clusters, and deploy GitOps-driven deployment pipelines.",
+        "gcpServices": ["google-kubernetes-engine--gke-", "cloud-build", "cloud-deploy"]
+      },
+      {
+        "id": "B2",
+        "req": "Simplify infrastructure management for rapid application deployment.",
+        "solution": "Standardize infrastructure definitions using Terraform (managed via Infrastructure Manager) and adopt GKE Autopilot to shift node-level operations to Google.",
+        "gcpServices": ["google-kubernetes-engine--gke-", "infrastructure-manager"]
+      },
+      {
+        "id": "B3",
+        "req": "Optimize cloud storage costs while maintaining high availability and scalability for media content.",
+        "solution": "Configure Object Lifecycle Management on Cloud Storage to automatically transition aged media to Nearline, Coldline, and Archive classes. Enable Autoclass for automated access-pattern cost matching.",
+        "gcpServices": ["cloud-storage"]
+      },
+      {
+        "id": "B4",
+        "req": "Enable natural language interaction with the platform with 24/7 user support.",
+        "solution": "Build and embed virtual agents using Dialogflow CX and Vertex AI Agent Builder, grounding conversations in media documents.",
+        "gcpServices": ["dialogflow-cx", "vertex-ai"]
+      },
+      {
+        "id": "B5",
+        "req": "Automatically generate concise summaries of media content.",
+        "solution": "Utilize Vertex AI Gemini models to parse audio transcripts and text documents, generating summaries via structured pipelines.",
+        "gcpServices": ["vertex-ai"]
+      },
+      {
+        "id": "B6",
+        "req": "Extract rich metadata from media assets using NLP and computer vision.",
+        "solution": "Process files via Vertex AI pre-trained models (Cloud Vision API for video/images and Speech-to-Text for audio transcription).",
+        "gcpServices": ["cloud-vision-api", "speech-to-text", "vertex-ai"]
+      },
+      {
+        "id": "B7",
+        "req": "Detect and filter inappropriate content.",
+        "solution": "Deploy Model Armor at the prompt/response edge and integrate Cloud Vision API's explicit content detection on uploaded media.",
+        "gcpServices": ["model-armor", "cloud-vision-api"]
+      },
+      {
+        "id": "B8",
+        "req": "Analyze media content to identify trends and extract insights.",
+        "solution": "Ingest stream metrics into BigQuery and use BigQuery ML or Vertex AI AutoML to identify viewer trends and content virality.",
+        "gcpServices": ["bigquery", "vertex-ai"]
+      }
+    ],
+    "technicalRequirements": [
+      {
+        "id": "T1",
+        "req": "Modernize CI/CD for containerized deployments with a centralized management platform.",
+        "solution": "Implement Cloud Build for pipeline integration, Artifact Registry for package registry hosting, and Cloud Deploy for canary rollouts to GKE.",
+        "gcpServices": ["cloud-build", "cloud-deploy", "artifact-registry"]
+      },
+      {
+        "id": "T2",
+        "req": "Secure, high-performance hybrid cloud connectivity for data ingestion.",
+        "solution": "Deploy Dedicated Interconnect (or Partner Interconnect) for physical high-speed lines, backed up by Cloud VPN tunnels with Cloud Router for active BGP routing.",
+        "gcpServices": ["cloud-interconnect", "cloud-vpn", "cloud-router"]
+      },
+      {
+        "id": "T3",
+        "req": "Provide scalable, performant kubernetes environments both on-premises and in the cloud.",
+        "solution": "Use GKE Enterprise (Anthos) to manage on-premises clusters (Anthos on bare-metal) and cloud GKE clusters under a unified fleet control plane.",
+        "gcpServices": ["google-kubernetes-engine--gke-"]
+      },
+      {
+        "id": "T4",
+        "req": "Optimize cloud storage costs for growing media volumes.",
+        "solution": "Configure regional/multi-regional buckets with Lifecycle rules and use Storage Transfer Service to migrate legacy archives from on-prem to GCS Archive class.",
+        "gcpServices": ["cloud-storage", "storage-transfer-service"]
+      },
+      {
+        "id": "T5",
+        "req": "Design AI-powered detection of harmful content.",
+        "solution": "Configure Model Armor policies with safety filter thresholds to screen user prompts and model responses for jailbreaks, hate speech, and PII leaks.",
+        "gcpServices": ["model-armor"]
+      },
+      {
+        "id": "T6",
+        "req": "Ensure that AI systems are auditable and their decisions can be explained.",
+        "solution": "Enable Vertex AI Explainable AI to output feature attributions and track data/metadata lineage using Vertex AI Pipelines.",
+        "gcpServices": ["vertex-ai"]
+      },
+      {
+        "id": "T7",
+        "req": "Leverage LLMs and conversational AI for personalized experiences and content virality.",
+        "solution": "Use Vertex AI Model Garden to select Gemini models and configure dynamic recommendations based on BigQuery user analytics.",
+        "gcpServices": ["vertex-ai", "bigquery"]
+      }
+    ],
+    "proposedArchitecture": "Altostrat's modernized architecture combines a hybrid network backbone with containerized microservices and an AI processing pipeline. Dedicated Interconnect links on-premises ingestion servers to a Shared VPC in Google Cloud. Centralized container orchestration is managed via GKE Enterprise (Anthos), enabling uniform security policy enforcement across both cloud and bare-metal nodes. Media streams are uploaded directly to Cloud Storage, triggering event-driven Cloud Run functions that coordinate transcoding (Transcoder API) and trigger Vertex AI pipelines for metadata extraction, summarization, and content screening (Model Armor + Vision API). Analytics metadata is streamed into BigQuery, where cost-optimized slots run machine learning models to output real-time recommendation updates, which are served to GKE clients via Cloud CDN and Global Load Balancers.",
+    "examTips": [
+      "GKE Enterprise (Anthos) is the key solution for 'consistent kubernetes management across hybrid environments' (on-prem + cloud).",
+      "Always select Dedicated Interconnect when the requirement calls for high-volume secure ingestion ('high-performance hybrid cloud connectivity'). Partner Interconnect is selected if Dedicated is unavailable in the provider facility.",
+      "Storage cost optimization must combine Lifecycle Policies (downgrading from Standard to Coldline/Archive after X days) and GCS Autoclass.",
+      "Auditable AI and explainability are solved specifically using Vertex AI Explainable AI (which details feature attributions).",
+      "Harmful content screening at the API/LLM boundary is solved by placing Model Armor in front of Vertex AI endpoints."
+    ]
+  },
+  {
+    "id": "cymbal-retail",
+    "name": "Cymbal Retail",
+    "industry": "E-Commerce & Digital Retail",
+    "overview": "Cymbal is an online retailer experiencing significant sales growth. They manage a large catalog spanning multiple retail sub-verticals, making catalog updates, attribute mapping, and customer product discovery a constant operational challenge.",
+    "concept": "Cymbal wants to modernize retail operations in three core areas: (1) Catalog and Content Enrichment (automating attribute/image generation using generative AI), (2) Conversational Commerce with Product Discovery (virtual agents and natural language search powered by Discovery AI), and (3) Technical Stack Modernization (cloud-based infrastructure, secure data handling, and automated error recovery).",
+    "existingEnv": [
+      "Hybrid state with legacy databases (MySQL, MS SQL Server, Redis, MongoDB) hosting catalog and user data.",
+      "Kubernetes clusters running customer-facing web applications.",
+      "File-based integrations with on-premises suppliers via SFTP and batch ETL processing.",
+      "Custom-built web application executing relational queries to browse product names and categories.",
+      "Legacy Interactive Voice Response (IVR) call center routing systems with manual agent order entry when transactions fail.",
+      "Open-source monitoring stack utilizing Grafana, Nagios, and Elastic."
+    ],
+    "businessRequirements": [
+      {
+        "id": "B1",
+        "req": "Automate Product Catalog Enrichment to reduce manual effort, minimize errors, and ensure accuracy.",
+        "solution": "Use Vertex AI Gemini models to analyze supplier PDFs/images, automatically extracting attributes, descriptions, and categories to write directly to the database.",
+        "gcpServices": ["vertex-ai"]
+      },
+      {
+        "id": "B2",
+        "req": "Improve Product Discoverability to enhance search relevance and enable efficient catalog navigation.",
+        "solution": "Deploy Google Cloud Retail Search (Discovery AI) to index the catalog, enabling semantic search, synonyms, and auto-recommendations based on user queries.",
+        "gcpServices": ["vertex-ai"]
+      },
+      {
+        "id": "B3",
+        "req": "Increase Customer Engagement by creating an interactive, personalized shopping experience.",
+        "solution": "Build conversational shopping agents using Dialogflow CX and Vertex AI Agent Builder, letting users find products using natural language chat.",
+        "gcpServices": ["dialogflow-cx", "vertex-ai"]
+      },
+      {
+        "id": "B4",
+        "req": "Drive Sales Conversion to improve conversion rates and revenue growth.",
+        "solution": "Integrate Recommendations AI to serve personalized 'frequently bought together' carousels based on real-time user browsing paths.",
+        "gcpServices": ["vertex-ai"]
+      },
+      {
+        "id": "B5",
+        "req": "Reduce costs, specifically call center staffing costs and data-center hosting costs.",
+        "solution": "Automate self-service orders via virtual agents in Dialogflow CX to deflect calls. Migrate on-premises SQL/MongoDB databases to managed databases (Cloud Spanner, AlloyDB) to eliminate VM maintenance overhead.",
+        "gcpServices": ["dialogflow-cx", "spanner", "alloydb-for-postgresql"]
+      }
+    ],
+    "technicalRequirements": [
+      {
+        "id": "T1",
+        "req": "Accurately derive relevant product attributes from various supplier data (titles, descriptions, images).",
+        "solution": "Use Vertex AI structured prompt processing and Gemini Multimodal APIs to parse unstructured files and output structured JSON matching the catalog database schema.",
+        "gcpServices": ["vertex-ai"]
+      },
+      {
+        "id": "T2",
+        "req": "Generate product image variations from a base image (backgrounds, color adjustments, text overlays).",
+        "solution": "Utilize Vertex AI Imagen 3 APIs to perform image-to-image variations, editing backgrounds and adding overlays programmatically.",
+        "gcpServices": ["vertex-ai"]
+      },
+      {
+        "id": "T3",
+        "req": "Process customer requests expressed in natural language and return highly relevant product results.",
+        "solution": "Integrate Dialogflow CX conversational interfaces with Google Cloud's Retail Search API, combining NLP with product catalog indexes.",
+        "gcpServices": ["dialogflow-cx", "vertex-ai"]
+      },
+      {
+        "id": "T4",
+        "req": "Scale the solution to handle Cymbal's extensive product catalog and accommodate growth.",
+        "solution": "Run frontends on GKE Autopilot clusters and migrate database backends to Cloud Spanner (globally consistent, horizontally scalable relational database) or AlloyDB.",
+        "gcpServices": ["google-kubernetes-engine--gke-", "spanner", "alloydb-for-postgresql"]
+      },
+      {
+        "id": "T5",
+        "req": "Provide a Human-in-the-Loop (HITL) review UI for associates to approve, reject, or modify gen AI content.",
+        "solution": "Build a review dashboard hosted on Cloud Run (or custom Svelte app) that writes AI suggestions to a staging database table, allowing associates to approve before pushing to the production catalog.",
+        "gcpServices": ["cloud-run", "spanner"]
+      },
+      {
+        "id": "T6",
+        "req": "Ensure customer data and interactions with virtual agents are secure and compliant.",
+        "solution": "Encrypt customer databases using Cloud KMS Customer-Managed Encryption Keys (CMEK), restrict network access using VPC Service Controls, and screen logs for PII using Sensitive Data Protection.",
+        "gcpServices": ["cloud-key-management-service", "vpc-service-controls", "sensitive-data-protection"]
+      }
+    ],
+    "proposedArchitecture": "Cymbal Retail's target architecture shifts hosting to GKE Autopilot and managed databases. The e-commerce frontend is deployed on GKE Autopilot, scaled dynamically by pod autoscalers. Catalog data resides in Cloud Spanner, providing horizontal scalability and ACID compliance across multiple regions. Supplier assets are uploaded to Cloud Storage, triggering a pipeline: a Cloud Run function calls Vertex AI Gemini to extract product attributes, and uses Imagen 3 to generate image color variations. These suggestions are loaded into a staging Spanner database. A Svelte-based review interface (Human-in-the-Loop) allows catalog managers to approve/reject variations. The search bar uses Retail Search (Discovery AI) for semantic lookups. Dialogflow CX virtual agents handle self-service shopping, integrated securely with user data using IAM roles and CMEK keys via Cloud KMS.",
+    "examTips": [
+      "Natural language product discovery is solved specifically using Google Cloud's Retail Search (part of Discovery AI).",
+      "For image generation and variation updates (backgrounds, overlays), the recommended solution is Imagen on Vertex AI.",
+      "Scalability of transactional catalog databases without losing relational consistency is solved by migrating to Cloud Spanner.",
+      "Implementing a Human-in-the-Loop (HITL) system requires staging data in a temporary schema/table and building a custom dashboard interface.",
+      "Secure customer interactions require combining KMS encryption, VPC Service Controls, and Sensitive Data Protection."
+    ]
+  },
+  {
+    "id": "ehr-healthcare",
+    "name": "EHR Healthcare",
+    "industry": "Healthcare & SaaS",
+    "overview": "EHR Healthcare is a leading provider of software-as-a-service (SaaS) electronic health record software to multi-national medical offices, hospitals, and insurance companies. Rapid healthcare industry shifts have led to exponential business growth, requiring a migration to a scalable, compliant cloud environment.",
+    "concept": "EHR Healthcare wants to migrate their legacy colocation facilities to Google Cloud to accommodate massive growth. Key objectives include scaling their compute/storage dynamically, adapting their disaster recovery (DR) plan for high durability, introducing automated continuous deployment (CD) capabilities, and maintaining strict regulatory compliance (HIPAA/GDPR).",
+    "existingEnv": [
+      "Hosted across multiple colocation data centers (one lease is about to expire).",
+      "Customer-facing web apps are containerized, running on a group of legacy Kubernetes clusters.",
+      "Database stack is fragmented, utilizing MySQL, MS SQL Server, Redis, and MongoDB.",
+      "Maintains legacy file- and API-based integrations with external insurance providers on-premises (scheduled to remain on-premises for several years).",
+      "Identities and user management are handled via Microsoft Active Directory.",
+      "Monitoring relies on fragmented open-source tools; alerts are sent via email and often ignored."
+    ],
+    "businessRequirements": [
+      {
+        "id": "B1",
+        "req": "On-board new insurance providers as quickly as possible.",
+        "solution": "Develop reusable API templates hosted on API Gateway or Apigee, enabling standard onboarding adapters and structured integration pipelines.",
+        "gcpServices": ["apigee-api-management", "api-gateway"]
+      },
+      {
+        "id": "B2",
+        "req": "Provide a minimum 99.9% availability for all customer-facing systems.",
+        "solution": "Deploy regional GKE clusters across multiple zones, fronted by global external HTTPS Load Balancers with multi-region backend failover routing.",
+        "gcpServices": ["google-kubernetes-engine--gke-", "cloud-load-balancing"]
+      },
+      {
+        "id": "B3",
+        "req": "Provide centralized visibility and proactive action on system performance and usage.",
+        "solution": "Migrate logging and metrics to Cloud Monitoring and Cloud Logging. Configure alerting policies routed to notification channels (Slack, PagerDuty) instead of raw emails.",
+        "gcpServices": ["cloud-monitoring", "cloud-logging"]
+      },
+      {
+        "id": "B4",
+        "req": "Increase ability to provide insights and make predictions on healthcare trends based on provider data.",
+        "solution": "Ingest de-identified health metrics into BigQuery. Leverage Vertex AI AutoML and BigQuery ML to run trend analysis and generate reports.",
+        "gcpServices": ["bigquery", "vertex-ai"]
+      },
+      {
+        "id": "B5",
+        "req": "Reduce latency to all customers.",
+        "solution": "Cache static assets using Cloud CDN and use regional Cloud Load Balancing to route traffic to the nearest compute backend.",
+        "gcpServices": ["cloud-cdn", "cloud-load-balancing"]
+      },
+      {
+        "id": "B6",
+        "req": "Maintain regulatory compliance (HIPAA / health record privacy).",
+        "solution": "Use Cloud Healthcare API to store FHIR/HL7 data securely, enforce CMEK encryption, isolate networks using VPC Service Controls, and sync identities with AD using Cloud Identity.",
+        "gcpServices": ["cloud-key-management-service", "vpc-service-controls", "identity-and-access-management"]
+      },
+      {
+        "id": "B7",
+        "req": "Decrease infrastructure administration costs.",
+        "solution": "Adopt fully managed serverless infrastructure (GKE Autopilot, Cloud SQL) to eliminate manual server patching, OS maintenance, and capacity planning.",
+        "gcpServices": ["google-kubernetes-engine--gke-", "cloud-sql"]
+      }
+    ],
+    "technicalRequirements": [
+      {
+        "id": "T1",
+        "req": "Maintain legacy interfaces to insurance providers with connectivity to both on-premises systems and cloud providers.",
+        "solution": "Use GKE Enterprise (Anthos) to run containerized integration applications uniformly on GKE on-premise and GKE in Google Cloud.",
+        "gcpServices": ["google-kubernetes-engine--gke-"]
+      },
+      {
+        "id": "T2",
+        "req": "Provide a consistent way to manage customer-facing applications that are container-based.",
+        "solution": "Register all Kubernetes clusters into GKE Fleets under GKE Enterprise, applying unified network policies and configuration controls.",
+        "gcpServices": ["google-kubernetes-engine--gke-"]
+      },
+      {
+        "id": "T3",
+        "req": "Provide a secure and high-performance connection between on-premises systems and Google Cloud.",
+        "solution": "Deploy Dedicated Interconnect (or Partner Interconnect) for secure, low-latency private connection, with Cloud VPN tunnels as a redundant backup path.",
+        "gcpServices": ["cloud-interconnect", "cloud-vpn", "cloud-router"]
+      },
+      {
+        "id": "T4",
+        "req": "Provide consistent logging, log retention, monitoring, and alerting capabilities.",
+        "solution": "Deploy Cloud Logging Agent on all nodes. Configure log sinks to export logs to Cloud Storage buckets with Object Retention Lock (for regulatory compliance retention).",
+        "gcpServices": ["cloud-logging", "cloud-monitoring"]
+      },
+      {
+        "id": "T5",
+        "req": "Maintain and manage multiple container-based environments and dynamically scale/provision them.",
+        "solution": "Manage dev, test, and prod environments using Terraform (Infrastructure Manager) and configure GKE Autopilot clusters to scale pods dynamically.",
+        "gcpServices": ["infrastructure-manager", "google-kubernetes-engine--gke-"]
+      },
+      {
+        "id": "T6",
+        "req": "Create interfaces to ingest and process data from new providers.",
+        "solution": "Deploy Cloud Healthcare API FHIR stores to ingest healthcare data, integrated with Pub/Sub and Dataflow for real-time processing and de-identification.",
+        "gcpServices": ["bigquery", "data-pipelines-streaming"]
+      }
+    ],
+    "proposedArchitecture": "EHR Healthcare's target architecture relies on GKE Enterprise (Anthos) and HIPAA-compliant data endpoints. A Shared VPC connects on-premises insurance systems to GCP via Dedicated Interconnect. GKE Enterprise governs clusters across the hybrid perimeter. Customer-facing apps run on regional GKE Autopilot clusters across three zones, fronted by global HTTPS Load Balancers with Cloud Armor policies. Database backends are migrated to Cloud SQL for PostgreSQL (with HA replicas and Cloud SQL Auth Proxy) and MongoDB to Firestore/Bigtable. Sensitive patient data is processed via Cloud Healthcare API FHIR stores, which automatically de-identify data before routing it to BigQuery for trend reporting. Cloud Logging sinks route immutable patient logs to Cloud Storage for compliance retention.",
+    "examTips": [
+      "EHR is a healthcare case study: HIPAA compliance is paramount. Always select Cloud Healthcare API for storing FHIR/HL7 datasets securely.",
+      "Logging and compliance retention rules require using Cloud Storage buckets configured with Object Retention Lock (WORM policy).",
+      "Unified management of containerized applications running on-prem and in the cloud is solved via GKE Enterprise (Anthos).",
+      "For Active Directory management, deploy Cloud Identity Directory Sync to synchronize AD users to GCP IAM automatically.",
+      "To resolve ignored email alerts, configure Cloud Monitoring to alert operators using notification channels like PagerDuty, Slack, or SMS."
+    ]
+  },
+  {
+    "id": "knightmotives-automotive",
+    "name": "KnightMotives Automotive",
+    "industry": "Automotive & Autonomous Systems",
+    "overview": "KnightMotives is a car manufacturer specializing in autonomous, self-driving vehicles, including Battery Electric Vehicles (BEVs), hybrids, and traditional internal combustion engine (ICE) vehicles. While their BEV fleet features advanced in-vehicle UX tech, the hybrid and ICE models lack this modern experience, leading to declining sales.",
+    "concept": "KnightMotives wants to transition from simple car manufacturing to creating a complete 'automotive experience' within 5 years. Key pillars include: (1) delivering a consistent, AI-powered UX across all vehicle models, (2) improving and stabilizing their online build-to-order system, (3) creating modern dealer management tools, and (4) monetizing corporate data to finance autonomous R&D.",
+    "existingEnv": [
+      "IT infrastructure is mostly on-premises with some applications hosted on disparate public clouds.",
+      "Supply chain runs on an outdated mainframe; Enterprise Resource Planning (ERP) is obsolete (making promotional updates difficult).",
+      "Dealers operate on restricted budgets with no capital for new hardware equipment.",
+      "Fragmentation across vehicle software with multiple codebases and significant backward compatibility technical debt.",
+      "Network connectivity to manufacturing plants and in-vehicle connectivity in rural zones are major challenges."
+    ],
+    "businessRequirements": [
+      {
+        "id": "B1",
+        "req": "Foster a personalized relationship with the driver and deliver a cohesive experience across all models.",
+        "solution": "Develop a standard in-vehicle platform running Container-Optimized OS, connecting to Vertex AI model endpoints for voice assistants and personalized features.",
+        "gcpServices": ["vertex-ai", "container-optimized-os"]
+      },
+      {
+        "id": "B2",
+        "req": "Create a better build-to-order model to reduce time on the lot and provide transparency.",
+        "solution": "Rebuild the online ordering system using Cloud Run and Cloud Spanner (globally consistent relational database) to ensure real-time inventory updates.",
+        "gcpServices": ["cloud-run", "spanner"]
+      },
+      {
+        "id": "B3",
+        "req": "Monetize corporate data to finance new technology investments.",
+        "solution": "Consolidate telemetry and sales data inside BigQuery. Share specific datasets securely with third parties using BigQuery Analytics Hub.",
+        "gcpServices": ["bigquery"]
+      },
+      {
+        "id": "B4",
+        "req": "Enforce strict data security due to past data breaches and adhere to European Union (EU) data protection regulations.",
+        "solution": "Implement customer-managed keys via Cloud KMS, encrypt data using CMEK, secure network boundaries via VPC Service Controls, and use Sensitive Data Protection to mask PII.",
+        "gcpServices": ["cloud-key-management-service", "vpc-service-controls", "sensitive-data-protection"]
+      },
+      {
+        "id": "B5",
+        "req": "Prioritize employee upskilling, attract top-tier talent, and foster business-technical team communication.",
+        "solution": "Create collaborative development spaces using Colab Enterprise and standard IAM-controlled Google workspaces.",
+        "gcpServices": ["colab-enterprise"]
+      }
+    ],
+    "technicalRequirements": [
+      {
+        "id": "T1",
+        "req": "Modernize the in-vehicle experience (consistent UX, AI features, update hardware/software in legacy models).",
+        "solution": "Deploy Container-Optimized OS to vehicle computers, running updates via GKE Fleets. Host Vertex AI AutoML models at the edge using Edge TPUs.",
+        "gcpServices": ["container-optimized-os", "vertex-ai"]
+      },
+      {
+        "id": "T2",
+        "req": "Ensure reliable network connectivity, especially in rural areas, to support real-time AI and data transmission.",
+        "solution": "Implement local message buffering inside vehicles using local databases. Establish MQTT-based connections to Cloud Pub/Sub, dynamically resuming transfers when network is available.",
+        "gcpServices": ["data-pipelines-streaming"]
+      },
+      {
+        "id": "T3",
+        "req": "Upgrade networks to support increased data traffic and improve connectivity between plants and HQ.",
+        "solution": "Deploy Dedicated Interconnect (or Partner Interconnect) connecting manufacturing plants to GCP, exchanging routes dynamically using Cloud Router and BGP.",
+        "gcpServices": ["cloud-interconnect", "cloud-router"]
+      },
+      {
+        "id": "T4",
+        "req": "Adopt a hybrid cloud strategy and gradually modernize or replace legacy systems (mainframe/ERP).",
+        "solution": "Implement GKE Enterprise (Anthos) for hybrid app management, and deploy Bare Metal Solution to host legacy ERP/Oracle databases near GCP zones.",
+        "gcpServices": ["bare-metal-solution", "google-kubernetes-engine--gke-"]
+      },
+      {
+        "id": "T5",
+        "req": "Develop robust simulation environments for autonomous vehicle development and testing.",
+        "solution": "Configure GKE clusters running simulation containers, powered by GPUs and TPUs inside AI Hypercomputer configurations.",
+        "gcpServices": ["google-kubernetes-engine--gke-", "vertex-ai"]
+      },
+      {
+        "id": "T6",
+        "req": "Implement a comprehensive security framework to protect against cyber threats and data breaches.",
+        "solution": "Protect endpoints using Cloud Armor, configure VPC Service Controls perimeters, monitor threats in Security Command Center, and log all events in Cloud Logging.",
+        "gcpServices": ["google-cloud-armor", "vpc-service-controls", "cloud-logging"]
+      },
+      {
+        "id": "T7",
+        "req": "Develop modern dealer tools to streamline sales, service, and inventory, and implement a CRM system.",
+        "solution": "Build web-based dealer tools running on GKE, backed by Cloud Spanner for global inventory, integrated with CRM endpoints using Apigee APIs.",
+        "gcpServices": ["google-kubernetes-engine--gke-", "spanner", "apigee-api-management"]
+      }
+    ],
+    "proposedArchitecture": "KnightMotives's architecture spans on-premises plants, vehicles, and the GCP cloud. Manufacturing plants connect to GCP via Dedicated Interconnect. Legacy ERP mainframes are hosted in Bare Metal Solution instances. Vehicle telematics connect via 4G/5G edge cells to global Pub/Sub endpoints, which buffer streams before processing in Dataflow. The build-to-order ordering portal runs on Cloud Run, executing transactions in Cloud Spanner to ensure consistent inventory counts globally. Autonomous vehicle simulation jobs are scheduled on GKE cluster nodes using GPU accelerators. Data is aggregated in BigQuery, and specific data slices are monetized securely using BigQuery Analytics Hub. All operations are enclosed within a VPC Service Controls perimeter and monitored via Security Command Center.",
+    "examTips": [
+      "Data monetization is a core business requirement: always select BigQuery Analytics Hub for secure, governed sharing of datasets.",
+      "Legacy mainframes, Oracle ERPs, and workloads that cannot be easily migrated to VMs require deploying Bare Metal Solution.",
+      "Vehicle connectivity in rural areas with high dropouts requires buffering telemetry data locally on the edge device and uploading asynchronously via Pub/Sub.",
+      "Globally consistent inventory counts for build-to-order systems must be backed by Cloud Spanner (providing multi-region consistency).",
+      "European Union data compliance (GDPR) requires combining Customer-Managed Encryption Keys (CMEK), data masking via Sensitive Data Protection, and restricting data locations to EU regions."
+    ]
+  }
+]

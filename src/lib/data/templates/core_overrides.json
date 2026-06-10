@@ -1,0 +1,239 @@
+{
+  "compute-engine": {
+    "features": [
+      {"name": "Spot & Preemptible VMs", "description": "Highly discounted (up to 91%) compute instances that Google can reclaim with a 30-second warning; Spot has no max duration while Preemptible is capped at 24 hours."},
+      {"name": "Live Migration", "description": "GCP technology that automatically migrates running VM instances to another host in the same zone during host maintenance, ensuring zero downtime."},
+      {"name": "Sole-Tenant Nodes", "description": "Dedicated physical compute servers running only your VMs, crucial for security, compliance, and custom hardware/licensing requirements."},
+      {"name": "Committed Use Discounts (CUDs)", "description": "Deep discounts (resource-based or flexible vCPU/RAM commitments) in exchange for signing a 1-year or 3-year contract."},
+      {"name": "Persistent Disk Snapshots", "description": "Zonal or regional block storage snapshots stored in Cloud Storage, supporting incremental backups and scheduling."}
+    ],
+    "iamRoles": [
+      {"role": "roles/compute.admin", "description": "Full control over all Compute Engine resources, network, and security."},
+      {"role": "roles/compute.instanceAdmin.v1", "description": "Permission to create, modify, and delete virtual machine instances, disks, and images."},
+      {"role": "roles/compute.networkAdmin", "description": "Permissions to configure networking, firewalls, and routing, but not VM creation."}
+    ],
+    "cliExamples": [
+      {"description": "Create a custom-sized VM with startup script and cloud-platform scope", "command": "gcloud compute instances create my-vm \\\n  --zone=us-central1-a \\\n  --machine-type=e2-custom-4-8192 \\\n  --metadata-from-file=startup-script=script.sh \\\n  --scopes=https://www.googleapis.com/auth/cloud-platform"},
+      {"description": "SSH into an instance through Identity-Aware Proxy (IAP) without public IP", "command": "gcloud compute ssh my-vm --zone=us-central1-a --tunnel-through-iap"}
+    ],
+    "keyPoints": {
+      "design": [
+        "Compute Engine virtual machines run on KVM virtualization and support custom vCPU and memory configurations.",
+        "Zonal persistent disks are replicated across multiple physical disks in a single zone to prevent data loss.",
+        "Regional persistent disks replicate data synchronously across two zones in the same region, providing an RPO of zero.",
+        "Local SSDs are physically attached to the server hosting the VM, offering extremely high IOPS and low latency.",
+        "Data on Local SSDs is ephemeral and is lost when the VM instance is stopped, deleted, or undergoes host failure.",
+        "Sole-tenant nodes allow you to run instances on dedicated physical hardware for compliance and software licensing.",
+        "Custom metadata can be queried by the VM from the metadata server at http://169.254.169.254/computeMetadata/v1/.",
+        "Managed Instance Groups (MIGs) support autoscaling, autohealing, and multi-zone deployment of identical VM templates."
+      ],
+      "security": [
+        "Access scopes set the default authorization scopes for API requests made from the VM's service account.",
+        "Best practice is to assign the 'cloud-platform' scope to the VM and restrict permissions using IAM roles on the service account.",
+        "OS Login allows managing SSH access to VM instances using IAM credentials, replacing metadata-based SSH keys.",
+        "Service Account User role (roles/iam.serviceAccountUser) is required to attach a service account to a VM.",
+        "Shielded VMs protect instances from boot-level malware and rootkits by validating boot state using UEFI and vTPM.",
+        "Firewall rules are applied at the network level but evaluated at the individual VM instance level using network tags.",
+        "Compute instances without external IP addresses can access Google APIs using Private Google Access in the subnet.",
+        "Disk encryption defaults to Google-managed keys, but can be configured with CMEK or Customer-Supplied Keys (CSEK)."
+      ],
+      "reliability": [
+        "Live Migration is enabled by default, allowing VMs to move automatically to other hardware during infrastructure updates.",
+        "VM shutdown scripts are guaranteed to run on a best-effort basis for up to 90 seconds (longer on request).",
+        "Regional MIGs distribute VM instances across multiple zones in a region, protecting against single-zone outages.",
+        "Autohealing uses HTTP(S) health checks to automatically recreate unhealthy VM instances in a Managed Instance Group.",
+        "Backup VM configurations using custom images or machine images, which capture disk state, metadata, and configuration.",
+        "Spot VMs have an SLA of 0% and are subject to termination at any time, requiring stateless, fault-tolerant workloads.",
+        "Always design instances to be stateless; configure startup scripts to pull configuration from Cloud Storage on boot.",
+        "Zonal outages do not affect regional persistent disks, allowing prompt recovery by attaching disks to a VM in another zone."
+      ],
+      "cost": [
+        "Resource-based Committed Use Discounts (CUDs) apply to vCPUs and memory for predictable workloads over a 1 or 3-year term.",
+        "Flexible CUDs provide spending-based discounts across VM families and regions, offering greater architectural flexibility.",
+        "Spot VMs offer a 60% to 91% discount compared to on-demand pricing, ideal for batch jobs and testing.",
+        "Custom machine types allow matching resources exactly to application needs, avoiding cost overhead from over-provisioning.",
+        "Persistent disks are billed based on provisioned capacity, not used capacity, so size them carefully.",
+        "Delete unattached persistent disks and unused static external IP addresses to avoid idle resource charges.",
+        "Enable autoscaling in MIGs to scale down instance counts during low-demand periods and save compute costs.",
+        "Configure VM scheduling (using Cloud Scheduler and Cloud Functions) to shut down dev/test VMs overnight."
+      ]
+    }
+  },
+  "google-kubernetes-engine--gke-": {
+    "features": [
+      {"name": "GKE Autopilot", "description": "A fully managed cluster configuration mode where Google provisions, configures, scales, and manages nodes, security, and operations."},
+      {"name": "Workload Identity", "description": "The recommended way for applications running in GKE to securely access Google Cloud services by mapping Kubernetes service accounts to IAM service accounts."},
+      {"name": "Binary Authorization", "description": "A deploy-time security control that ensures only trusted container images signed by authorized keys are deployed to GKE."},
+      {"name": "Cluster Autoscaler", "description": "Automatically resizes the GKE node pool based on pod resource demands, scaling down to zero when resources are idle."}
+    ],
+    "iamRoles": [
+      {"role": "roles/container.admin", "description": "Full access to GKE clusters, node pools, Kubernetes APIs, and Kubernetes configuration."},
+      {"role": "roles/container.developer", "description": "Allows managing Kubernetes deployments, pods, services, and workloads, but not modifying the cluster itself."},
+      {"role": "roles/container.clusterViewer", "description": "Read-only access to cluster configurations and nodes."}
+    ],
+    "cliExamples": [
+      {"description": "Create a regional GKE Autopilot cluster with private nodes and authorized networks", "command": "gcloud container clusters create-auto my-cluster \\\n  --region=us-central1 \\\n  --enable-private-nodes \\\n  --enable-master-authorized-networks"},
+      {"description": "Get cluster credentials and configure kubectl", "command": "gcloud container clusters get-credentials my-cluster --region=us-central1"}
+    ],
+    "keyPoints": {
+      "design": [
+        "GKE Autopilot mode shifts node management, provisioning, scaling, and security patching to Google Cloud.",
+        "GKE Standard mode provides full control over the underlying VM nodes, custom machine types, and node pools.",
+        "Regional clusters distribute master replicas and nodes across three zones in a region, maximizing control plane SLA.",
+        "Zonal clusters run the master control plane and nodes in a single zone, exposing them to zonal failures.",
+        "Workload Identity eliminates the need to export and manage JSON service account keys in Kubernetes Secrets.",
+        "GKE integrates with Cloud Load Balancing, automatically configuring external Ingress via Google Front End (GFE).",
+        "Node pools allow grouping VMs with identical machine types and labels to schedule workloads on specific hardware.",
+        "Pod address ranges must be planned carefully during subnet design to avoid running out of IPs in private clusters."
+      ],
+      "security": [
+        "Private GKE clusters hide node external IPs; nodes communicate with the internet via Cloud NAT.",
+        "Master Authorized Networks restricts access to the Kubernetes control plane API to specified CIDR blocks.",
+        "Kubernetes Role-Based Access Control (RBAC) manages fine-grained permissions inside the namespace, while IAM secures cluster control.",
+        "Binary Authorization enforces policies that prevent containers from running if they lack signatures from trusted build pipelines.",
+        "Shielded GKE nodes protect the host against boot-level rootkits by validating kernel signatures.",
+        "Enable Network Policies using Calico to restrict pod-to-pod communication inside the cluster (east-west traffic).",
+        "Encrypt Kubernetes Secrets at rest using keys managed by Cloud KMS (envelope encryption).",
+        "Container Threat Detection in Security Command Center monitors container runtime activity for suspicious behaviors."
+      ],
+      "reliability": [
+        "Enable Node Auto-Repair so GKE automatically recreates nodes that fail health checks.",
+        "Enable Node Auto-Upgrade to keep nodes up-to-date with security patches and Kubernetes releases automatically.",
+        "Deploy workloads across multiple zones using Pod Anti-Affinity rules to ensure high availability.",
+        "Use Horizontal Pod Autoscaler (HPA) to scale pod replicas based on CPU utilization or custom metrics.",
+        "Configure Vertical Pod Autoscaler (VPA) to adjust CPU and memory requests/limits for pods automatically.",
+        "Maintain GKE cluster configuration and manifests in a Git repository to enable GitOps-based disaster recovery.",
+        "GKE Autopilot control plane SLA is 99.95% for regional clusters and 99.5% for zonal clusters.",
+        "Set pod resource requests and limits correctly so Kubernetes scheduler can distribute pods reliably across nodes."
+      ],
+      "cost": [
+        "GKE Autopilot bills you based on the CPU, memory, and storage requested by your running pods, not node capacity.",
+        "GKE Standard bills for the underlying Compute Engine VMs, persistent disks, and load balancers running in your project.",
+        "A management fee of $0.10 per hour per cluster is charged, but GCP offers one free zonal cluster per billing account.",
+        "Use Spot VM node pools in GKE Standard for fault-tolerant, stateless batch workloads to save compute costs.",
+        "Configure Cluster Autoscaler to scale node pools down to zero when no pods are scheduled on them.",
+        "Utilize the GKE cost optimization dashboard in Cloud Console to identify overallocated CPU/RAM requests.",
+        "Choose Autopilot over Standard for low-overhead operational costs, reducing engineering hours spent on cluster management.",
+        "Establish resource quotas at the Kubernetes namespace level to prevent single teams from over-consuming cluster budget."
+      ]
+    }
+  },
+  "cloud-run": {
+    "features": [
+      {"name": "Serverless Container Execution", "description": "Runs stateless HTTP containers on a fully managed Knative-based infrastructure, scaling up instantly and down to zero."},
+      {"name": "Concurrency Tuning", "description": "Allows configuring the maximum number of concurrent requests sent to a single container instance, reducing cold starts."},
+      {"name": "Serverless VPC Access", "description": "Enables Cloud Run services to securely connect to resources inside a VPC (like Cloud SQL, Memorystore) using private IPs."},
+      {"name": "Traffic Splitting", "description": "Supports routing percentages of incoming traffic across multiple revisions for canary deployments or A/B testing."}
+    ],
+    "iamRoles": [
+      {"role": "roles/run.admin", "description": "Full access to create, update, delete, and manage Cloud Run services, traffic, and configurations."},
+      {"role": "roles/run.invoker", "description": "Permissions to send requests and trigger public or private Cloud Run services."},
+      {"role": "roles/run.viewer", "description": "Read-only access to service definitions, revisions, and configurations."}
+    ],
+    "cliExamples": [
+      {"description": "Deploy a container image to Cloud Run with internal-only ingress and VPC connector", "command": "gcloud run deploy my-service \\\n  --image=gcr.io/my-project/my-app:v1 \\\n  --platform=managed \\\n  --region=us-central1 \\\n  --ingress=internal \\\n  --vpc-connector=my-connector"},
+      {"description": "Grant public unauthenticated access to a Cloud Run service", "command": "gcloud run services add-iam-policy-binding my-service \\\n  --member=allUsers \\\n  --role=roles/run.invoker \\\n  --region=us-central1"}
+    ],
+    "keyPoints": {
+      "design": [
+        "Cloud Run executes containerized code serverlessly, supporting any programming language, binary, or library.",
+        "Services scale dynamically from zero to thousands of instances based on incoming request traffic.",
+        "A single container instance can handle up to 250 concurrent requests, reducing cold starts compared to FaaS.",
+        "Revisions are immutable snapshots of code and configuration; deploying changes creates a new revision.",
+        "Integrates directly with Eventarc to trigger container invocations based on events from 90+ GCP services.",
+        "Cloud Run jobs run batch workloads that perform finite execution tasks to completion instead of web endpoints.",
+        "Connect to databases using Cloud SQL Auth Proxy built-in integration or Serverless VPC Access connector.",
+        "Supports custom domains with automated SSL/TLS certificate provisioning and renewal."
+      ],
+      "security": [
+        "By default, Cloud Run services require authenticated requests; grant public access using roles/run.invoker for allUsers.",
+        "Use IAM service accounts to give Cloud Run containers specific permissions to other GCP resources (e.g. Secret Manager).",
+        "Integrate Cloud Run with Cloud Armor by placing it behind an external HTTP(S) Load Balancer and limiting direct ingress.",
+        "Secret Manager variables can be mounted as volumes or environment variables, avoiding storing secrets in the container image.",
+        "Ingress control settings allow restricting access to internal traffic or internal plus load balancer traffic only.",
+        "Use VPC Service Controls perimeters to protect Cloud Run workloads from data exfiltration risks.",
+        "VPC egress settings let you route all outbound traffic from Cloud Run through your VPC network to apply firewall rules.",
+        "Enforce Binary Authorization policies on Cloud Run to restrict deployments to approved images."
+      ],
+      "reliability": [
+        "Cloud Run automatically replicates containers across multiple zones within the deployed region for high availability.",
+        "Min instances setting keeps a specified number of containers active, eliminating cold starts for latency-sensitive apps.",
+        "Max instances setting acts as a safety limit to prevent run-away autoscaling and protect backend systems from overload.",
+        "HTTP health checks can be configured to verify instance readiness before routing traffic to them.",
+        "Configure automatic retries and custom timeouts for backend container HTTP requests (up to 60 minutes).",
+        "Traffic splitting allows safe canary rollouts, routing e.g. 5% of traffic to a new revision and monitoring error rates.",
+        "Integrates with Cloud Logging out of the box; standard stdout/stderr logs are collected automatically.",
+        "Utilize Cloud Monitoring metrics to trigger alerts on container errors, request latency, and CPU usage."
+      ],
+      "cost": [
+        "Charged on a pay-as-you-go basis, billed to the nearest 100 milliseconds of actual CPU and memory utilization.",
+        "Idle resources cost zero when a service scales down to zero instances, which is the default behavior.",
+        "Choose CPU allocation mode: 'CPU allocated only during request processing' (default) vs 'CPU always allocated'.",
+        "Always-allocated CPU is more expensive but reduces latency by allowing background tasks and faster warm starts.",
+        "Tune container concurrency limits to maximize CPU utilization per container instance, minimizing cost.",
+        "Set max instances to prevent high billing spikes from unexpected traffic bursts or DDoS attacks.",
+        "Optimize container startup times (smaller images, fast boot) to reduce billing during cold-start scaling.",
+        "Free tier offers 180,000 vCPU-seconds and 360,000 GiB-seconds of memory free per month."
+      ]
+    }
+  },
+  "cloud-storage": {
+    "features": [
+      {"name": "Storage Classes", "description": "Offers Standard (active), Nearline (accessed < once/month), Coldline (< once/quarter), and Archive (long-term data retention)."},
+      {"name": "Lifecycle Management", "description": "Rules to automatically delete or transition objects to cheaper storage classes based on age, creation date, or version count."},
+      {"name": "Object Versioning", "description": "Protects against accidental deletion by keeping history of object edits, allowing recovery of older object versions."},
+      {"name": "Signed URLs", "description": "Provides temporary, secure access to private storage objects without requiring Google credentials."}
+    ],
+    "iamRoles": [
+      {"role": "roles/storage.admin", "description": "Full control over buckets, ACLs, and objects in Cloud Storage."},
+      {"role": "roles/storage.objectAdmin", "description": "Full control over objects (create, read, delete), but cannot modify bucket metadata."},
+      {"role": "roles/storage.objectViewer", "description": "Read-only access to objects and their metadata."}
+    ],
+    "cliExamples": [
+      {"description": "Upload a directory to a Coldline bucket with multithreaded parallel upload", "command": "gcloud storage cp -r ./local-dir gs://my-coldline-bucket/ \\\n  --storage-class=coldline"},
+      {"description": "Generate a signed URL for reading a file that expires in 15 minutes", "command": "gcloud storage sign-url gs://my-bucket/secret.pdf --duration=15m"}
+    ],
+    "keyPoints": {
+      "design": [
+        "Cloud Storage is a globally unified, highly durable, serverless object storage system.",
+        "Storage classes determine performance and cost: Standard, Nearline (30d min), Coldline (90d min), and Archive (365d min).",
+        "Object names are flat keys; folders are simulated prefix listings (e.g. gs://bucket/folder/file.txt).",
+        "Object versioning helps recover from accidental overwrites, keeping active and noncurrent object states.",
+        "Dual-region storage replicates data synchronously across two distinct regions, offering 99.999% SLA.",
+        "Bucket Lock enforces WORM (Write Once Read Many) policies, making objects immutable for regulatory compliance.",
+        "Signed URLs grant time-limited access to specific objects using the signatures of a service account.",
+        "Storage Transfer Service transfers petabytes of data from other clouds (S3), HTTP endpoints, or on-premises."
+      ],
+      "security": [
+        "Access control can be Uniform (bucket-level IAM only) or Fine-grained (using ACLs on individual objects).",
+        "Uniform bucket-level access is highly recommended for security compliance and ease of auditing.",
+        "All data in Cloud Storage is encrypted at rest by default; encryption can be CMEK or Customer-Supplied (CSEK).",
+        "Public access prevention (PAP) can be enabled on the bucket to prevent accidental exposure of sensitive data.",
+        "Data in transit is secured using HTTPS/TLS; access control supports VPC Service Controls security perimeters.",
+        "Do not use service account keys directly on clients; generate signed URLs or use Workload Identity.",
+        "Object lifecycle actions can delete noncurrent versions to enforce data retention compliance policies.",
+        "Audit logs track data access (Object Read, Object Write) and admin operations inside the bucket."
+      ],
+      "reliability": [
+        "Cloud Storage offers 99.999999999% (11 9s) annual durability for all storage classes.",
+        "Multi-regional and dual-regional configurations replicate data across geographically separated datacenters.",
+        "Automatic geo-replication protects data from catastrophic regional disasters and data center failures.",
+        "Dual-region buckets have a recovery time objective (RTO) of zero during regional outages.",
+        "Standard storage has a 99.9% availability SLA, while Nearline/Coldline is 99.0% and Archive is 99.0%.",
+        "Strong global consistency ensures that after a write, updates are immediately visible to subsequent read requests.",
+        "Resume aborted uploads automatically using resumable upload sessions for large files (files up to 5TB).",
+        "Validate data integrity during transfers automatically using MD5/CRC32C hash checksum checks."
+      ],
+      "cost": [
+        "Billed based on storage volume (GB/month), network egress, and operations (Class A: writes, Class B: reads).",
+        "Coldline and Archive classes have lower storage fees but higher access costs and minimum storage durations.",
+        "Archive storage costs as low as $0.0012 per GB/month, ideal for data kept for compliance purposes.",
+        "Retrieving data from Nearline, Coldline, or Archive incurs a retrieval fee per GB accessed.",
+        "Lifecycle management rules should automatically downgrade Standard data to Coldline/Archive over time.",
+        "Enable lifecycle rules to clean up incomplete multipart uploads after a specified number of days.",
+        "Transferring data between Cloud Storage buckets in the same region is free, but cross-region transfer incurs egress fees.",
+        "Reduce operational costs by combining many small files into larger archives before uploading."
+      ]
+    }
+  }
+}

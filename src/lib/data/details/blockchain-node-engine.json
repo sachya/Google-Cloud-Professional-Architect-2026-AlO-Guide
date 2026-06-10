@@ -1,0 +1,78 @@
+{
+  "features": [
+    {
+      "name": "Unified ML Platform",
+      "description": "Manages the complete machine learning lifecycle, from custom model training to endpoint predictions."
+    },
+    {
+      "name": "Generative AI Agent Studio",
+      "description": "Visual canvas to design, prototype, and evaluate conversational agents grounded in corporate data."
+    },
+    {
+      "name": "Model Garden Repository",
+      "description": "Central repository to browse, test, and deploy Google's Gemini models and open-weight architectures."
+    }
+  ],
+  "iamRoles": [
+    {
+      "role": "roles/aiplatform.admin",
+      "description": "Full access to administer all Vertex AI datasets, endpoints, models, and pipelines."
+    },
+    {
+      "role": "roles/aiplatform.user",
+      "description": "Permissions to run models, upload data, and execute training pipelines."
+    }
+  ],
+  "cliExamples": [
+    {
+      "description": "List all model deployments in Vertex AI",
+      "command": "gcloud ai models list --region=us-central1"
+    },
+    {
+      "description": "Get details of an active AI endpoint",
+      "command": "gcloud ai endpoints describe my-endpoint --region=us-central1"
+    }
+  ],
+  "keyPoints": {
+    "design": [
+      "AI ecosystems are selected to deploy predictive machine learning or autonomous generative agents.",
+      "Vertex AI is the core platform, providing unified registries for training, tuning, and prediction pipelines.",
+      "Model Garden hosts foundation models (like Gemini 3.5 Pro/Flash) and third-party weights (Llama, Claude).",
+      "Agent Development Kit (ADK) builds modular conversational workflows, managing agent tasks.",
+      "Retrieval-Augmented Generation (RAG) Engine grounds LLMs with private databases, preventing hallucinations.",
+      "Model Armor acts as an inline security firewall, screening prompts and responses for injections.",
+      "Colab Enterprise runs managed Jupyter notebook environments with enterprise-grade compliance.",
+      "Integrate AI models with Cloud Monitoring to track query latency, prediction drift, and token rates."
+    ],
+    "security": [
+      "Model Armor screens inputs/outputs for prompt injections, malware, and sensitive PII leaks.",
+      "VPC Service Controls perimeters protect custom training data and models from exfiltration.",
+      "Data-at-rest is encrypted by default; configure Customer-Managed Encryption Keys (CMEK) on storage.",
+      "Manage model query access using specific IAM roles (`roles/aiplatform.user`), avoiding admin roles.",
+      "Private Google Access is required to allow compute runtimes to trigger AI endpoints privately.",
+      "Establish Safety Filters in Vertex AI to block hateful, explicit, or toxic model outputs.",
+      "Audit ML training jobs, endpoint query rates, and administrative changes in Cloud Audit Logs.",
+      "Restrict client access scopes on VM instances connecting to Vertex AI APIs."
+    ],
+    "reliability": [
+      "Vertex AI endpoints scale automatically to meet query spikes, distributing requests across zones.",
+      "Foundation models are hosted on Google's globally redundant infrastructure, ensuring high SLAs.",
+      "Dataflow pipelines automate continuous data ingestion for retraining machine learning models.",
+      "Configure failover endpoints to route traffic to backup models during primary model latency spikes.",
+      "Save model training states (checkpoints) to Cloud Storage to resume training after worker failures.",
+      "Monitor model prediction drift and accuracy degradation using Vertex AI Model Monitoring.",
+      "Client libraries support automatic retries with backoff on model query rate limits (429 errors).",
+      "Maintain version controls on model registry artifacts to allow safe rollbacks."
+    ],
+    "cost": [
+      "Charged based on custom training compute hours (node/hour), endpoint prediction volume, or token counts.",
+      "Gemini models charge per 1K tokens for input and output; Flash is significantly cheaper than Pro.",
+      "Model Armor charges a flat rate per million tokens processed after the monthly free tier.",
+      "Configure scale-down thresholds (minimum nodes to zero) for custom endpoints to save compute fees.",
+      "Use lightweight, cheaper models (Flash) for simple summarization tasks, reserving Pro for complex reasoning.",
+      "Clean up old custom model versions, datasets, and inactive Jupyter notebooks to reduce storage fees.",
+      "Establish alerts in Cloud Billing to monitor generative AI token consumption.",
+      "Use Google's pre-trained APIs (Vision, Speech-to-Text) when possible instead of training custom models."
+    ]
+  }
+}

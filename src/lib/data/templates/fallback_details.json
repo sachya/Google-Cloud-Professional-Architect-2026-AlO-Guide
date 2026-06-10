@@ -1,0 +1,107 @@
+{
+  "Artificial Intelligence and Machine Learning Ecosystem": {
+    "features": [
+      {"name": "Vertex AI Integration", "description": "Seamlessly routes inputs and predictions through the centralized Vertex AI machine learning pipeline."},
+      {"name": "Generative AI Grounding", "description": "Grounds LLM prompts and responses using enterprise databases to prevent hallucinated answers."},
+      {"name": "Managed API Sandbox", "description": "Executes models and orchestrates reasoning loops in a fully managed sandbox environment."}
+    ],
+    "iamRoles": [
+      {"role": "roles/aiplatform.admin", "description": "Full access to all Vertex AI and machine learning resources in the project."},
+      {"role": "roles/aiplatform.user", "description": "Permissions to run models, invoke endpoints, and manage notebook environments."}
+    ],
+    "cliExamples": [
+      {"description": "List all deployed AI models in the region", "command": "gcloud ai models list --region=us-central1"},
+      {"description": "Predict endpoint using custom JSON inputs", "command": "gcloud ai endpoints predict my-endpoint \\\n  --region=us-central1 \\\n  --json-request=input.json"}
+    ]
+  },
+  "DevOps Continuous Integration and Application Delivery": {
+    "features": [
+      {"name": "Declarative CI/CD Pipelines", "description": "Define build steps, testing parameters, and deployment targets in declarative configuration files."},
+      {"name": "Secret Manager Integration", "description": "Inject secrets and deployment credentials securely during pipeline runtimes without hardcoding values."},
+      {"name": "Container & Package Registry", "description": "Securely store compiled artifacts, Docker images, and application libraries in unified registries."}
+    ],
+    "iamRoles": [
+      {"role": "roles/cloudbuild.builds.builder", "description": "Permissions to run builds, manage build execution, and store logs."},
+      {"role": "roles/artifactregistry.admin", "description": "Full access to create repositories and manage stored container packages."}
+    ],
+    "cliExamples": [
+      {"description": "Submit a local build directory to Cloud Build in the cloud", "command": "gcloud builds submit --config=cloudbuild.yaml ."},
+      {"description": "Configure Docker credential helper for Artifact Registry authentication", "command": "gcloud auth configure-docker us-central1-docker.pkg.dev"}
+    ]
+  },
+  "Application Hosting and Compute Infrastructure": {
+    "features": [
+      {"name": "Autoscaling Compute", "description": "Automatically provisions and scales compute instances up or down based on incoming request traffic or resource usage."},
+      {"name": "Managed Container Runtimes", "description": "Execute containerized applications in serverless or cluster environments with built-in health checking."},
+      {"name": "Persistent Storage Mounting", "description": "Attach high-performance zonal or regional block storage partitions directly to running application hosts."}
+    ],
+    "iamRoles": [
+      {"role": "roles/compute.instanceAdmin.v1", "description": "Full access to manage compute instances, VM templates, and local storage."},
+      {"role": "roles/run.admin", "description": "Full access to create, update, and deploy serverless application services."}
+    ],
+    "cliExamples": [
+      {"description": "Create a virtual machine instance in the preferred zone", "command": "gcloud compute instances create my-app-instance --zone=us-central1-a --machine-type=e2-medium"},
+      {"description": "Deploy container image to managed serverless compute runtime", "command": "gcloud run deploy my-service --image=gcr.io/my-project/my-image"}
+    ]
+  },
+  "Databases, Analytics, and Data Lakes": {
+    "features": [
+      {"name": "Serverless Scaling", "description": "Compute and storage scale independently and dynamically, aligning resources with query volume and table sizing."},
+      {"name": "Point-in-Time Recovery", "description": "Enables database rollbacks to any specific microsecond to recover from accidental deletions or corruption."},
+      {"name": "IAM Database Authentication", "description": "Bypasses hardcoded database passwords by authenticating clients using their GCP IAM credentials."}
+    ],
+    "iamRoles": [
+      {"role": "roles/bigquery.admin", "description": "Full access to BigQuery resources, dataset tables, and query executions."},
+      {"role": "roles/cloudsql.admin", "description": "Full access to Cloud SQL databases, replication configurations, and backups."}
+    ],
+    "cliExamples": [
+      {"description": "Run a BigQuery analytical query using the SQL CLI tool", "command": "bq query --use_legacy_sql=false \\\n  'SELECT country, COUNT(*) FROM `my-project.dataset.users` GROUP BY country'"},
+      {"description": "List all running managed database instances in the project", "command": "gcloud sql instances list"}
+    ]
+  },
+  "Enterprise Networking and Security Architecture": {
+    "features": [
+      {"name": "Global Traffic Routing", "description": "Distributes external user requests globally to the nearest healthy application backend for low latency."},
+      {"name": "Private Service Ingress", "description": "Access databases, APIs, and cloud services privately over internal VPC networks without exposing public IPs."},
+      {"name": "DDoS and Web App Protection", "description": "Shields network-facing endpoints from malicious Layer 7 attacks and Layer 3/4 DDoS floods."}
+    ],
+    "iamRoles": [
+      {"role": "roles/compute.networkAdmin", "description": "Full control to configure subnets, firewalls, load balancers, and routing tables."},
+      {"role": "roles/dns.admin", "description": "Permissions to configure nameservers, DNS zones, and DNSSEC records."}
+    ],
+    "cliExamples": [
+      {"description": "Create a new subnet in a specific VPC network", "command": "gcloud compute networks subnets create my-subnet \\\n  --network=my-vpc --region=us-central1 --range=10.0.1.0/24"},
+      {"description": "Create a new HA VPN gateway with two routing interfaces", "command": "gcloud compute vpn-gateways create my-vpn-gw --network=my-vpc --region=us-central1"}
+    ]
+  },
+  "Security, Governance, and Platform Management": {
+    "features": [
+      {"name": "Least-Privilege Role Governance", "description": "Assign fine-grained, predefined roles to user groups, preventing over-privileged access and audits."},
+      {"name": "Cryptographic Key Lifecycle", "description": "Generate, rotate, and disable cryptographic encryption keys used to secure data in other GCP storage services."},
+      {"name": "Continuous Vulnerability Scanning", "description": "Real-time threat detection, configuration scanning, and anomaly monitoring in a centralized dashboard."}
+    ],
+    "iamRoles": [
+      {"role": "roles/resourcemanager.organizationAdmin", "description": "Full control over organization policies, folder structures, and projects."},
+      {"role": "roles/cloudkms.admin", "description": "Permissions to create and manage key rings, key rotations, and KMS policies."}
+    ],
+    "cliExamples": [
+      {"description": "Create a new secret in Secret Manager", "command": "gcloud secrets create api-token --replication-policy=automatic"},
+      {"description": "Create a key ring for cryptographic key storage", "command": "gcloud kms keyrings create my-keyring --location=global"}
+    ]
+  },
+  "Storage, Backup, and Disaster Recovery Catalog": {
+    "features": [
+      {"name": "Immutable Backup Vaults", "description": "Write backups to air-gapped, indelible storage vaults to ensure they cannot be modified or deleted by ransomware."},
+      {"name": "Incremental-Forever Backups", "description": "Saves network bandwidth by transferring only modified block data after the initial base backup is stored."},
+      {"name": "Object Lifecycle Archival", "description": "Automatically moves infrequently accessed data partitions to colder storage tiers to reduce monthly storage costs."}
+    ],
+    "iamRoles": [
+      {"role": "roles/backupdr.admin", "description": "Permissions to create backup plans, schedules, and trigger restores."},
+      {"role": "roles/storage.admin", "description": "Full access to manage object storage buckets and lifecycle management rules."}
+    ],
+    "cliExamples": [
+      {"description": "Create a storage bucket in a dual-region configuration", "command": "gcloud storage buckets create gs://my-backup-bucket --location=us-central1,us-east1"},
+      {"description": "Set a lifecycle rule on a bucket using a local configuration JSON file", "command": "gcloud storage buckets update gs://my-bucket --lifecycle-file=lifecycle.json"}
+    ]
+  }
+}
