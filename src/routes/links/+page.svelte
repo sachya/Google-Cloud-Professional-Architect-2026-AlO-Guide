@@ -145,7 +145,7 @@
 
                 <div class="flex items-center justify-between pt-2 text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-450 transition-colors">
                   <span class="truncate pr-4 max-w-[280px]">
-                    {link.aliasUrl || link.url}
+                    {(link as any).aliasUrl || link.url}
                   </span>
                   <span class="flex items-center gap-1 shrink-0">
                     <span>Visit resource</span>
