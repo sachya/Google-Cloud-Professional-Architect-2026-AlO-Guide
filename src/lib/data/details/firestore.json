@@ -1,78 +1,44 @@
 {
-  "features": [
+  "keyPoints": [
+    "Serverless document database optimized for mobile, web, and server application development.",
+    "Supports Native Mode for real-time synchronization listeners and direct client-side SDK integration.",
+    "Supports Datastore Mode for high-throughput server backends requiring backwards-compatible Datastore API access.",
+    "Automatically indexes every field in a document, enabling fast querying without manual configuration.",
+    "Composite indices are required for queries that filter on multiple properties, and must be created manually.",
+    "Point-in-Time Recovery (PITR) allows database rollbacks to any specific microsecond to recover from corruption.",
+    "Transactions execute with ACID compliance across multiple documents, ensuring data consistency.",
+    "Supports offline data caching on client SDKs, syncing changes automatically once connection resumes.",
+    "Allows defining Security Rules to validate database writes and authorize requests directly from clients.",
+    "Integrates with vector similarity search to execute semantic search queries on embedded vector properties.",
+    "Offers a multi-region configuration that replicates data across zones and regions for high availability.",
+    "Billing is based on document read, write, and delete counts, alongside database storage size.",
+    "Allows exporting collection datasets to Cloud Storage for backup or BigQuery analysis.",
+    "Provides sub-second real-time notifications to thousands of connected clients simultaneously.",
+    "Limits individual document sizes to 1MB and limits write rates to a single document to 1 write per second.",
+    "Supports collection groups, allowing queries to search across identical collections nested inside documents.",
+    "Integrates with Firebase Authentication to validate user identity contexts inside security rules.",
+    "Provides query performance recommendations and slow-query log diagnostics.",
+    "Supports cursor-based query pagination to load large datasets incrementally.",
+    "Requires no infrastructure provisioning, automatically scaling capacity to handle millions of active users."
+  ],
+  "scenarios": [
     {
-      "name": "ACID Compliance & Transactions",
-      "description": "Guarantees strong transactional consistency and integrity for relational schemas across zonal or global deployments."
+      "scenario": "A mobile chat application needs a database that syncs user message lists instantly across devices and supports offline typing when tunnels are offline.",
+      "solution": "Configure Firestore in Native Mode and attach real-time snapshot listeners to the client-side mobile application SDKs."
     },
     {
-      "name": "Automated Backups & PITR",
-      "description": "Enables point-in-time recovery (PITR) to restore database states back to a specific millisecond in case of corruption."
-    },
-    {
-      "name": "High Availability Failover",
-      "description": "Deploys active-passive synchronous replication across zones, executing automatic failover during outages."
+      "scenario": "An API query sorting records by user age and registration date is failing with a missing index exception.",
+      "solution": "Retrieve the composite index generation link from the Svelte console logs or error message, and create the index in Firestore."
     }
   ],
-  "iamRoles": [
+  "commands": [
     {
-      "role": "roles/cloudsql.admin",
-      "description": "Full access to administer Cloud SQL instances, backups, and user credentials."
+      "description": "Create a Native Mode Firestore database in the us-central1 region",
+      "command": "gcloud firestore databases create --location=us-central1 --type=firestore-native"
     },
     {
-      "role": "roles/spanner.databaseAdmin",
-      "description": "Full administrative permissions over Cloud Spanner Firestore instances, schemas, and queries."
+      "description": "Export the Firestore database collections to a backup storage bucket",
+      "command": "gcloud firestore export gs://prod-firestore-backups"
     }
-  ],
-  "cliExamples": [
-    {
-      "description": "Create a high-availability Firestore deployment",
-      "command": "gcloud sql instances create firestore-db \\\n  --database-version=POSTGRES_15 \\\n  --tier=db-custom-2-7680 \\\n  --region=us-central1 \\\n  --availability-type=REGIONAL"
-    },
-    {
-      "description": "List all read replicas attached to database instances",
-      "command": "gcloud sql instances list --filter=\"settings.tier:db-*\""
-    }
-  ],
-  "keyPoints": {
-    "design": [
-      "Relational databases are chosen when workloads require full ACID transactional guarantees and complex table joins.",
-      "Cloud SQL supports standard MySQL, PostgreSQL, and SQL Server, scaling vertically through custom machine types.",
-      "Cloud Spanner is designed for global relational scalability, offering horizontal writes and transactional consistency.",
-      "For Cloud Spanner, primary key design must avoid sequential values (like timestamps) to prevent partition hotspots.",
-      "AlloyDB is a PostgreSQL-compatible analytical and transactional database built for high-performance enterprise engines.",
-      "Database schema migrations require executing Schema Conversion Tool and Database Migration Service (DMS).",
-      "Read replicas offload read-heavy dashboard query traffic from the primary transactional instance.",
-      "Use database connection pools to prevent exhausting database thread connection limits."
-    ],
-    "security": [
-      "Connect securely to Cloud SQL using the Cloud SQL Auth Proxy, which whitelists connections without public IPs.",
-      "Database IAM Authentication allows users and service accounts to login using Google credentials instead of static passwords.",
-      "Enforce private IP configurations using Serverless VPC Access or Private Service Connect for database interaction.",
-      "Always encrypt database backups and transaction logs using Customer-Managed Encryption Keys (CMEK) via KMS.",
-      "VPC Service Controls protect databases from data exfiltration by creating a secure network boundary.",
-      "Enable SSL/TLS configurations on client connection strings to secure data in transit.",
-      "Database administration actions (e.g. changing root password, backups) are audited in Cloud Audit Logs.",
-      "Implement row-level and column-level database security to restrict unauthorized service accounts from reading sensitive tables."
-    ],
-    "reliability": [
-      "HA configurations use synchronous replication to a standby instance in a different zone in the same region.",
-      "Standard read replicas replicate asynchronously, which may lead to replication lag during high write spikes.",
-      "Point-in-time recovery (PITR) uses write-ahead logging (WAL) to enable restores to any timestamp within the log retention window.",
-      "Perform regular automated daily backups, setting retention policies to match regulatory compliance needs.",
-      "Cross-region replicas provide disaster recovery, enabling prompt promote-to-primary actions during region failure.",
-      "Cloud Spanner provides an availability SLA of 99.999% for multi-regional instances using Paxos-based replication.",
-      "Establish monitoring metrics on database CPU usage, memory usage, and storage growth rate.",
-      "Auto-resize storage triggers disk expansion automatically, preventing database crashes due to full disks."
-    ],
-    "cost": [
-      "Relational databases charge for provisioned compute (vCPUs/RAM), database storage (GB/month), and backup storage.",
-      "Read replicas are billed as full independent database instances, increasing compute cost.",
-      "Storage is billed on provisioned capacity, not active database contents; size disks carefully.",
-      "Configure storage auto-resize with a safety threshold to prevent runaway disk storage billing.",
-      "Use committed use discounts (CUDs) for database instances running continuously in production environments.",
-      "Schedule development database shutdowns (e.g., stopping non-HA instances overnight) to minimize off-hour billing.",
-      "Review Recommender suggestions to downsize database instances with low historical CPU and memory utilization.",
-      "Prune old, unused database snapshots and test backups to minimize storage cost leaks."
-    ]
-  }
+  ]
 }

@@ -1,78 +1,42 @@
 {
-  "features": [
+  "keyPoints": [
+    "Provides a dedicated Processing & Streaming platform engineered to a stream and batch data-processing pipeline executor based on the unified Apache Beam programming model..",
+    "Integrates Dataflow capabilities directly into multi-tier cloud architectures, serving as a key component of the Databases, Analytics, and Data Lakes portfolio.",
+    "Encourages standard interface structures (REST APIs, Client SDKs, or console controls) to facilitate rapid cloud resource provisioning.",
+    "Manages relational schemas, NoSQL documents, and column-family tables with built-in replication and backup options.",
+    "Supports decoupled storage and compute architectures to process petabytes of analytical data without performance interference.",
+    "Implements Point-in-Time Recovery (PITR) to restore transactional databases to any microsecond for disaster recovery.",
+    "Optimizes Dataflow performance through automated platform scaling and resource balancing.",
+    "Enables resource segregation, logical naming conventions, and tag-based configuration policies for Dataflow.",
+    "Integrates with VPC routing and private service access architectures to secure communication tunnels.",
+    "Governs access to Dataflow using standard IAM roles (e.g. roles/dataflow.admin and roles/dataflow.viewer) for fine-grained permissions.",
+    "Supports audit logging to record administrative actions and verify API configuration modifications for compliance reports.",
+    "Secures operational payloads using encryption at rest (Google-managed or Customer-Managed Keys via KMS) and SSL/TLS in transit.",
+    "Offers regional and multi-regional configuration options, duplicating service state across multiple zones to sustain outage events.",
+    "Enforces API quotas and rate limits programmatically to prevent resource starvation and noisy-neighbor interference.",
+    "Provides service recovery tools, regular status logs, and high-availability SLAs matching enterprise uptime goals.",
+    "Billed based on resource metrics (e.g., operations count, active connections, or gigabytes stored) allowing cost optimization.",
+    "Integrates with Cloud Monitoring and Cloud Logging to enable real-time alerting, metrics tracking, and diagnostic dashboards.",
+    "Enables command line administration through the gcloud CLI tool, allowing pipeline automation and scripting."
+  ],
+  "scenarios": [
     {
-      "name": "Serverless Message Ingestion",
-      "description": "Ingests millions of streaming messages per second with global anycast routing and low-latency storage."
+      "scenario": "An enterprise wants to construct a secure architectural pattern involving Dataflow that blocks public internet ingress and enforces strict access restrictions.",
+      "solution": "Deploy the Dataflow resource inside a VPC Service Control perimeter, routing connections privately using Serverless VPC connectors or internal gateways, and assign permissions using IAM roles."
     },
     {
-      "name": "Unified Stream/Batch Processing",
-      "description": "Executes data transformations across streaming or batch sources using Apache Beam pipelines."
-    },
-    {
-      "name": "Data Lake Governance",
-      "description": "Centralizes metadata cataloging, data lineage tracking, and compliance scanning across storage resources."
+      "scenario": "A development team needs to build automated CI/CD configurations that configure and audit Dataflow operations on a regular basis while tracking costs.",
+      "solution": "Use Cloud Build scripts executing 'gcloud' commands to provision the Dataflow resources, enable Cloud Audit Logs, and configure budget notifications at the project folder level."
     }
   ],
-  "iamRoles": [
+  "commands": [
     {
-      "role": "roles/pubsub.admin",
-      "description": "Full access to create, publish, and subscribe to Pub/Sub topics and subscriptions."
+      "description": "Create or configure a new Dataflow resource",
+      "command": "gcloud dataflow jobs create prod-dataflow-resource \\\n  --region=us-central1 \\\n  --description=\"Production Dataflow Resource\""
     },
     {
-      "role": "roles/dataflow.admin",
-      "description": "Permissions to execute, monitor, and cancel Dataflow pipeline jobs."
+      "description": "List active Dataflow instances and query configuration states",
+      "command": "gcloud dataflow jobs list --format=\"table(name, state, updateTime)\""
     }
-  ],
-  "cliExamples": [
-    {
-      "description": "Create a Pub/Sub topic with schema validation",
-      "command": "gcloud pubsub topics create dataflow-topic"
-    },
-    {
-      "description": "Create a Pub/Sub pull subscription with a 7-day retention period",
-      "command": "gcloud pubsub subscriptions create dataflow-sub \\\n  --topic=dataflow-topic \\\n  --message-retention-duration=7d"
-    }
-  ],
-  "keyPoints": {
-    "design": [
-      "Data pipelines ingest, transform, and load massive data streams for real-time analytics.",
-      "Pub/Sub is a serverless, global messaging queue, routing messages from publishers to subscribers.",
-      "Dataflow runs managed Apache Beam pipelines for unified stream and batch data processing.",
-      "Dataplex manages logical data lakes, consolidating metadata and enforcing governance across storage.",
-      "Pub/Sub Lite offers lower cost partitions for predictable, high-volume zonal streaming.",
-      "Configure dead-letter topics to route unparseable stream messages for debug analysis.",
-      "Dataflow templates allow running standard data transformations without compiling code.",
-      "Use Pub/Sub push subscriptions to invoke serverless runtimes directly on message arrivals."
-    ],
-    "security": [
-      "Manage publisher and subscriber access separately using specific IAM roles (`roles/pubsub.publisher`).",
-      "VPC Service Controls perimeters protect data pipelines from exfiltrating data to external topics.",
-      "Data in transit and at rest is encrypted, supporting customer-managed keys (CMEK) via Cloud KMS.",
-      "Restrict database ingress by executing Dataflow workers on internal subnets with private IPs.",
-      "Enable Pub/Sub message schemas to validate message structures before ingestion, blocking corrupt payloads.",
-      "Audit data lineage, pipeline edits, and message publishing metrics in Cloud Logging.",
-      "Deploy Dataflow workers inside dedicated service accounts with least privilege roles.",
-      "Enforce sensitive data masking inside streaming pipelines using Sensitive Data Protection API."
-    ],
-    "reliability": [
-      "Pub/Sub replicates messages across multiple zones in the region to guarantee high availability.",
-      "Pub/Sub guarantees at-least-once message delivery; write downstream systems to be idempotent.",
-      "Dataflow autoscales worker nodes dynamically based on pipeline backlog (backpressure).",
-      "Configure message retention periods in Pub/Sub (up to 7 days) to preserve streams during subscriber outages.",
-      "Dead-letter queues isolate failing messages, preventing pipeline crashes.",
-      "Enable snapshotting on Pub/Sub subscriptions to replay historical messages for recovery.",
-      "Dataplex automatically runs data quality and compliance checks on data lakes.",
-      "Dataflow streaming jobs store state in local SSDs, resuming execution during worker failover."
-    ],
-    "cost": [
-      "Pub/Sub charges based on volume of data ingested (GB) and message storage duration.",
-      "Dataflow bills for compute resource workers (vCPUs/RAM/Disk per hour) used in job execution.",
-      "Dataplex billing is based on metadata storage and data processing units consumed.",
-      "Use Pub/Sub Lite for predictable, high-volume pipelines to reduce ingestion charges by up to 80%.",
-      "Configure Dataflow pipeline autoscaling limits to prevent runaway compute resource billing.",
-      "Set appropriate message retention limits; do not store message histories longer than necessary.",
-      "Optimize Dataflow worker machine sizes, selecting memory-optimized shapes only when necessary.",
-      "Reduce data transfer cost by deploying pipelines, topics, and databases in the same region."
-    ]
-  }
+  ]
 }

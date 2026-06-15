@@ -1,86 +1,44 @@
 {
-  "features": [
+  "keyPoints": [
+    "Unified object storage service offering high availability, durability, and standard web API access.",
+    "Offers four storage classes matching access frequencies: Standard, Nearline (30-day), Coldline (90-day), and Archive (365-day).",
+    "Uniform Bucket-Level Access (UBLA) simplifies security by enforcing IAM policies at the bucket level, disabling object ACLs.",
+    "Lifecycle Management Rules automatically transition objects to cheaper classes or delete them based on criteria like age.",
+    "Object Versioning stores historical states of modified files, protecting against accidental overwrite or deletion.",
+    "Signed URLs grant temporary read or write access to private files using service account signatures without Google logins.",
+    "Object Retention Lock (WORM policy) prevents deletion of files until a specified retention term expires.",
+    "Dual-region and Multi-region storage options replicate data across zones and regions to survive regional disasters.",
+    "Storage Transfer Service automates scheduled bulk data imports from AWS S3, Azure Blob, or local network shares.",
+    "Data is encrypted at rest automatically using Google-managed keys, or optionally using Customer-Managed Keys (CMEK).",
+    "Offers strong global consistency, ensuring that read-after-write operations always return the updated object payload.",
+    "Pub/Sub Notifications alert external systems immediately whenever objects are created, overwritten, or deleted.",
+    "Requester Pays configurations charge access and egress fees to the client reading the object rather than the bucket owner.",
+    "Allows setting up static website hosting directly from public buckets, serving content over HTTP.",
+    "Encourages chunked parallel uploads to speed up ingestion of multi-gigabyte or terabyte files.",
+    "Object lifecycle rules support age, created-before, custom-time, and number-of-newer-versions conditions.",
+    "Integrates with Sensitive Data Protection (DLP) to scan files for sensitive PII or credentials automatically.",
+    "Provides hierarchical namespace features to support directory structures and high-throughput file access.",
+    "Supports bucket locks that cannot be bypassed by anyone, including the project owner, once locked.",
+    "Storage pricing is based on GB/month stored, network egress, and operational API requests (Class A/B operations)."
+  ],
+  "scenarios": [
     {
-      "name": "Storage Classes",
-      "description": "Offers Standard (active), Nearline (accessed < once/month), Coldline (< once/quarter), and Archive (long-term data retention)."
+      "scenario": "A health portal requires storing patient reports for 7 years. The documents must remain immutable and protected against delete commands.",
+      "solution": "Store reports in a Cloud Storage Archive bucket, enable Object Versioning, and apply a Bucket Lock retention policy of 7 years."
     },
     {
-      "name": "Lifecycle Management",
-      "description": "Rules to automatically delete or transition objects to cheaper storage classes based on age, creation date, or version count."
-    },
-    {
-      "name": "Object Versioning",
-      "description": "Protects against accidental deletion by keeping history of object edits, allowing recovery of older object versions."
-    },
-    {
-      "name": "Signed URLs",
-      "description": "Provides temporary, secure access to private storage objects without requiring Google credentials."
+      "scenario": "An app backend needs to let anonymous mobile users upload profile photos directly to a private bucket without signing in to Google.",
+      "solution": "Generate a short-lived Cloud Storage Signed URL with write permissions, letting the client HTTP PUT the image directly."
     }
   ],
-  "iamRoles": [
+  "commands": [
     {
-      "role": "roles/storage.admin",
-      "description": "Full control over buckets, ACLs, and objects in Cloud Storage."
+      "description": "Upload a local folder to a storage bucket with parallel processing",
+      "command": "gcloud storage cp -r ./local-images gs://prod-media-bucket/"
     },
     {
-      "role": "roles/storage.objectAdmin",
-      "description": "Full control over objects (create, read, delete), but cannot modify bucket metadata."
-    },
-    {
-      "role": "roles/storage.objectViewer",
-      "description": "Read-only access to objects and their metadata."
+      "description": "Apply a uniform bucket-level access policy to lock down object permissions",
+      "command": "gcloud storage buckets update gs://prod-media-bucket/ --uniform-bucket-level-access"
     }
-  ],
-  "cliExamples": [
-    {
-      "description": "Upload a directory to a Coldline bucket with multithreaded parallel upload",
-      "command": "gcloud storage cp -r ./local-dir gs://my-coldline-bucket/ \\\n  --storage-class=coldline"
-    },
-    {
-      "description": "Generate a signed URL for reading a file that expires in 15 minutes",
-      "command": "gcloud storage sign-url gs://my-bucket/secret.pdf --duration=15m"
-    }
-  ],
-  "keyPoints": {
-    "design": [
-      "Cloud Storage is a globally unified, highly durable, serverless object storage system.",
-      "Storage classes determine performance and cost: Standard, Nearline (30d min), Coldline (90d min), and Archive (365d min).",
-      "Object names are flat keys; folders are simulated prefix listings (e.g. gs://bucket/folder/file.txt).",
-      "Object versioning helps recover from accidental overwrites, keeping active and noncurrent object states.",
-      "Dual-region storage replicates data synchronously across two distinct regions, offering 99.999% SLA.",
-      "Bucket Lock enforces WORM (Write Once Read Many) policies, making objects immutable for regulatory compliance.",
-      "Signed URLs grant time-limited access to specific objects using the signatures of a service account.",
-      "Storage Transfer Service transfers petabytes of data from other clouds (S3), HTTP endpoints, or on-premises."
-    ],
-    "security": [
-      "Access control can be Uniform (bucket-level IAM only) or Fine-grained (using ACLs on individual objects).",
-      "Uniform bucket-level access is highly recommended for security compliance and ease of auditing.",
-      "All data in Cloud Storage is encrypted at rest by default; encryption can be CMEK or Customer-Supplied (CSEK).",
-      "Public access prevention (PAP) can be enabled on the bucket to prevent accidental exposure of sensitive data.",
-      "Data in transit is secured using HTTPS/TLS; access control supports VPC Service Controls security perimeters.",
-      "Do not use service account keys directly on clients; generate signed URLs or use Workload Identity.",
-      "Object lifecycle actions can delete noncurrent versions to enforce data retention compliance policies.",
-      "Audit logs track data access (Object Read, Object Write) and admin operations inside the bucket."
-    ],
-    "reliability": [
-      "Cloud Storage offers 99.999999999% (11 9s) annual durability for all storage classes.",
-      "Multi-regional and dual-regional configurations replicate data across geographically separated datacenters.",
-      "Automatic geo-replication protects data from catastrophic regional disasters and data center failures.",
-      "Dual-region buckets have a recovery time objective (RTO) of zero during regional outages.",
-      "Standard storage has a 99.9% availability SLA, while Nearline/Coldline is 99.0% and Archive is 99.0%.",
-      "Strong global consistency ensures that after a write, updates are immediately visible to subsequent read requests.",
-      "Resume aborted uploads automatically using resumable upload sessions for large files (files up to 5TB).",
-      "Validate data integrity during transfers automatically using MD5/CRC32C hash checksum checks."
-    ],
-    "cost": [
-      "Billed based on storage volume (GB/month), network egress, and operations (Class A: writes, Class B: reads).",
-      "Coldline and Archive classes have lower storage fees but higher access costs and minimum storage durations.",
-      "Archive storage costs as low as $0.0012 per GB/month, ideal for data kept for compliance purposes.",
-      "Retrieving data from Nearline, Coldline, or Archive incurs a retrieval fee per GB accessed.",
-      "Lifecycle management rules should automatically downgrade Standard data to Coldline/Archive over time.",
-      "Enable lifecycle rules to clean up incomplete multipart uploads after a specified number of days.",
-      "Transferring data between Cloud Storage buckets in the same region is free, but cross-region transfer incurs egress fees.",
-      "Reduce operational costs by combining many small files into larger archives before uploading."
-    ]
-  }
+  ]
 }

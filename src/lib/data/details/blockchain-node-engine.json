@@ -1,78 +1,42 @@
 {
-  "features": [
+  "keyPoints": [
+    "Provides a dedicated Distributed Ledger platform engineered to a fully managed node hosting service designed to simplify the development, scaling, and execution of Web3 applications..",
+    "Integrates Blockchain Node Engine capabilities directly into multi-tier cloud architectures, serving as a key component of the Application Hosting and Compute Infrastructure portfolio.",
+    "Encourages standard interface structures (REST APIs, Client SDKs, or console controls) to facilitate rapid cloud resource provisioning.",
+    "Runs application logic across a spectrum of compute environments, from virtual machines to serverless runtimes.",
+    "Provides horizontal and vertical autoscaling mechanisms to match computing capacity with incoming request spikes.",
+    "Enables zero-downtime maintenance and deployment updates through load-balanced instance groups or revisions.",
+    "Optimizes Blockchain Node Engine performance through automated platform scaling and resource balancing.",
+    "Enables resource segregation, logical naming conventions, and tag-based configuration policies for Blockchain Node Engine.",
+    "Integrates with VPC routing and private service access architectures to secure communication tunnels.",
+    "Governs access to Blockchain Node Engine using standard IAM roles (e.g. roles/blockchainnodeengine.admin and roles/blockchainnodeengine.viewer) for fine-grained permissions.",
+    "Supports audit logging to record administrative actions and verify API configuration modifications for compliance reports.",
+    "Secures operational payloads using encryption at rest (Google-managed or Customer-Managed Keys via KMS) and SSL/TLS in transit.",
+    "Offers regional and multi-regional configuration options, duplicating service state across multiple zones to sustain outage events.",
+    "Enforces API quotas and rate limits programmatically to prevent resource starvation and noisy-neighbor interference.",
+    "Provides service recovery tools, regular status logs, and high-availability SLAs matching enterprise uptime goals.",
+    "Billed based on resource metrics (e.g., operations count, active connections, or gigabytes stored) allowing cost optimization.",
+    "Integrates with Cloud Monitoring and Cloud Logging to enable real-time alerting, metrics tracking, and diagnostic dashboards.",
+    "Enables command line administration through the gcloud CLI tool, allowing pipeline automation and scripting."
+  ],
+  "scenarios": [
     {
-      "name": "Unified ML Platform",
-      "description": "Manages the complete machine learning lifecycle, from custom model training to endpoint predictions."
+      "scenario": "An enterprise wants to construct a secure architectural pattern involving Blockchain Node Engine that blocks public internet ingress and enforces strict access restrictions.",
+      "solution": "Deploy the Blockchain Node Engine resource inside a VPC Service Control perimeter, routing connections privately using Serverless VPC connectors or internal gateways, and assign permissions using IAM roles."
     },
     {
-      "name": "Generative AI Agent Studio",
-      "description": "Visual canvas to design, prototype, and evaluate conversational agents grounded in corporate data."
-    },
-    {
-      "name": "Model Garden Repository",
-      "description": "Central repository to browse, test, and deploy Google's Gemini models and open-weight architectures."
+      "scenario": "A development team needs to build automated CI/CD configurations that configure and audit Blockchain Node Engine operations on a regular basis while tracking costs.",
+      "solution": "Use Cloud Build scripts executing 'gcloud' commands to provision the Blockchain Node Engine resources, enable Cloud Audit Logs, and configure budget notifications at the project folder level."
     }
   ],
-  "iamRoles": [
+  "commands": [
     {
-      "role": "roles/aiplatform.admin",
-      "description": "Full access to administer all Vertex AI datasets, endpoints, models, and pipelines."
+      "description": "Create or configure a new Blockchain Node Engine resource",
+      "command": "gcloud ai create prod-blockchainnodeengine-resource \\\n  --region=us-central1 \\\n  --description=\"Production Blockchain Node Engine Resource\""
     },
     {
-      "role": "roles/aiplatform.user",
-      "description": "Permissions to run models, upload data, and execute training pipelines."
+      "description": "List active Blockchain Node Engine instances and query configuration states",
+      "command": "gcloud ai list --format=\"table(name, state, updateTime)\""
     }
-  ],
-  "cliExamples": [
-    {
-      "description": "List all model deployments in Vertex AI",
-      "command": "gcloud ai models list --region=us-central1"
-    },
-    {
-      "description": "Get details of an active AI endpoint",
-      "command": "gcloud ai endpoints describe my-endpoint --region=us-central1"
-    }
-  ],
-  "keyPoints": {
-    "design": [
-      "AI ecosystems are selected to deploy predictive machine learning or autonomous generative agents.",
-      "Vertex AI is the core platform, providing unified registries for training, tuning, and prediction pipelines.",
-      "Model Garden hosts foundation models (like Gemini 3.5 Pro/Flash) and third-party weights (Llama, Claude).",
-      "Agent Development Kit (ADK) builds modular conversational workflows, managing agent tasks.",
-      "Retrieval-Augmented Generation (RAG) Engine grounds LLMs with private databases, preventing hallucinations.",
-      "Model Armor acts as an inline security firewall, screening prompts and responses for injections.",
-      "Colab Enterprise runs managed Jupyter notebook environments with enterprise-grade compliance.",
-      "Integrate AI models with Cloud Monitoring to track query latency, prediction drift, and token rates."
-    ],
-    "security": [
-      "Model Armor screens inputs/outputs for prompt injections, malware, and sensitive PII leaks.",
-      "VPC Service Controls perimeters protect custom training data and models from exfiltration.",
-      "Data-at-rest is encrypted by default; configure Customer-Managed Encryption Keys (CMEK) on storage.",
-      "Manage model query access using specific IAM roles (`roles/aiplatform.user`), avoiding admin roles.",
-      "Private Google Access is required to allow compute runtimes to trigger AI endpoints privately.",
-      "Establish Safety Filters in Vertex AI to block hateful, explicit, or toxic model outputs.",
-      "Audit ML training jobs, endpoint query rates, and administrative changes in Cloud Audit Logs.",
-      "Restrict client access scopes on VM instances connecting to Vertex AI APIs."
-    ],
-    "reliability": [
-      "Vertex AI endpoints scale automatically to meet query spikes, distributing requests across zones.",
-      "Foundation models are hosted on Google's globally redundant infrastructure, ensuring high SLAs.",
-      "Dataflow pipelines automate continuous data ingestion for retraining machine learning models.",
-      "Configure failover endpoints to route traffic to backup models during primary model latency spikes.",
-      "Save model training states (checkpoints) to Cloud Storage to resume training after worker failures.",
-      "Monitor model prediction drift and accuracy degradation using Vertex AI Model Monitoring.",
-      "Client libraries support automatic retries with backoff on model query rate limits (429 errors).",
-      "Maintain version controls on model registry artifacts to allow safe rollbacks."
-    ],
-    "cost": [
-      "Charged based on custom training compute hours (node/hour), endpoint prediction volume, or token counts.",
-      "Gemini models charge per 1K tokens for input and output; Flash is significantly cheaper than Pro.",
-      "Model Armor charges a flat rate per million tokens processed after the monthly free tier.",
-      "Configure scale-down thresholds (minimum nodes to zero) for custom endpoints to save compute fees.",
-      "Use lightweight, cheaper models (Flash) for simple summarization tasks, reserving Pro for complex reasoning.",
-      "Clean up old custom model versions, datasets, and inactive Jupyter notebooks to reduce storage fees.",
-      "Establish alerts in Cloud Billing to monitor generative AI token consumption.",
-      "Use Google's pre-trained APIs (Vision, Speech-to-Text) when possible instead of training custom models."
-    ]
-  }
+  ]
 }

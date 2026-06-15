@@ -1,86 +1,44 @@
 {
-  "features": [
+  "keyPoints": [
+    "Managed Kubernetes environment supporting containerized deployment, horizontal scaling, and automated container health checks.",
+    "GKE Autopilot fully manages nodes, scaling, operating systems, and security boundaries, billing only for running pods.",
+    "GKE Standard leaves the cluster's underlying VM node pools and node configurations under the control of cluster admins.",
+    "Workload Identity maps Kubernetes service accounts directly to IAM service accounts, eliminating service account JSON files.",
+    "Regional Clusters distribute the control plane and worker nodes across three zones in a region, guaranteeing a 99.95% availability SLA.",
+    "Cluster Autoscaler resizes worker node pools dynamically based on scheduling demands and can scale pools to zero when empty.",
+    "Binary Authorization integrates with GKE to block deployment of container images not signed by trusted build keys.",
+    "Horizontal Pod Autoscaler (HPA) adjusts pod replica counts based on CPU utilization or custom monitoring metrics.",
+    "Vertical Pod Autoscaler (VPA) analyzes pod resource consumption and recommends or adjusts container CPU and memory requests.",
+    "Node Auto-Provisioning automatically creates custom node pools with appropriate machine shapes to fit pending pod criteria.",
+    "Container-Optimized OS (COS) is the default, hardened node operating system designed by Google specifically to run containers.",
+    "Kubernetes Network Policies restrict traffic routing between pods, enforcing microsegmentation within the cluster.",
+    "Managed Service for Prometheus collects pod metrics, offering out-of-the-box monitoring and dashboard support.",
+    "Private Clusters isolate nodes from the internet, exposing the control plane endpoint only via private VPC subnets or IAP.",
+    "Multi-Cluster Ingress orchestrates load balancing across GKE clusters deployed across multiple global Google Cloud regions.",
+    "GKE Datapath V2 improves network performance and enforces policy structures using eBPF technology.",
+    "Node Auto-Repair monitors node health and automatically recreates failed VMs to maintain cluster capacity.",
+    "Node Auto-Upgrade automatically patches OS vulnerabilities and upgrades the Kubernetes version on worker nodes.",
+    "Supports local SSDs and persistent disk mounts as PersistentVolumes, managed automatically by CSI storage drivers.",
+    "Integrates with Cloud Run for Anthos (Knative) to deploy serverless, event-driven containers directly on container clusters."
+  ],
+  "scenarios": [
     {
-      "name": "GKE Autopilot",
-      "description": "A fully managed cluster configuration mode where Google provisions, configures, scales, and manages nodes, security, and operations."
+      "scenario": "A development team wants to deploy a modular microservices app on Kubernetes without managing VM configurations, OS patches, or node scaling.",
+      "solution": "Deploy the application workloads to GKE Autopilot, letting Google manage the node lifecycle and billing strictly based on pod resources."
     },
     {
-      "name": "Workload Identity",
-      "description": "The recommended way for applications running in GKE to securely access Google Cloud services by mapping Kubernetes service accounts to IAM service accounts."
-    },
-    {
-      "name": "Binary Authorization",
-      "description": "A deploy-time security control that ensures only trusted container images signed by authorized keys are deployed to GKE."
-    },
-    {
-      "name": "Cluster Autoscaler",
-      "description": "Automatically resizes the GKE node pool based on pod resource demands, scaling down to zero when resources are idle."
+      "scenario": "An enterprise requires that pods running inside a cluster connect securely to BigQuery without storing static JSON credentials in Kubernetes secrets.",
+      "solution": "Enable Workload Identity on GKE, bind the Kubernetes ServiceAccount to an IAM Service Account, and assign the IAM account BigQuery access."
     }
   ],
-  "iamRoles": [
+  "commands": [
     {
-      "role": "roles/container.admin",
-      "description": "Full access to GKE clusters, node pools, Kubernetes APIs, and Kubernetes configuration."
+      "description": "Provision a regional GKE Autopilot cluster inside a specific subnet",
+      "command": "gcloud container clusters create-auto production-cluster \\\n  --region=us-central1 \\\n  --network=prod-vpc \\\n  --subnetwork=us-central1-subnet"
     },
     {
-      "role": "roles/container.developer",
-      "description": "Allows managing Kubernetes deployments, pods, services, and workloads, but not modifying the cluster itself."
-    },
-    {
-      "role": "roles/container.clusterViewer",
-      "description": "Read-only access to cluster configurations and nodes."
+      "description": "Retrieve GKE cluster credentials to configure local kubectl configuration",
+      "command": "gcloud container clusters get-credentials production-cluster \\\n  --region=us-central1"
     }
-  ],
-  "cliExamples": [
-    {
-      "description": "Create a regional GKE Autopilot cluster with private nodes and authorized networks",
-      "command": "gcloud container clusters create-auto my-cluster \\\n  --region=us-central1 \\\n  --enable-private-nodes \\\n  --enable-master-authorized-networks"
-    },
-    {
-      "description": "Get cluster credentials and configure kubectl",
-      "command": "gcloud container clusters get-credentials my-cluster --region=us-central1"
-    }
-  ],
-  "keyPoints": {
-    "design": [
-      "GKE Autopilot mode shifts node management, provisioning, scaling, and security patching to Google Cloud.",
-      "GKE Standard mode provides full control over the underlying VM nodes, custom machine types, and node pools.",
-      "Regional clusters distribute master replicas and nodes across three zones in a region, maximizing control plane SLA.",
-      "Zonal clusters run the master control plane and nodes in a single zone, exposing them to zonal failures.",
-      "Workload Identity eliminates the need to export and manage JSON service account keys in Kubernetes Secrets.",
-      "GKE integrates with Cloud Load Balancing, automatically configuring external Ingress via Google Front End (GFE).",
-      "Node pools allow grouping VMs with identical machine types and labels to schedule workloads on specific hardware.",
-      "Pod address ranges must be planned carefully during subnet design to avoid running out of IPs in private clusters."
-    ],
-    "security": [
-      "Private GKE clusters hide node external IPs; nodes communicate with the internet via Cloud NAT.",
-      "Master Authorized Networks restricts access to the Kubernetes control plane API to specified CIDR blocks.",
-      "Kubernetes Role-Based Access Control (RBAC) manages fine-grained permissions inside the namespace, while IAM secures cluster control.",
-      "Binary Authorization enforces policies that prevent containers from running if they lack signatures from trusted build pipelines.",
-      "Shielded GKE nodes protect the host against boot-level rootkits by validating kernel signatures.",
-      "Enable Network Policies using Calico to restrict pod-to-pod communication inside the cluster (east-west traffic).",
-      "Encrypt Kubernetes Secrets at rest using keys managed by Cloud KMS (envelope encryption).",
-      "Container Threat Detection in Security Command Center monitors container runtime activity for suspicious behaviors."
-    ],
-    "reliability": [
-      "Enable Node Auto-Repair so GKE automatically recreates nodes that fail health checks.",
-      "Enable Node Auto-Upgrade to keep nodes up-to-date with security patches and Kubernetes releases automatically.",
-      "Deploy workloads across multiple zones using Pod Anti-Affinity rules to ensure high availability.",
-      "Use Horizontal Pod Autoscaler (HPA) to scale pod replicas based on CPU utilization or custom metrics.",
-      "Configure Vertical Pod Autoscaler (VPA) to adjust CPU and memory requests/limits for pods automatically.",
-      "Maintain GKE cluster configuration and manifests in a Git repository to enable GitOps-based disaster recovery.",
-      "GKE Autopilot control plane SLA is 99.95% for regional clusters and 99.5% for zonal clusters.",
-      "Set pod resource requests and limits correctly so Kubernetes scheduler can distribute pods reliably across nodes."
-    ],
-    "cost": [
-      "GKE Autopilot bills you based on the CPU, memory, and storage requested by your running pods, not node capacity.",
-      "GKE Standard bills for the underlying Compute Engine VMs, persistent disks, and load balancers running in your project.",
-      "A management fee of $0.10 per hour per cluster is charged, but GCP offers one free zonal cluster per billing account.",
-      "Use Spot VM node pools in GKE Standard for fault-tolerant, stateless batch workloads to save compute costs.",
-      "Configure Cluster Autoscaler to scale node pools down to zero when no pods are scheduled on them.",
-      "Utilize the GKE cost optimization dashboard in Cloud Console to identify overallocated CPU/RAM requests.",
-      "Choose Autopilot over Standard for low-overhead operational costs, reducing engineering hours spent on cluster management.",
-      "Establish resource quotas at the Kubernetes namespace level to prevent single teams from over-consuming cluster budget."
-    ]
-  }
+  ]
 }

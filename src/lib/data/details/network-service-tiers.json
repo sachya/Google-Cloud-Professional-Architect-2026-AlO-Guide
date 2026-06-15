@@ -1,78 +1,42 @@
 {
-  "features": [
+  "keyPoints": [
+    "Provides a dedicated Core Networking platform engineered to a tiered routing model that lets organizations optimize cost and performance using either the Premium global network or Standard internet routing..",
+    "Integrates Network Service Tiers capabilities directly into multi-tier cloud architectures, serving as a key component of the Enterprise Networking and Security Architecture portfolio.",
+    "Encourages standard interface structures (REST APIs, Client SDKs, or console controls) to facilitate rapid cloud resource provisioning.",
+    "Establishes globally routing, logically isolated networks spanning multiple Google Cloud regions privately.",
+    "Guarantees highly available hybrid connectivity to on-premises sites using redundant VPN tunnels or private fiber paths.",
+    "Balances user traffic dynamically at Google Cloud's edge, directing requests to the lowest-latency healthy backend instance.",
+    "Optimizes Network Service Tiers performance through automated platform scaling and resource balancing.",
+    "Enables resource segregation, logical naming conventions, and tag-based configuration policies for Network Service Tiers.",
+    "Integrates with VPC routing and private service access architectures to secure communication tunnels.",
+    "Governs access to Network Service Tiers using standard IAM roles (e.g. roles/networkservicetiers.admin and roles/networkservicetiers.viewer) for fine-grained permissions.",
+    "Supports audit logging to record administrative actions and verify API configuration modifications for compliance reports.",
+    "Secures operational payloads using encryption at rest (Google-managed or Customer-Managed Keys via KMS) and SSL/TLS in transit.",
+    "Offers regional and multi-regional configuration options, duplicating service state across multiple zones to sustain outage events.",
+    "Enforces API quotas and rate limits programmatically to prevent resource starvation and noisy-neighbor interference.",
+    "Provides service recovery tools, regular status logs, and high-availability SLAs matching enterprise uptime goals.",
+    "Billed based on resource metrics (e.g., operations count, active connections, or gigabytes stored) allowing cost optimization.",
+    "Integrates with Cloud Monitoring and Cloud Logging to enable real-time alerting, metrics tracking, and diagnostic dashboards.",
+    "Enables command line administration through the gcloud CLI tool, allowing pipeline automation and scripting."
+  ],
+  "scenarios": [
     {
-      "name": "Global VPC Topologies",
-      "description": "Constructs virtual network topologies globally across GCP, organizing regional subnets in a private boundary."
+      "scenario": "An enterprise wants to construct a secure architectural pattern involving Network Service Tiers that blocks public internet ingress and enforces strict access restrictions.",
+      "solution": "Deploy the Network Service Tiers resource inside a VPC Service Control perimeter, routing connections privately using Serverless VPC connectors or internal gateways, and assign permissions using IAM roles."
     },
     {
-      "name": "High-Speed Interconnect",
-      "description": "Connects on-premises datacenters directly to GCP networks via Dedicated or Partner fiber lines (up to 100 Gbps)."
-    },
-    {
-      "name": "Dynamic BGP Routing",
-      "description": "Exchanges route tables dynamically between Cloud Routers and on-premises networks using dynamic routing."
+      "scenario": "A development team needs to build automated CI/CD configurations that configure and audit Network Service Tiers operations on a regular basis while tracking costs.",
+      "solution": "Use Cloud Build scripts executing 'gcloud' commands to provision the Network Service Tiers resources, enable Cloud Audit Logs, and configure budget notifications at the project folder level."
     }
   ],
-  "iamRoles": [
+  "commands": [
     {
-      "role": "roles/compute.networkAdmin",
-      "description": "Full access to create, modify, and delete networking resources, VPCs, subnets, and firewalls."
+      "description": "Create or configure a new Network Service Tiers resource",
+      "command": "gcloud compute networks create prod-networkservicetiers-resource \\\n  --region=us-central1 \\\n  --description=\"Production Network Service Tiers Resource\""
     },
     {
-      "role": "roles/compute.networkViewer",
-      "description": "Read-only access to VPC topologies, routing configurations, and IP allocations."
+      "description": "List active Network Service Tiers instances and query configuration states",
+      "command": "gcloud compute networks list --format=\"table(name, state, updateTime)\""
     }
-  ],
-  "cliExamples": [
-    {
-      "description": "Create a custom Virtual Private Cloud (VPC) network",
-      "command": "gcloud compute networks create my-custom-vpc --subnet-mode=custom"
-    },
-    {
-      "description": "Create a regional subnet inside a VPC network",
-      "command": "gcloud compute networks subnets create network-service-tiers-subnet \\\n  --network=my-custom-vpc \\\n  --region=us-central1 \\\n  --range=10.10.1.0/24 \\\n  --enable-private-ip-google-access"
-    }
-  ],
-  "keyPoints": {
-    "design": [
-      "VPC networks are global resources; subnets are regional resources hosting virtual machines and network interfaces.",
-      "Shared VPC allows a host project to share subnets with service projects, centralizing network control.",
-      "VPC Network Peering connects two VPCs securely with low latency; routing is non-transitive.",
-      "Cloud Router uses Border Gateway Protocol (BGP) to exchange routes dynamically between VPCs and external systems.",
-      "HA VPN deploys two active tunnels with dynamic routing to guarantee a 99.99% connection uptime SLA.",
-      "Cloud Interconnect provides physical fiber connections; Dedicated connects directly, Partner connects via providers.",
-      "VPC network peering requires that IP CIDR blocks do not overlap between the peered networks.",
-      "Configure Private Google Access on subnets to allow VMs with only internal IPs to access Google APIs."
-    ],
-    "security": [
-      "Firewall rules are stateful and applied to VM instances using network tags, service accounts, or IP ranges.",
-      "Hierarchical firewall policies apply network rules at the Organization or Folder levels, enforcing corporate standards.",
-      "Cloud NAT allows private VMs to access the internet for updates while blocking incoming connections.",
-      "Audit network connections, blocked ports, and packets using VPC Flow Logs.",
-      "Enable Firewall Rules Logging to audit which rules are actively blocking or allowing traffic.",
-      "Secure hybrid connections by encrypting Cloud Interconnect traffic using MACsec or IPsec VPN tunnels.",
-      "Use Private Service Connect to expose internal services to other VPCs privately without IP peering.",
-      "Restrict administrative network changes using the networkAdmin IAM role."
-    ],
-    "reliability": [
-      "HA VPN requires deploying two tunnels from different gateway interfaces to distinct public peer IPs.",
-      "Cloud Router automatically handles path failover by dynamically updating routing paths via BGP.",
-      "Dedicated Interconnect offers 99.99% availability when deployed with dual circuits across two edge locations.",
-      "Replicate subnets across multiple zones in a region to ensure high availability for compute nodes.",
-      "Configure health checks on load balancers to route traffic away from unhealthy network zones.",
-      "VPC networks support automatic subnet routing, which propagates routes globally.",
-      "Monitor network latency and packet drops using Network Intelligence Center.",
-      "Dynamic routing mode must be set to 'Global' to allow routers to propagate routes across all regions."
-    ],
-    "cost": [
-      "VPC networks do not charge for network creation; billing is based on network data transfer (egress).",
-      "Data transfer within the same zone is free, but cross-zone transfer within the region incurs network fees.",
-      "Cross-region data egress is billed based on source and destination region rates; design zones carefully.",
-      "Cloud NAT charges per gateway hour and for data processed; do not deploy NAT gateways in idle subnets.",
-      "Dedicated Interconnect reduces overall cross-region egress billing compared to standard internet egress.",
-      "Prune unused static external IP addresses to avoid hourly idle reservation fees.",
-      "VPC Flow Logs generate large volumes of metadata; configure sampling rates to control logging costs.",
-      "Use Shared VPC to consolidate network infrastructure, reducing the number of VPN gateways and NATs needed."
-    ]
-  }
+  ]
 }

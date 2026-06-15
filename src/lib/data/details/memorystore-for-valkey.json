@@ -1,78 +1,42 @@
 {
-  "features": [
+  "keyPoints": [
+    "Provides a dedicated Caching & In-Memory platform engineered to a fully managed in-memory cache supporting Valkey 7.2 & 9.0, vector search, JSON documents, and custom CA certificates..",
+    "Integrates Memorystore for Valkey capabilities directly into multi-tier cloud architectures, serving as a key component of the Databases, Analytics, and Data Lakes portfolio.",
+    "Encourages standard interface structures (REST APIs, Client SDKs, or console controls) to facilitate rapid cloud resource provisioning.",
+    "Manages relational schemas, NoSQL documents, and column-family tables with built-in replication and backup options.",
+    "Supports decoupled storage and compute architectures to process petabytes of analytical data without performance interference.",
+    "Implements Point-in-Time Recovery (PITR) to restore transactional databases to any microsecond for disaster recovery.",
+    "Optimizes Memorystore for Valkey performance through automated platform scaling and resource balancing.",
+    "Enables resource segregation, logical naming conventions, and tag-based configuration policies for Memorystore for Valkey.",
+    "Integrates with VPC routing and private service access architectures to secure communication tunnels.",
+    "Governs access to Memorystore for Valkey using standard IAM roles (e.g. roles/memorystoreforvalkey.admin and roles/memorystoreforvalkey.viewer) for fine-grained permissions.",
+    "Supports audit logging to record administrative actions and verify API configuration modifications for compliance reports.",
+    "Secures operational payloads using encryption at rest (Google-managed or Customer-Managed Keys via KMS) and SSL/TLS in transit.",
+    "Offers regional and multi-regional configuration options, duplicating service state across multiple zones to sustain outage events.",
+    "Enforces API quotas and rate limits programmatically to prevent resource starvation and noisy-neighbor interference.",
+    "Provides service recovery tools, regular status logs, and high-availability SLAs matching enterprise uptime goals.",
+    "Billed based on resource metrics (e.g., operations count, active connections, or gigabytes stored) allowing cost optimization.",
+    "Integrates with Cloud Monitoring and Cloud Logging to enable real-time alerting, metrics tracking, and diagnostic dashboards.",
+    "Enables command line administration through the gcloud CLI tool, allowing pipeline automation and scripting."
+  ],
+  "scenarios": [
     {
-      "name": "Sub-millisecond Latency",
-      "description": "Optimizes in-memory and NoSQL storage to deliver ultra-low read/write latency at scale."
+      "scenario": "An enterprise wants to construct a secure architectural pattern involving Memorystore for Valkey that blocks public internet ingress and enforces strict access restrictions.",
+      "solution": "Deploy the Memorystore for Valkey resource inside a VPC Service Control perimeter, routing connections privately using Serverless VPC connectors or internal gateways, and assign permissions using IAM roles."
     },
     {
-      "name": "Flexible Schema & Documents",
-      "description": "Supports unstructured or semi-structured data formats, allowing rapid indexing without schema migrations."
-    },
-    {
-      "name": "Automatic Scaling & Partitioning",
-      "description": "Shards data dynamically across nodes to maintain high performance under heavy read/write volumes."
+      "scenario": "A development team needs to build automated CI/CD configurations that configure and audit Memorystore for Valkey operations on a regular basis while tracking costs.",
+      "solution": "Use Cloud Build scripts executing 'gcloud' commands to provision the Memorystore for Valkey resources, enable Cloud Audit Logs, and configure budget notifications at the project folder level."
     }
   ],
-  "iamRoles": [
+  "commands": [
     {
-      "role": "roles/bigtable.admin",
-      "description": "Full control over Bigtable instances, tables, and replication policies."
+      "description": "Create or configure a new Memorystore for Valkey resource",
+      "command": "gcloud redis instances create prod-memorystoreforvalkey-resource \\\n  --region=us-central1 \\\n  --description=\"Production Memorystore for Valkey Resource\""
     },
     {
-      "role": "roles/datastore.owner",
-      "description": "Full administrative access over Firestore and Datastore Memorystore for Valkey instances."
+      "description": "List active Memorystore for Valkey instances and query configuration states",
+      "command": "gcloud redis instances list --format=\"table(name, state, updateTime)\""
     }
-  ],
-  "cliExamples": [
-    {
-      "description": "Create a Memorystore Redis instance for caching",
-      "command": "gcloud redis instances create memorystore-for-valkey-cache \\\n  --size=5 \\\n  --region=us-central1 \\\n  --redis-version=redis_6_x"
-    },
-    {
-      "description": "List all running Bigtable clusters in the project",
-      "command": "gcloud bigtable instances list"
-    }
-  ],
-  "keyPoints": {
-    "design": [
-      "NoSQL databases (Bigtable, Firestore) are chosen for high-throughput, schema-less, or unstructured document storage.",
-      "Cloud Bigtable is designed for analytical and high-throughput operational workloads, supporting single-row transactions only.",
-      "Bigtable row key design must be lexicographically sorted and designed carefully to avoid database partition hotspots.",
-      "Firestore is a document-based database optimized for mobile apps, offering real-time synchronization and automatic indexing.",
-      "Memorystore provides fully managed in-memory cache supporting Redis, Valkey, and Memcached engines.",
-      "Valkey 9.0 introduces pipeline memory prefetching and zero-copy responses for performance gains.",
-      "Choose Redis for complex data types (lists, sorted sets) and Memcached for simple key-value string caching.",
-      "Use Firestore in Native mode for mobile/web clients, and Datastore mode for backend server workloads."
-    ],
-    "security": [
-      "Secure Memorystore instances by using private services access, isolating caches inside your VPC.",
-      "NoSQL databases do not support traditional SQL user privileges; manage access strictly using IAM roles.",
-      "Use VPC Service Controls perimeters to protect Firestore and Bigtable data from exfiltration.",
-      "Data-at-rest is encrypted using Google default keys, with options to configure KMS keys (CMEK).",
-      "Enable Identity-Aware Proxy (IAP) to protect application endpoints communicating with NoSQL databases.",
-      "Audit data-access logs to monitor which service accounts are querying sensitive document databases.",
-      "Configure security rules in Firestore Native mode to authenticate mobile client requests directly.",
-      "Restrict client access scopes on VM instances connecting to Bigtable API endpoints."
-    ],
-    "reliability": [
-      "Bigtable replication allows active-active read/write access across multiple geographical clusters.",
-      "Firestore replicates data across multiple zones (regional) or multiple regions (multi-regional) for high availability.",
-      "Memorystore Redis High Availability uses primary-replica configurations with automated failover and health checks.",
-      "Redis Sentinel or Redis Cluster configurations handle automatic promotion of replicas when the primary node fails.",
-      "Set appropriate Redis eviction policies (e.g. volatile-lru) to handle cache exhaustion gracefully.",
-      "Automatic sharding in Firestore handles high write loads, splitting documents across internal servers.",
-      "Configure client-side retry policies with backoff to handle transient NoSQL connection errors.",
-      "Back up Firestore databases regularly using automated export tasks saved to Cloud Storage."
-    ],
-    "cost": [
-      "Bigtable charges for compute nodes, storage (SSD vs HDD), and network egress between clusters.",
-      "Firestore pricing is based on document read, write, and delete counts, not provisioned compute.",
-      "Memorystore Redis charges based on cache capacity (GB) and node count (Standard vs Basic tier).",
-      "Select Bigtable HDD storage for massive cold analytical data, and SSD for low-latency operational workloads.",
-      "Limit unnecessary Firestore read operations by caching query results on client devices.",
-      "Configure TTL (Time to Live) policies in Firestore to automatically delete expired documents, reducing storage fees.",
-      "Avoid using over-provisioned Memorystore cache sizes; size capacity matching active memory consumption.",
-      "Analyze bigquery-to-bigtable integration queries to ensure you are not paying for double transfer."
-    ]
-  }
+  ]
 }

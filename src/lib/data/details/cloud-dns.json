@@ -1,78 +1,42 @@
 {
-  "features": [
+  "keyPoints": [
+    "Provides a dedicated Performance & Scalability platform engineered to a highly reliable, low-latency global Domain Name System (DNS) designed to manage internal and public domains..",
+    "Integrates Cloud DNS capabilities directly into multi-tier cloud architectures, serving as a key component of the Enterprise Networking and Security Architecture portfolio.",
+    "Encourages standard interface structures (REST APIs, Client SDKs, or console controls) to facilitate rapid cloud resource provisioning.",
+    "Establishes globally routing, logically isolated networks spanning multiple Google Cloud regions privately.",
+    "Guarantees highly available hybrid connectivity to on-premises sites using redundant VPN tunnels or private fiber paths.",
+    "Balances user traffic dynamically at Google Cloud's edge, directing requests to the lowest-latency healthy backend instance.",
+    "Optimizes Cloud DNS performance through automated platform scaling and resource balancing.",
+    "Enables resource segregation, logical naming conventions, and tag-based configuration policies for Cloud DNS.",
+    "Integrates with VPC routing and private service access architectures to secure communication tunnels.",
+    "Governs access to Cloud DNS using standard IAM roles (e.g. roles/dns.admin and roles/dns.viewer) for fine-grained permissions.",
+    "Supports audit logging to record administrative actions and verify API configuration modifications for compliance reports.",
+    "Secures operational payloads using encryption at rest (Google-managed or Customer-Managed Keys via KMS) and SSL/TLS in transit.",
+    "Offers regional and multi-regional configuration options, duplicating service state across multiple zones to sustain outage events.",
+    "Enforces API quotas and rate limits programmatically to prevent resource starvation and noisy-neighbor interference.",
+    "Provides service recovery tools, regular status logs, and high-availability SLAs matching enterprise uptime goals.",
+    "Billed based on resource metrics (e.g., operations count, active connections, or gigabytes stored) allowing cost optimization.",
+    "Integrates with Cloud Monitoring and Cloud Logging to enable real-time alerting, metrics tracking, and diagnostic dashboards.",
+    "Enables command line administration through the gcloud CLI tool, allowing pipeline automation and scripting."
+  ],
+  "scenarios": [
     {
-      "name": "Global HTTP(S) Load Balancing",
-      "description": "Acts as a single global IP address entry point, routing requests to the nearest healthy backend region."
+      "scenario": "An enterprise wants to construct a secure architectural pattern involving Cloud DNS that blocks public internet ingress and enforces strict access restrictions.",
+      "solution": "Deploy the Cloud DNS resource inside a VPC Service Control perimeter, routing connections privately using Serverless VPC connectors or internal gateways, and assign permissions using IAM roles."
     },
     {
-      "name": "Cloud CDN Edge Caching",
-      "description": "Caches static web assets at Google's global Edge Points of Presence (PoPs) to minimize latency."
-    },
-    {
-      "name": "Globally Redundant DNS",
-      "description": "Translates domain names to IP addresses globally using Google's redundant anycast nameserver network."
+      "scenario": "A development team needs to build automated CI/CD configurations that configure and audit Cloud DNS operations on a regular basis while tracking costs.",
+      "solution": "Use Cloud Build scripts executing 'gcloud' commands to provision the Cloud DNS resources, enable Cloud Audit Logs, and configure budget notifications at the project folder level."
     }
   ],
-  "iamRoles": [
+  "commands": [
     {
-      "role": "roles/compute.loadBalancerAdmin",
-      "description": "Full access to configure load balancers, SSL certificates, and URL maps."
+      "description": "Create or configure a new Cloud DNS resource",
+      "command": "gcloud dns managed-zones create prod-dns-resource \\\n  --region=us-central1 \\\n  --description=\"Production Cloud DNS Resource\""
     },
     {
-      "role": "roles/dns.admin",
-      "description": "Permissions to create, modify, and delete DNS zones, records, and policies."
+      "description": "List active Cloud DNS instances and query configuration states",
+      "command": "gcloud dns managed-zones list --format=\"table(name, state, updateTime)\""
     }
-  ],
-  "cliExamples": [
-    {
-      "description": "Create a global static external IP address for a load balancer",
-      "command": "gcloud compute addresses create cloud-dns-ip --global"
-    },
-    {
-      "description": "Create a DNS managed zone for domain routing",
-      "command": "gcloud dns managed-zones create cloud-dns-zone \\\n  --dns-name=\"example.com.\" \\\n  --description=\"My domain zone\""
-    }
-  ],
-  "keyPoints": {
-    "design": [
-      "Cloud Load Balancing distributes traffic across multiple virtual machines, containers, or serverless backends.",
-      "Global HTTP(S) Load Balancer is a Layer 7 proxy using a single Anycast IP, supporting URL path routing.",
-      "SSL Proxy and TCP Proxy are global Layer 4 load balancers for non-HTTP traffic, terminating SSL at edge.",
-      "Network Load Balancer (NLB) is a regional, non-proxy Layer 4 load balancer that preserves client IP addresses.",
-      "Cloud CDN caches static content close to users at Google edge points, integrating with HTTP(S) load balancers.",
-      "Cloud DNS provides highly scalable, low-latency domain name resolution using anycast routing.",
-      "Configure DNS routing policies (geo-routing, failover) to manage global traffic destination paths.",
-      "Use URL maps to define routing rules, sending traffic to specific backend buckets or VM groups."
-    ],
-    "security": [
-      "Integrate Cloud Armor with HTTP(S) Load Balancers to defend against Layer 7 OWASP Top 10 and DDoS attacks.",
-      "Terminate SSL/TLS connections at the load balancer using Google-managed SSL certificates with automatic renewal.",
-      "Access control to backend resources can be restricted by enabling Identity-Aware Proxy (IAP) on the load balancer.",
-      "Enable DNSSEC (Domain Name System Security Extensions) in Cloud DNS to prevent cache poisoning and spoofing.",
-      "Configure SSL policies on the load balancer to restrict weak ciphers and enforce TLS version limits.",
-      "Protect backend servers by placing them in private subnets, allowing traffic only from the load balancer proxy IPs.",
-      "Use backend service signing keys to secure CDN cache configurations (signed URLs/cookies).",
-      "Enable HTTPS-only redirection at the load balancer level to enforce transport encryption."
-    ],
-    "reliability": [
-      "Global load balancers automatically route traffic around regional outages to healthy backend regions.",
-      "Configure multi-region backend services with capacity limits, letting the load balancer spill over traffic automatically.",
-      "Managed health checks verify VM/container readiness, immediately draining connections from failed nodes.",
-      "Cloud DNS has an availability SLA of 100% supported by Google's global nameserver network.",
-      "Configure DNS failover policies to route users to backup cloud resources during primary application failures.",
-      "Cloud CDN uses automatic cache bypass during backend failures to ensure dynamic content delivery.",
-      "Load balancers handle sudden traffic spikes gracefully without requiring warming.",
-      "Use session affinity settings to bind client requests to the same backend node when state is required."
-    ],
-    "cost": [
-      "Load balancing charges are based on forwarding rules, ingress data processed (GB), and backend connections.",
-      "Cloud CDN bills for cache egress network fees, cache fill operations, and cache lookup requests.",
-      "Cloud DNS charges per managed zone and for millions of DNS queries processed per month.",
-      "Cloud CDN significantly reduces network egress billing by serving cached files from edge points instead of backend VMs.",
-      "Use Google-managed SSL certificates to eliminate the purchase and manual renewal cost of certificates.",
-      "Consolidate multiple domains under a single global load balancer using URL host rules to minimize rule charges.",
-      "Configure CDN cache TTLs (Time to Live) to maximize cache hit ratios, reducing backend compute costs.",
-      "Delete unused forwarding rules and static IP reservations to avoid idle network fees."
-    ]
-  }
+  ]
 }

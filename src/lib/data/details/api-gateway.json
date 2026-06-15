@@ -1,78 +1,42 @@
 {
-  "features": [
+  "keyPoints": [
+    "Provides a dedicated API Gateway & Governance platform engineered to a managed gateway designed to secure and control access to backend services, cloud functions, and API endpoints..",
+    "Integrates API Gateway capabilities directly into multi-tier cloud architectures, serving as a key component of the DevOps Continuous Integration and Application Delivery portfolio.",
+    "Encourages standard interface structures (REST APIs, Client SDKs, or console controls) to facilitate rapid cloud resource provisioning.",
+    "Automates software builds, containerization, and deployments using declaration files (YAML/JSON).",
+    "Supports release automation with built-in progressive rollout strategies (canary, blue-green, and rolling upgrades).",
+    "Secures the software supply chain by scanning dependencies, code, and container images for known vulnerabilities.",
+    "Optimizes API Gateway performance through automated platform scaling and resource balancing.",
+    "Enables resource segregation, logical naming conventions, and tag-based configuration policies for API Gateway.",
+    "Integrates with VPC routing and private service access architectures to secure communication tunnels.",
+    "Governs access to API Gateway using standard IAM roles (e.g. roles/gateway.admin and roles/gateway.viewer) for fine-grained permissions.",
+    "Supports audit logging to record administrative actions and verify API configuration modifications for compliance reports.",
+    "Secures operational payloads using encryption at rest (Google-managed or Customer-Managed Keys via KMS) and SSL/TLS in transit.",
+    "Offers regional and multi-regional configuration options, duplicating service state across multiple zones to sustain outage events.",
+    "Enforces API quotas and rate limits programmatically to prevent resource starvation and noisy-neighbor interference.",
+    "Provides service recovery tools, regular status logs, and high-availability SLAs matching enterprise uptime goals.",
+    "Billed based on resource metrics (e.g., operations count, active connections, or gigabytes stored) allowing cost optimization.",
+    "Integrates with Cloud Monitoring and Cloud Logging to enable real-time alerting, metrics tracking, and diagnostic dashboards.",
+    "Enables command line administration through the gcloud CLI tool, allowing pipeline automation and scripting."
+  ],
+  "scenarios": [
     {
-      "name": "Serverless Build Execution",
-      "description": "Compiles, tests, and packages code in isolated, serverless container sandboxes that scale dynamically."
+      "scenario": "An enterprise wants to construct a secure architectural pattern involving API Gateway that blocks public internet ingress and enforces strict access restrictions.",
+      "solution": "Deploy the API Gateway resource inside a VPC Service Control perimeter, routing connections privately using Serverless VPC connectors or internal gateways, and assign permissions using IAM roles."
     },
     {
-      "name": "Progressive Delivery Control",
-      "description": "Orchestrates multi-stage application releases to GKE, Cloud Run, and Anthos with automated canary checks."
-    },
-    {
-      "name": "Vulnerability Scanning",
-      "description": "Scans container images and language packages automatically for CVEs during the build and storage stages."
+      "scenario": "A development team needs to build automated CI/CD configurations that configure and audit API Gateway operations on a regular basis while tracking costs.",
+      "solution": "Use Cloud Build scripts executing 'gcloud' commands to provision the API Gateway resources, enable Cloud Audit Logs, and configure budget notifications at the project folder level."
     }
   ],
-  "iamRoles": [
+  "commands": [
     {
-      "role": "roles/cloudbuild.builds.editor",
-      "description": "Full access to create, run, and cancel Cloud Build pipelines and triggers."
+      "description": "Create or configure a new API Gateway resource",
+      "command": "gcloud api-gateway gateways create prod-gateway-resource \\\n  --region=us-central1 \\\n  --description=\"Production API Gateway Resource\""
     },
     {
-      "role": "roles/clouddeploy.admin",
-      "description": "Permissions to manage continuous delivery releases, targets, and rollouts."
+      "description": "List active API Gateway instances and query configuration states",
+      "command": "gcloud api-gateway gateways list --format=\"table(name, state, updateTime)\""
     }
-  ],
-  "cliExamples": [
-    {
-      "description": "Trigger a Cloud Build execution using a local config file",
-      "command": "gcloud builds submit --config=cloudbuild.yaml ."
-    },
-    {
-      "description": "Create a release in Cloud Deploy for a specific pipeline",
-      "command": "gcloud deploy releases create my-release-v1 \\\n  --delivery-pipeline=my-pipeline \\\n  --region=us-central1 \\\n  --images=api-gateway-app-image=gcr.io/my-project/api-gateway-app:v1"
-    }
-  ],
-  "keyPoints": {
-    "design": [
-      "DevOps pipelines automate the compilation, packaging, testing, and deployment of software artifacts.",
-      "Cloud Build executes declarative build steps defined in YAML or JSON, running in isolated container environments.",
-      "Cloud Deploy manages continuous delivery pipelines, automating progressive rollouts to GKE and Cloud Run.",
-      "Artifact Registry stores and governs container images, Helm charts, and Maven/npm packages in a single registry.",
-      "Developer Connect establishes secure Git proxies between GCP services and external code repositories.",
-      "Secure Source Manager hosts private Git repositories with enterprise compliance, CMEK, and IAM.",
-      "Use Cloud Build triggers to automate build runs on Git commits, pull requests, or branch updates.",
-      "Deploy pipelines must support immutable tags; do not use the 'latest' tag in production releases."
-    ],
-    "security": [
-      "Enforce Binary Authorization policies in target environments to block containers that lack build pipeline signatures.",
-      "Store API keys, SSH keys, and passwords in Secret Manager and fetch them dynamically during the build run.",
-      "Segregate IAM duties: developers write code, build accounts compile, release roles approve production deployments.",
-      "Vulnerability scanning in Artifact Registry automatically flags security threats inside dependencies.",
-      "Run build workers inside a private pool VPC network to connect to databases and internal services safely.",
-      "Encrypt code repositories and stored packages in Artifact Registry using Customer-Managed Keys (CMEK).",
-      "Restrict build agent Service Accounts to least privilege, avoiding owner or editor roles.",
-      "All build outputs, compiler logs, and deployment approvals are logged permanently in Cloud Audit Logs."
-    ],
-    "reliability": [
-      "Cloud Build executes builds in serverless sandboxes, scaling automatically to handle parallel jobs.",
-      "Cloud Deploy supports automated rollback to a previous successful release when rollout health checks fail.",
-      "Artifact Registry replicates stored packages across multiple zones or regions to ensure high availability.",
-      "Store pipeline configs and build manifests in Git to enable recovery via GitOps practices.",
-      "Cache intermediate compiler dependencies in Cloud Storage to prevent build crashes due to external package network failures.",
-      "Monitor rollout statuses, deployment speeds, and build error rates in Cloud Monitoring dashboards.",
-      "Configure pipeline triggers to run tests and linters, preventing broken code from reaching production.",
-      "Maintain immutable build logs and release archives to guarantee traceability."
-    ],
-    "cost": [
-      "Cloud Build charges based on machine type (virtual machine shape) and execution duration (per minute).",
-      "Artifact Registry bills for package storage capacity (GB/month) and network transfer egress.",
-      "Cloud Deploy charges based on active delivery pipelines and target deployments executed.",
-      "Enable caching of build steps to speed up pipelines and minimize active build billing minutes.",
-      "Establish cleanup policies in Artifact Registry to delete old, noncurrent, or untagged container images.",
-      "Use standard, smaller build worker machines unless compilation tasks explicitly require high CPU/RAM.",
-      "Set build timeout limits in pipeline files to terminate stalled builds and prevent runaway billing.",
-      "Take advantage of monthly free tiers (e.g. 120 build-minutes free per day on standard machines)."
-    ]
-  }
+  ]
 }

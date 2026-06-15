@@ -1,78 +1,42 @@
 {
-  "features": [
+  "keyPoints": [
+    "Provides a dedicated Observability & Diagnostics platform engineered to a distributed tracing system that collects latency data from microservices, helping developers optimize application response times..",
+    "Integrates Cloud Trace capabilities directly into multi-tier cloud architectures, serving as a key component of the Security, Governance, and Platform Management portfolio.",
+    "Encourages standard interface structures (REST APIs, Client SDKs, or console controls) to facilitate rapid cloud resource provisioning.",
+    "Enforces the principle of least privilege across resources using Identity and Access Management (IAM) role assignments.",
+    "Governs organizational resources hierarchically using folders and projects with inherited configuration policies.",
+    "Secures encryption keys and sensitive credentials centrally to avoid plaintext leakage in application codebases.",
+    "Aggregates system metrics, application logs, and request trace spans into centralized dashboards.",
+    "Supports alert routing, threshold alarms, and log filtering to diagnose system health anomalies in real-time.",
+    "Monitors audit logs to ensure compliance and trace administrative actions across Google Cloud resources.",
+    "Governs access to Cloud Trace using standard IAM roles (e.g. roles/trace.admin and roles/trace.viewer) for fine-grained permissions.",
+    "Supports audit logging to record administrative actions and verify API configuration modifications for compliance reports.",
+    "Secures operational payloads using encryption at rest (Google-managed or Customer-Managed Keys via KMS) and SSL/TLS in transit.",
+    "Offers regional and multi-regional configuration options, duplicating service state across multiple zones to sustain outage events.",
+    "Enforces API quotas and rate limits programmatically to prevent resource starvation and noisy-neighbor interference.",
+    "Provides service recovery tools, regular status logs, and high-availability SLAs matching enterprise uptime goals.",
+    "Billed based on resource metrics (e.g., operations count, active connections, or gigabytes stored) allowing cost optimization.",
+    "Integrates with Cloud Monitoring and Cloud Logging to enable real-time alerting, metrics tracking, and diagnostic dashboards.",
+    "Enables command line administration through the gcloud CLI tool, allowing pipeline automation and scripting."
+  ],
+  "scenarios": [
     {
-      "name": "Unified Dashboarding",
-      "description": "Consolidates logs, CPU/memory performance metrics, and application traces in real-time dashboards."
+      "scenario": "An enterprise wants to construct a secure architectural pattern involving Cloud Trace that blocks public internet ingress and enforces strict access restrictions.",
+      "solution": "Deploy the Cloud Trace resource inside a VPC Service Control perimeter, routing connections privately using Serverless VPC connectors or internal gateways, and assign permissions using IAM roles."
     },
     {
-      "name": "Dynamic Alerting Rules",
-      "description": "Triggers email, Slack, or PagerDuty alerts automatically when metric thresholds are breached."
-    },
-    {
-      "name": "Distributed Trace Analysis",
-      "description": "Tracks request execution paths across multiple microservices to pinpoint latency bottlenecks."
+      "scenario": "A development team needs to build automated CI/CD configurations that configure and audit Cloud Trace operations on a regular basis while tracking costs.",
+      "solution": "Use Cloud Build scripts executing 'gcloud' commands to provision the Cloud Trace resources, enable Cloud Audit Logs, and configure budget notifications at the project folder level."
     }
   ],
-  "iamRoles": [
+  "commands": [
     {
-      "role": "roles/monitoring.admin",
-      "description": "Full access to configure monitoring dashboards, alerting policies, and uptime checks."
+      "description": "Create or configure a new Cloud Trace resource",
+      "command": "gcloud trace create prod-trace-resource \\\n  --region=us-central1 \\\n  --description=\"Production Cloud Trace Resource\""
     },
     {
-      "role": "roles/logging.admin",
-      "description": "Permissions to configure log sinks, buckets, retention policies, and view all logs."
+      "description": "List active Cloud Trace instances and query configuration states",
+      "command": "gcloud trace list --format=\"table(name, state, updateTime)\""
     }
-  ],
-  "cliExamples": [
-    {
-      "description": "Create a log routing sink to export logs to a Cloud Storage bucket",
-      "command": "gcloud logging sinks create cloud-trace-sink \\\n  storage.googleapis.com/my-log-bucket \\\n  --log-filter=\"severity>=ERROR\""
-    },
-    {
-      "description": "List all active alerting policies in the project",
-      "command": "gcloud alpha monitoring policies list"
-    }
-  ],
-  "keyPoints": {
-    "design": [
-      "Google Cloud Observability (formerly Stackdriver) provides logging, monitoring, tracing, and profiling.",
-      "Cloud Monitoring collects performance metrics from GCP services, VMs, and custom applications.",
-      "Cloud Logging ingests, filters, and routes log lines from applications and audit trails.",
-      "Log Sinks route filtered logs to Cloud Storage (archival), BigQuery (analytics), or Pub/Sub (real-time stream).",
-      "Cloud Trace analyses request latency across microservices, identifying performance bottlenecks.",
-      "Cloud Profiler continuously analyzes CPU and memory allocation patterns inside application code.",
-      "Uptime checks monitor external endpoints, alerting operators on availability failures.",
-      "Use MQL (Monitoring Query Language) to write advanced metric aggregation and filtering queries."
-    ],
-    "security": [
-      "Administrative changes and data access logs are recorded in immutable Admin Activity and Data Access Audit Logs.",
-      "Exclude sensitive PII or credentials from logs using Logging exclusions or Sensitive Data Protection.",
-      "Manage log access using IAM logging roles (`roles/logging.privateViewer` is required to view audit logs).",
-      "Encrypt log buckets at rest using Customer-Managed Encryption Keys (CMEK) via Cloud KMS.",
-      "Access to Cloud Monitoring dashboards can be restricted to security and operations teams.",
-      "Log sinks can export logs to a secure, isolated audit project bucket for compliance.",
-      "VPC Service Controls perimeters protect metrics and trace data from external exfiltration.",
-      "Set strict log bucket retention periods to comply with data privacy regulations (e.g. GDPR)."
-    ],
-    "reliability": [
-      "Cloud Logging is serverless, scaling instantly to absorb massive spikes in system logs.",
-      "Log routing sinks support automated retries to ensure log delivery to destinations (Storage, BigQuery).",
-      "Configure alert notifications to multiple channels (PagerDuty, SMS, Slack, Webhooks) to ensure response.",
-      "Uptime checks run from multiple geographical locations worldwide to prevent false positives.",
-      "Trace and Profiler agents run in the background with low overhead, ensuring application stability.",
-      "Replicate log buckets across regions to secure logs from regional disasters.",
-      "Store historical logs in Cloud Storage buckets with Object Lifecycle Lock for WORM compliance.",
-      "Create custom metric alerts to detect anomalies in log ingestion rates."
-    ],
-    "cost": [
-      "Cloud Logging charges per GB of logs ingested and for logs retained beyond the default 30 days.",
-      "Cloud Monitoring charges based on custom metrics ingested and API read/write operations.",
-      "Reduce logging costs by setting up Log Exclusions to drop high-volume, low-value debug logs.",
-      "Configure log sinks to only route warnings and errors to BigQuery, keeping debug logs in standard storage.",
-      "Shorten log bucket retention periods to the minimum required to avoid monthly log storage fees.",
-      "Monitor custom metric ingestion rates; avoid exporting high-cardinality metrics (like user IDs) to Monitoring.",
-      "Standard GCP service metrics are ingested at no cost; only custom or Prometheus metrics incur fees.",
-      "Use Cloud Storage Archive class for long-term log storage to minimize GB/month fees."
-    ]
-  }
+  ]
 }

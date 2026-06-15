@@ -1,78 +1,44 @@
 {
-  "features": [
+  "keyPoints": [
+    "Centralized cloud service to generate, rotate, and manage cryptographic keys for encrypting data.",
+    "Supports symmetric, asymmetric, and signing key rings matching various security patterns.",
+    "Customer-Managed Encryption Keys (CMEK) integrate with GCS, BigQuery, and compute disks to manage data locks.",
+    "Cloud HSM provides FIPS 140-2 Level 3 validated physical security modules protecting key lifecycle events.",
+    "Cloud EKM delegates key protection to on-premises key management servers outside Google Cloud.",
+    "Cryptographic keys cannot be deleted immediately; they must be scheduled for destruction, with a 24-hour restore window.",
+    "Allows configuring automatic key rotation schedules to generate new key versions on specified cycles.",
+    "Access control is managed at the key ring or key level using specific IAM decrypt/encrypt roles.",
+    "Logs all encryption and decryption operations to Cloud Audit Logs for compliance reviews.",
+    "Integrates with external identity providers to authorize key operations dynamically.",
+    "Supports importing on-premises cryptographic keys into Cloud KMS to maintain schema configurations.",
+    "Provides high-performance encryption operations directly inside regional Google locations.",
+    "Asymmetric keys support public-key encryption and digital signature verification.",
+    "Allows disabling key versions to instantly lock down encrypted storage buckets or disks.",
+    "Designed to comply with HIPAA, PCI-DSS, FedRAMP, and GDPR security standards.",
+    "Supports key rings to organize keys logically by department, location, or environment.",
+    "Provides client libraries and a REST API to perform cryptographic functions programmatically.",
+    "Supports symmetric keys for envelope encryption, encrypting local keys with a KMS root key.",
+    "Saves operational overheads compared to maintaining on-premises HSM hardware nodes.",
+    "Key usage is billed per active key version per month, plus cryptographic transaction volumes."
+  ],
+  "scenarios": [
     {
-      "name": "Centralized Vault Storage",
-      "description": "Provides secure, centralized storage and rotation for passwords, API keys, and certificates."
+      "scenario": "A regulatory compliance audit mandates that all medical scan backups in GCS be encrypted using keys managed in an on-premises datacenter.",
+      "solution": "Configure GCS CMEK, linking it to a Cloud KMS key integrated with Cloud EKM pointing to the on-premises HSM."
     },
     {
-      "name": "Hardware Security Modules (HSM)",
-      "description": "Generates and stores cryptographic keys inside FIPS 140-2 Level 3 validated Hardware Security Modules."
-    },
-    {
-      "name": "Automated Key Rotation",
-      "description": "Rotates cryptographic keys and secret versions automatically based on defined schedules."
+      "scenario": "A security incident occurs, and a database administrator needs to instantly revoke all read access to encrypted database tables.",
+      "solution": "Disable the active version of the Customer-Managed Encryption Key in Cloud KMS, instantly blocking decryption operations."
     }
   ],
-  "iamRoles": [
+  "commands": [
     {
-      "role": "roles/cloudkms.admin",
-      "description": "Full access to create, modify, and rotate cryptographic keys and key rings."
+      "description": "Create a key ring inside a specified regional location",
+      "command": "gcloud kms keyrings create prod-keyring --location=us-central1"
     },
     {
-      "role": "roles/secretmanager.admin",
-      "description": "Permissions to create, modify, access, and rotate secrets inside Secret Manager."
+      "description": "Provision a symmetric encryption key inside the key ring",
+      "command": "gcloud kms keys create app-key \\\n  --keyring=prod-keyring \\\n  --location=us-central1 \\\n  --purpose=encryption"
     }
-  ],
-  "cliExamples": [
-    {
-      "description": "Create a new secret in Secret Manager",
-      "command": "gcloud secrets create cloud-key-management-service-secret --replication-policy=automatic"
-    },
-    {
-      "description": "Add a new secret version with static text",
-      "command": "echo -n \"super-secret-password\" | gcloud secrets versions add cloud-key-management-service-secret --data-file=-"
-    }
-  ],
-  "keyPoints": {
-    "design": [
-      "Secret Manager is chosen to store API keys, database credentials, and certificates securely.",
-      "Cloud Key Management Service (KMS) manages cryptographic keys used to encrypt data.",
-      "Envelope encryption: Cloud KMS manages Key Encryption Keys (KEK) that encrypt Data Encryption Keys (DEKs) which encrypt actual data.",
-      "Customer-Managed Encryption Keys (CMEK) give you control over key rotation and access policies in GCP services.",
-      "Customer-Supplied Encryption Keys (CSEK) are keys generated on-premises and provided to GCP during API calls.",
-      "KMS HSM keys generate and store cryptographic keys inside FIPS 140-2 Level 3 validated physical modules.",
-      "Cloud External Key Manager (EKM) stores cryptographic keys outside of Google's network for complete sovereignty.",
-      "Secrets and keys are global or regional resources; choose regional storage to comply with data sovereignty regulations."
-    ],
-    "security": [
-      "Do not store plaintext passwords in source repositories or container images; pull them from Secret Manager.",
-      "Manage access to secrets using roles/secretmanager.secretAccessor, avoiding administrative roles.",
-      "KMS key ring permissions must be configured at the key ring or key level, not the project level (least privilege).",
-      "Enable automated rotation policies for KMS keys and secrets to mitigate credential compromise risk.",
-      "Secret Manager allows configuring VPC Service Controls perimeters to prevent unauthorized secret fetching.",
-      "Audit logs track key rotations, key access events, and secret version retrievals.",
-      "Disable or destroy compromised KMS key versions immediately to prevent further decryption.",
-      "Always encrypt database connection passwords when mounting them to serverless containers."
-    ],
-    "reliability": [
-      "KMS and Secret Manager replicate keys and secrets across multiple zones or regions.",
-      "Choose automatic replication for Secret Manager to distribute secrets globally for high availability.",
-      "Destroyed KMS keys have a 24-hour grace period during which they can be recovered before permanent deletion.",
-      "KMS key rings cannot be deleted, preventing accidental loss of keys encrypting legacy archives.",
-      "Secret versions are immutable; updates create a new version, allowing safe rollbacks.",
-      "KMS API endpoints are highly optimized to ensure decryption calls do not introduce app latency.",
-      "System alerts on key expiration or decryption errors are sent to Cloud Monitoring.",
-      "Configure backup decryption keys in recovery plans for disaster recovery."
-    ],
-    "cost": [
-      "KMS charges per active key version per month and for cryptographic operations performed.",
-      "Secret Manager bills per active secret, per secret version, and for API access operations.",
-      "Disable or destroy unused KMS key versions to avoid monthly key storage fees.",
-      "Secret Manager charges for API operations; cache retrieved secrets in application memory to minimize API billing.",
-      "Consolidate keys on shared Key Rings where possible to simplify billing structures.",
-      "Avoid using EKM (External Key Manager) for high-frequency operations due to network egress costs.",
-      "Take advantage of free tier limits for secret lookups and KMS decryption operations.",
-      "Monitor decryption API call rates using billing dashboards to detect inefficient application code."
-    ]
-  }
+  ]
 }

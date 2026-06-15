@@ -1,78 +1,42 @@
 {
-  "features": [
+  "keyPoints": [
+    "Provides a dedicated Encryption & Key Management platform engineered to a highly secure cloud-hosted hardware security module (HSM) designed to store and manage cryptographic keys..",
+    "Integrates Cloud HSM capabilities directly into multi-tier cloud architectures, serving as a key component of the Security, Governance, and Platform Management portfolio.",
+    "Encourages standard interface structures (REST APIs, Client SDKs, or console controls) to facilitate rapid cloud resource provisioning.",
+    "Enforces the principle of least privilege across resources using Identity and Access Management (IAM) role assignments.",
+    "Governs organizational resources hierarchically using folders and projects with inherited configuration policies.",
+    "Secures encryption keys and sensitive credentials centrally to avoid plaintext leakage in application codebases.",
+    "Secures resources using symmetric or asymmetric cryptographic keys with automatic rotation cycles.",
+    "Integrates Customer-Managed Encryption Keys (CMEK) to encrypt data stored inside GCS, BigQuery, or Compute Engine.",
+    "Supports FIPS 140-2 Level 3 Hardware Security Modules (HSM) for highly compliant encryption key isolation.",
+    "Governs access to Cloud HSM using standard IAM roles (e.g. roles/hsm.admin and roles/hsm.viewer) for fine-grained permissions.",
+    "Supports audit logging to record administrative actions and verify API configuration modifications for compliance reports.",
+    "Secures operational payloads using encryption at rest (Google-managed or Customer-Managed Keys via KMS) and SSL/TLS in transit.",
+    "Offers regional and multi-regional configuration options, duplicating service state across multiple zones to sustain outage events.",
+    "Enforces API quotas and rate limits programmatically to prevent resource starvation and noisy-neighbor interference.",
+    "Provides service recovery tools, regular status logs, and high-availability SLAs matching enterprise uptime goals.",
+    "Billed based on resource metrics (e.g., operations count, active connections, or gigabytes stored) allowing cost optimization.",
+    "Integrates with Cloud Monitoring and Cloud Logging to enable real-time alerting, metrics tracking, and diagnostic dashboards.",
+    "Enables command line administration through the gcloud CLI tool, allowing pipeline automation and scripting."
+  ],
+  "scenarios": [
     {
-      "name": "Centralized Vault Storage",
-      "description": "Provides secure, centralized storage and rotation for passwords, API keys, and certificates."
+      "scenario": "An enterprise wants to construct a secure architectural pattern involving Cloud HSM that blocks public internet ingress and enforces strict access restrictions.",
+      "solution": "Deploy the Cloud HSM resource inside a VPC Service Control perimeter, routing connections privately using Serverless VPC connectors or internal gateways, and assign permissions using IAM roles."
     },
     {
-      "name": "Hardware Security Modules (HSM)",
-      "description": "Generates and stores cryptographic keys inside FIPS 140-2 Level 3 validated Hardware Security Modules."
-    },
-    {
-      "name": "Automated Key Rotation",
-      "description": "Rotates cryptographic keys and secret versions automatically based on defined schedules."
+      "scenario": "A development team needs to build automated CI/CD configurations that configure and audit Cloud HSM operations on a regular basis while tracking costs.",
+      "solution": "Use Cloud Build scripts executing 'gcloud' commands to provision the Cloud HSM resources, enable Cloud Audit Logs, and configure budget notifications at the project folder level."
     }
   ],
-  "iamRoles": [
+  "commands": [
     {
-      "role": "roles/cloudkms.admin",
-      "description": "Full access to create, modify, and rotate cryptographic keys and key rings."
+      "description": "Create or configure a new Cloud HSM resource",
+      "command": "gcloud hsm create prod-hsm-resource \\\n  --region=us-central1 \\\n  --description=\"Production Cloud HSM Resource\""
     },
     {
-      "role": "roles/secretmanager.admin",
-      "description": "Permissions to create, modify, access, and rotate secrets inside Secret Manager."
+      "description": "List active Cloud HSM instances and query configuration states",
+      "command": "gcloud hsm list --format=\"table(name, state, updateTime)\""
     }
-  ],
-  "cliExamples": [
-    {
-      "description": "Create a new secret in Secret Manager",
-      "command": "gcloud secrets create cloud-hsm-secret --replication-policy=automatic"
-    },
-    {
-      "description": "Add a new secret version with static text",
-      "command": "echo -n \"super-secret-password\" | gcloud secrets versions add cloud-hsm-secret --data-file=-"
-    }
-  ],
-  "keyPoints": {
-    "design": [
-      "Secret Manager is chosen to store API keys, database credentials, and certificates securely.",
-      "Cloud Key Management Service (KMS) manages cryptographic keys used to encrypt data.",
-      "Envelope encryption: Cloud KMS manages Key Encryption Keys (KEK) that encrypt Data Encryption Keys (DEKs) which encrypt actual data.",
-      "Customer-Managed Encryption Keys (CMEK) give you control over key rotation and access policies in GCP services.",
-      "Customer-Supplied Encryption Keys (CSEK) are keys generated on-premises and provided to GCP during API calls.",
-      "KMS HSM keys generate and store cryptographic keys inside FIPS 140-2 Level 3 validated physical modules.",
-      "Cloud External Key Manager (EKM) stores cryptographic keys outside of Google's network for complete sovereignty.",
-      "Secrets and keys are global or regional resources; choose regional storage to comply with data sovereignty regulations."
-    ],
-    "security": [
-      "Do not store plaintext passwords in source repositories or container images; pull them from Secret Manager.",
-      "Manage access to secrets using roles/secretmanager.secretAccessor, avoiding administrative roles.",
-      "KMS key ring permissions must be configured at the key ring or key level, not the project level (least privilege).",
-      "Enable automated rotation policies for KMS keys and secrets to mitigate credential compromise risk.",
-      "Secret Manager allows configuring VPC Service Controls perimeters to prevent unauthorized secret fetching.",
-      "Audit logs track key rotations, key access events, and secret version retrievals.",
-      "Disable or destroy compromised KMS key versions immediately to prevent further decryption.",
-      "Always encrypt database connection passwords when mounting them to serverless containers."
-    ],
-    "reliability": [
-      "KMS and Secret Manager replicate keys and secrets across multiple zones or regions.",
-      "Choose automatic replication for Secret Manager to distribute secrets globally for high availability.",
-      "Destroyed KMS keys have a 24-hour grace period during which they can be recovered before permanent deletion.",
-      "KMS key rings cannot be deleted, preventing accidental loss of keys encrypting legacy archives.",
-      "Secret versions are immutable; updates create a new version, allowing safe rollbacks.",
-      "KMS API endpoints are highly optimized to ensure decryption calls do not introduce app latency.",
-      "System alerts on key expiration or decryption errors are sent to Cloud Monitoring.",
-      "Configure backup decryption keys in recovery plans for disaster recovery."
-    ],
-    "cost": [
-      "KMS charges per active key version per month and for cryptographic operations performed.",
-      "Secret Manager bills per active secret, per secret version, and for API access operations.",
-      "Disable or destroy unused KMS key versions to avoid monthly key storage fees.",
-      "Secret Manager charges for API operations; cache retrieved secrets in application memory to minimize API billing.",
-      "Consolidate keys on shared Key Rings where possible to simplify billing structures.",
-      "Avoid using EKM (External Key Manager) for high-frequency operations due to network egress costs.",
-      "Take advantage of free tier limits for secret lookups and KMS decryption operations.",
-      "Monitor decryption API call rates using billing dashboards to detect inefficient application code."
-    ]
-  }
+  ]
 }

@@ -1,78 +1,42 @@
 {
-  "features": [
+  "keyPoints": [
+    "Provides a dedicated Data Pipeline Orchestration platform engineered to a development environment designed to model, test, and execute complex SQL workflows inside analytical data warehouses..",
+    "Integrates Dataform capabilities directly into multi-tier cloud architectures, serving as a key component of the Databases, Analytics, and Data Lakes portfolio.",
+    "Encourages standard interface structures (REST APIs, Client SDKs, or console controls) to facilitate rapid cloud resource provisioning.",
+    "Manages relational schemas, NoSQL documents, and column-family tables with built-in replication and backup options.",
+    "Supports decoupled storage and compute architectures to process petabytes of analytical data without performance interference.",
+    "Implements Point-in-Time Recovery (PITR) to restore transactional databases to any microsecond for disaster recovery.",
+    "Optimizes Dataform performance through automated platform scaling and resource balancing.",
+    "Enables resource segregation, logical naming conventions, and tag-based configuration policies for Dataform.",
+    "Integrates with VPC routing and private service access architectures to secure communication tunnels.",
+    "Governs access to Dataform using standard IAM roles (e.g. roles/dataform.admin and roles/dataform.viewer) for fine-grained permissions.",
+    "Supports audit logging to record administrative actions and verify API configuration modifications for compliance reports.",
+    "Secures operational payloads using encryption at rest (Google-managed or Customer-Managed Keys via KMS) and SSL/TLS in transit.",
+    "Offers regional and multi-regional configuration options, duplicating service state across multiple zones to sustain outage events.",
+    "Enforces API quotas and rate limits programmatically to prevent resource starvation and noisy-neighbor interference.",
+    "Provides service recovery tools, regular status logs, and high-availability SLAs matching enterprise uptime goals.",
+    "Billed based on resource metrics (e.g., operations count, active connections, or gigabytes stored) allowing cost optimization.",
+    "Integrates with Cloud Monitoring and Cloud Logging to enable real-time alerting, metrics tracking, and diagnostic dashboards.",
+    "Enables command line administration through the gcloud CLI tool, allowing pipeline automation and scripting."
+  ],
+  "scenarios": [
     {
-      "name": "State Machine Execution",
-      "description": "Orchestrates multi-step API and HTTP integrations in reliable serverless state machines with automated retry steps."
+      "scenario": "An enterprise wants to construct a secure architectural pattern involving Dataform that blocks public internet ingress and enforces strict access restrictions.",
+      "solution": "Deploy the Dataform resource inside a VPC Service Control perimeter, routing connections privately using Serverless VPC connectors or internal gateways, and assign permissions using IAM roles."
     },
     {
-      "name": "Asynchronous Rate Control",
-      "description": "Buffers execution requests inside task queues, managing retry rates and rate limits to protect backend servers."
-    },
-    {
-      "name": "Serverless Cron Scheduler",
-      "description": "Triggers recurring API calls, Pub/Sub events, or workflows on standard crontab schedules."
+      "scenario": "A development team needs to build automated CI/CD configurations that configure and audit Dataform operations on a regular basis while tracking costs.",
+      "solution": "Use Cloud Build scripts executing 'gcloud' commands to provision the Dataform resources, enable Cloud Audit Logs, and configure budget notifications at the project folder level."
     }
   ],
-  "iamRoles": [
+  "commands": [
     {
-      "role": "roles/workflows.admin",
-      "description": "Full administrative control to create, update, and trigger workflows."
+      "description": "Create or configure a new Dataform resource",
+      "command": "gcloud dataform create prod-dataform-resource \\\n  --region=us-central1 \\\n  --description=\"Production Dataform Resource\""
     },
     {
-      "role": "roles/cloudtasks.admin",
-      "description": "Permissions to manage task queues, task creation, and execution settings."
+      "description": "List active Dataform instances and query configuration states",
+      "command": "gcloud dataform list --format=\"table(name, state, updateTime)\""
     }
-  ],
-  "cliExamples": [
-    {
-      "description": "Create a Cloud Tasks queue with custom rate limits",
-      "command": "gcloud tasks queues create dataform-queue \\\n  --max-dispatches-per-second=10 \\\n  --max-concurrent-tasks=5"
-    },
-    {
-      "description": "Trigger a serverless workflow execution with JSON arguments",
-      "command": "gcloud workflows run dataform-flow --data='{\"user\":\"alice\"}'"
-    }
-  ],
-  "keyPoints": {
-    "design": [
-      "Orchestration tools connect disparate services in structured, automated, and reliable sequences.",
-      "Workflows runs serverless state machines that execute HTTP/API calls, handling errors and states.",
-      "Cloud Tasks manages asynchronous execution queues, providing rate control and request buffering.",
-      "Cloud Scheduler is a managed cron service that triggers recurring Pub/Sub events or HTTP calls.",
-      "Eventarc routes system events (from Cloud Audit Logs, Pub/Sub) to serverless targets (Cloud Run).",
-      "Choose Workflows for complex API orchestration and Cloud Tasks for target-rate backpressure queue management.",
-      "Cloud Tasks supports both HTTP target tasks and App Engine tasks.",
-      "State configurations in Workflows are defined declaratively in YAML or JSON."
-    ],
-    "security": [
-      "Assign custom Service Accounts to Workflows to grant permissions to trigger target APIs.",
-      "Secure Cloud Tasks workers by using OIDC/OAuth2 tokens in task headers for authentication.",
-      "Secure Cloud Scheduler HTTP endpoints by configuring OIDC tokens on trigger requests.",
-      "Eventarc triggers enforce IAM roles (roles/eventarc.eventReceiver) on receiving runtimes.",
-      "VPC Service Controls protect event routes, task queues, and workflows from unauthorized projects.",
-      "Log workflow executions, task completions, and event deliveries to Cloud Logging.",
-      "Secrets used during workflow steps must be fetched from Secret Manager at runtime.",
-      "Restrict administrative access to queues and schedulers using IAM roles."
-    ],
-    "reliability": [
-      "Workflows handles execution state and failures, retrying failed HTTP calls with custom backoff.",
-      "Cloud Tasks automatically retries failed tasks based on queue configurations (max double backoff).",
-      "Cloud Scheduler guarantees execution, retrying failed cron triggers.",
-      "Eventarc is built on Pub/Sub, guaranteeing event delivery to endpoints.",
-      "Workflows executions are serverless and highly available, persisting state across failures.",
-      "Set maximum concurrent tasks in Cloud Tasks to prevent overloading backend database systems.",
-      "Establish dead-letter queues in Eventarc/Pub/Sub to isolate events that fail to deliver.",
-      "Monitor task queue lengths and workflow execution latencies in Cloud Monitoring."
-    ],
-    "cost": [
-      "Workflows charges based on the number of steps executed during execution runs.",
-      "Cloud Tasks bills for operations performed (task creation, execution attempts).",
-      "Cloud Scheduler charges per active job per month (up to 3 jobs are free per account).",
-      "Eventarc pricing is based on the volume of events routed to destination runtimes.",
-      "Reduce Cloud Tasks billing by batching multiple events into a single task payload where possible.",
-      "Configure task retry limits to prevent infinite loop executions from accumulating billing fees.",
-      "Choose Workflows over compute instances for orchestration to eliminate 24/7 VM hosting costs.",
-      "Utilize free tiers available for Workflows steps and Eventarc data volumes monthly."
-    ]
-  }
+  ]
 }

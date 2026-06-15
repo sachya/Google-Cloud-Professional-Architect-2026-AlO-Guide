@@ -1,78 +1,42 @@
 {
-  "features": [
+  "keyPoints": [
+    "Provides a dedicated Serverless Compute platform engineered to a lightweight, event-driven function-as-a-service (FaaS) platform designed to run small snippets of code without server management..",
+    "Integrates Cloud Run functions capabilities directly into multi-tier cloud architectures, serving as a key component of the Application Hosting and Compute Infrastructure portfolio.",
+    "Encourages standard interface structures (REST APIs, Client SDKs, or console controls) to facilitate rapid cloud resource provisioning.",
+    "Runs application logic across a spectrum of compute environments, from virtual machines to serverless runtimes.",
+    "Provides horizontal and vertical autoscaling mechanisms to match computing capacity with incoming request spikes.",
+    "Enables zero-downtime maintenance and deployment updates through load-balanced instance groups or revisions.",
+    "Executes stateless HTTP containers or simple event-driven functions without provisioning virtual machine hosts.",
+    "Scales compute allocations dynamically from zero to thousands of active instances based on incoming request volume.",
+    "Minimizes idle resource billing by charging only during active request processing or execution cycles.",
+    "Governs access to Cloud Run functions using standard IAM roles (e.g. roles/runfunctions.admin and roles/runfunctions.viewer) for fine-grained permissions.",
+    "Supports audit logging to record administrative actions and verify API configuration modifications for compliance reports.",
+    "Secures operational payloads using encryption at rest (Google-managed or Customer-Managed Keys via KMS) and SSL/TLS in transit.",
+    "Offers regional and multi-regional configuration options, duplicating service state across multiple zones to sustain outage events.",
+    "Enforces API quotas and rate limits programmatically to prevent resource starvation and noisy-neighbor interference.",
+    "Provides service recovery tools, regular status logs, and high-availability SLAs matching enterprise uptime goals.",
+    "Billed based on resource metrics (e.g., operations count, active connections, or gigabytes stored) allowing cost optimization.",
+    "Integrates with Cloud Monitoring and Cloud Logging to enable real-time alerting, metrics tracking, and diagnostic dashboards.",
+    "Enables command line administration through the gcloud CLI tool, allowing pipeline automation and scripting."
+  ],
+  "scenarios": [
     {
-      "name": "Zero Server Management",
-      "description": "Completely abstracts physical servers, VMs, and OS patching, allowing developers to focus solely on code."
+      "scenario": "An enterprise wants to construct a secure architectural pattern involving Cloud Run functions that blocks public internet ingress and enforces strict access restrictions.",
+      "solution": "Deploy the Cloud Run functions resource inside a VPC Service Control perimeter, routing connections privately using Serverless VPC connectors or internal gateways, and assign permissions using IAM roles."
     },
     {
-      "name": "Instant Autoscaling",
-      "description": "Scales compute instances up instantly to handle heavy incoming traffic spikes, and down to zero when idle."
-    },
-    {
-      "name": "Event-Driven Invocations",
-      "description": "Triggers code execution automatically in response to events from Pub/Sub, Cloud Storage, or HTTP requests."
+      "scenario": "A development team needs to build automated CI/CD configurations that configure and audit Cloud Run functions operations on a regular basis while tracking costs.",
+      "solution": "Use Cloud Build scripts executing 'gcloud' commands to provision the Cloud Run functions resources, enable Cloud Audit Logs, and configure budget notifications at the project folder level."
     }
   ],
-  "iamRoles": [
+  "commands": [
     {
-      "role": "roles/run.admin",
-      "description": "Full administrative control over Cloud Run services, configurations, and revisions."
+      "description": "Create or configure a new Cloud Run functions resource",
+      "command": "gcloud run services create prod-runfunctions-resource \\\n  --region=us-central1 \\\n  --description=\"Production Cloud Run functions Resource\""
     },
     {
-      "role": "roles/cloudfunctions.admin",
-      "description": "Full access to create, update, delete, and configure Cloud Functions."
+      "description": "List active Cloud Run functions instances and query configuration states",
+      "command": "gcloud run services list --format=\"table(name, state, updateTime)\""
     }
-  ],
-  "cliExamples": [
-    {
-      "description": "Deploy a containerized application to Cloud Run",
-      "command": "gcloud run deploy cloud-run-functions-app \\\n  --image=gcr.io/my-project/my-image:latest \\\n  --region=us-central1 \\\n  --allow-unauthenticated"
-    },
-    {
-      "description": "Deploy an event-driven Cloud Function triggered by a Pub/Sub topic",
-      "command": "gcloud functions deploy my-function \\\n  --runtime=nodejs18 \\\n  --trigger-topic=my-pubsub-topic \\\n  --entry-point=helloWorld"
-    }
-  ],
-  "keyPoints": {
-    "design": [
-      "Serverless compute platforms are selected for stateless, variable, or event-driven applications.",
-      "Cloud Run runs stateless containers, supporting any binary, framework, or language.",
-      "Cloud Run functions (formerly Cloud Functions) deploy small snippets of code for simple, isolated tasks.",
-      "App Engine Standard is a PaaS for standard languages, offering fast scaling and pre-configured runtimes.",
-      "App Engine Flexible runs custom Docker containers on managed Compute Engine VMs, scaling slower than Standard.",
-      "Cloud Run supports up to 250 concurrent requests per container instance, reducing cold start rates.",
-      "Serverless VPC Access connectors are required to access resources (like Cloud SQL, Memorystore) with private IPs.",
-      "Applications must be stateless; write local scratch data only to the ephemeral /tmp directory."
-    ],
-    "security": [
-      "Manage public service availability using IAM roles (allUsers for public, specific users/accounts for private).",
-      "Assign a custom Service Account to your serverless service to enforce least privilege to other GCP APIs.",
-      "Integrate Cloud Run/App Engine with Cloud Armor by routing traffic through an external HTTP(S) Load Balancer.",
-      "Mount secrets from Secret Manager directly as environment variables or volume mounts instead of hardcoding.",
-      "Configure Ingress settings to 'Internal' to prevent external traffic from accessing internal microservices.",
-      "Restrict serverless functions from accessing other projects using project-specific VPC Service Controls.",
-      "Verify container image security using Artifact Analysis before deploying them to Cloud Run.",
-      "Enable Binary Authorization to block deployment of unsigned, untrusted container images."
-    ],
-    "reliability": [
-      "Serverless runtimes automatically replicate application containers across multiple zones in the region.",
-      "Set the minimum instances configuration to '1' or more to eliminate cold-start latency for key endpoints.",
-      "Autoscaling limits (maximum instances) prevent runaway scaling and protect downstream databases from crashing.",
-      "Configure HTTP health checks to verify that container instances are ready before routing traffic to them.",
-      "Canary deployments are supported out of the box using traffic splitting between revision states.",
-      "Logs written to stdout/stderr are captured automatically and exported directly to Cloud Logging.",
-      "Event-driven functions process events asynchronously, supporting automatic retries on execution failures.",
-      "Design services to handle duplicate events gracefully, maintaining idempotency."
-    ],
-    "cost": [
-      "Serverless platforms bill to the nearest 100ms based on CPU and memory allocated during active request execution.",
-      "Idle resources cost zero because instances auto-scale down to zero when request traffic stops.",
-      "Choose CPU allocation mode: 'CPU allocated only during request processing' (saves cost) vs 'CPU always allocated'.",
-      "Set max instances to cap maximum possible spending and protect against DDoS billing spikes.",
-      "Optimize container startup times (e.g. lightweight base images) to reduce billing during scaling cold starts.",
-      "Tune container request concurrency limits to maximize resource efficiency per active instance.",
-      "Use Cloud Billing budgets and Pub/Sub notifications to automate service shutdown if cost thresholds are crossed.",
-      "Take advantage of the generous free tiers offered monthly for Cloud Run and Cloud Run functions."
-    ]
-  }
+  ]
 }

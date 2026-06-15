@@ -1,78 +1,44 @@
 {
-  "features": [
+  "keyPoints": [
+    "Wide-column NoSQL database engine designed for high-throughput, single-digit millisecond latency workloads.",
+    "A single cluster node handles up to 10,000 writes per second, scaling capacity linearly as nodes are added.",
+    "Row keys must be designed lexicographically (sorted alphabetically) to balance query loads across nodes and prevent hotspots.",
+    "Key Visualizer diagnostic tool provides visual heatmaps to identify and resolve read-write hotspots in real-time.",
+    "Supports multi-cluster replication across regions, enabling active-active write configurations and seamless failover.",
+    "Optimizes database size using automated garbage collection policies to prune old row versions or expired data.",
+    "Data is stored in sorted SSTables, partitioned dynamically across nodes as tablets scale in size.",
+    "Integrates natively with Apache Spark, Hadoop, and Dataflow pipelines via standard HBase APIs.",
+    "Provides single-digit millisecond latency for reads and writes, making it ideal for financial ticks and IoT streams.",
+    "Does not support transactional SQL queries or joins; tables are flat and key-value based.",
+    "Requires client access to run via gRPC endpoints, optimizing network performance.",
+    "Offers choice of SSD storage for latency-critical apps, or HDD storage for low-cost archive use cases.",
+    "Enables autoscaling policies to dynamically adjust node counts based on CPU utilization and storage load.",
+    "Supports IAM policies to restrict access at the instance, cluster, or table level.",
+    "Integrates with Vertex AI Vector Search to perform nearest-neighbor searches directly on stored column data.",
+    "Supports backup and restore operations to clone tables across instances or regions.",
+    "Uses column families to group related columns together, optimizing disk read performance.",
+    "Allows live migration of clusters between zones and storage tiers without downtime.",
+    "Provides detailed client libraries for Java, Python, Go, Node.js, and C++.",
+    "Pricing is based on cluster node count, storage tier capacity, and network data egress."
+  ],
+  "scenarios": [
     {
-      "name": "ACID Compliance & Transactions",
-      "description": "Guarantees strong transactional consistency and integrity for relational schemas across zonal or global deployments."
+      "scenario": "An IoT gateway is receiving telemetry logs from millions of smart devices. Writes are heavy and must be committed in real-time with sub-10ms latency.",
+      "solution": "Deploy a Cloud Bigtable instance, using SSD storage, and stream logs using Cloud Pub/Sub and a Dataflow write pipeline."
     },
     {
-      "name": "Automated Backups & PITR",
-      "description": "Enables point-in-time recovery (PITR) to restore database states back to a specific millisecond in case of corruption."
-    },
-    {
-      "name": "High Availability Failover",
-      "description": "Deploys active-passive synchronous replication across zones, executing automatic failover during outages."
+      "scenario": "A Bigtable cluster is experiencing CPU spikes because all read-write operations are targeting row keys that begin with the current date.",
+      "solution": "Analyze the access pattern using Key Visualizer, and change the row key design to prepend a hashed client ID to distribute writes."
     }
   ],
-  "iamRoles": [
+  "commands": [
     {
-      "role": "roles/cloudsql.admin",
-      "description": "Full access to administer Cloud SQL instances, backups, and user credentials."
+      "description": "Provision a Bigtable instance with 3 SSD nodes in a cluster",
+      "command": "gcloud bigtable instances create prod-bigtable \\\n  --display-name=\"Prod Bigtable\" \\\n  --cluster-storage-type=SSD \\\n  --cluster-config=id=prod-cluster,zone=us-central1-a,nodes=3"
     },
     {
-      "role": "roles/spanner.databaseAdmin",
-      "description": "Full administrative permissions over Cloud Spanner Bigtable instances, schemas, and queries."
+      "description": "List all active tables inside the Bigtable instance",
+      "command": "gcloud bigtable instances list"
     }
-  ],
-  "cliExamples": [
-    {
-      "description": "Create a high-availability Bigtable deployment",
-      "command": "gcloud sql instances create bigtable-db \\\n  --database-version=POSTGRES_15 \\\n  --tier=db-custom-2-7680 \\\n  --region=us-central1 \\\n  --availability-type=REGIONAL"
-    },
-    {
-      "description": "List all read replicas attached to database instances",
-      "command": "gcloud sql instances list --filter=\"settings.tier:db-*\""
-    }
-  ],
-  "keyPoints": {
-    "design": [
-      "Relational databases are chosen when workloads require full ACID transactional guarantees and complex table joins.",
-      "Cloud SQL supports standard MySQL, PostgreSQL, and SQL Server, scaling vertically through custom machine types.",
-      "Cloud Spanner is designed for global relational scalability, offering horizontal writes and transactional consistency.",
-      "For Cloud Spanner, primary key design must avoid sequential values (like timestamps) to prevent partition hotspots.",
-      "AlloyDB is a PostgreSQL-compatible analytical and transactional database built for high-performance enterprise engines.",
-      "Database schema migrations require executing Schema Conversion Tool and Database Migration Service (DMS).",
-      "Read replicas offload read-heavy dashboard query traffic from the primary transactional instance.",
-      "Use database connection pools to prevent exhausting database thread connection limits."
-    ],
-    "security": [
-      "Connect securely to Cloud SQL using the Cloud SQL Auth Proxy, which whitelists connections without public IPs.",
-      "Database IAM Authentication allows users and service accounts to login using Google credentials instead of static passwords.",
-      "Enforce private IP configurations using Serverless VPC Access or Private Service Connect for database interaction.",
-      "Always encrypt database backups and transaction logs using Customer-Managed Encryption Keys (CMEK) via KMS.",
-      "VPC Service Controls protect databases from data exfiltration by creating a secure network boundary.",
-      "Enable SSL/TLS configurations on client connection strings to secure data in transit.",
-      "Database administration actions (e.g. changing root password, backups) are audited in Cloud Audit Logs.",
-      "Implement row-level and column-level database security to restrict unauthorized service accounts from reading sensitive tables."
-    ],
-    "reliability": [
-      "HA configurations use synchronous replication to a standby instance in a different zone in the same region.",
-      "Standard read replicas replicate asynchronously, which may lead to replication lag during high write spikes.",
-      "Point-in-time recovery (PITR) uses write-ahead logging (WAL) to enable restores to any timestamp within the log retention window.",
-      "Perform regular automated daily backups, setting retention policies to match regulatory compliance needs.",
-      "Cross-region replicas provide disaster recovery, enabling prompt promote-to-primary actions during region failure.",
-      "Cloud Spanner provides an availability SLA of 99.999% for multi-regional instances using Paxos-based replication.",
-      "Establish monitoring metrics on database CPU usage, memory usage, and storage growth rate.",
-      "Auto-resize storage triggers disk expansion automatically, preventing database crashes due to full disks."
-    ],
-    "cost": [
-      "Relational databases charge for provisioned compute (vCPUs/RAM), database storage (GB/month), and backup storage.",
-      "Read replicas are billed as full independent database instances, increasing compute cost.",
-      "Storage is billed on provisioned capacity, not active database contents; size disks carefully.",
-      "Configure storage auto-resize with a safety threshold to prevent runaway disk storage billing.",
-      "Use committed use discounts (CUDs) for database instances running continuously in production environments.",
-      "Schedule development database shutdowns (e.g., stopping non-HA instances overnight) to minimize off-hour billing.",
-      "Review Recommender suggestions to downsize database instances with low historical CPU and memory utilization.",
-      "Prune old, unused database snapshots and test backups to minimize storage cost leaks."
-    ]
-  }
+  ]
 }

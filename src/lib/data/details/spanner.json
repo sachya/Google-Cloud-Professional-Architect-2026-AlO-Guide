@@ -1,78 +1,44 @@
 {
-  "features": [
+  "keyPoints": [
+    "Relational database providing global transactional consistency, horizontal write scaling, and SQL compatibility.",
+    "Paxos-based consensus engine replicates writes synchronously across multi-region configurations, ensuring 99.999% availability.",
+    "TrueTime API uses synchronized GPS receivers and atomic clocks to order transactions globally without read locks.",
+    "Primary keys must be designed carefully to avoid auto-incrementing integers, which cluster writes onto a single node hotspot.",
+    "Spanner Graph allows running complex open-source graph queries directly over relational schemas.",
+    "Scales database compute capacity (nodes/processing units) and storage independently without operational downtime.",
+    "Supports online DDL schema changes, allowing table additions or indexing to run while the database is live.",
+    "Provides Point-in-Time Recovery (PITR) to restore database states down to the exact microsecond.",
+    "Allows storing related tables hierarchically using Interleaved Tables, co-locating child rows physically near parent rows.",
+    "Data is encrypted automatically at rest, supporting Customer-Managed Encryption Keys (CMEK) via KMS.",
+    "Fine-Grained Access Control limits user database access to specific tables, views, or rows using IAM privileges.",
+    "Provides query execution plan visualizations to analyze index usage and tune query performance.",
+    "Allows running read-only transactions without locking, maintaining high read throughput during massive write loads.",
+    "Offers PostgreSQL compatibility dialect, allowing teams to migrate Postgres schemas with minimal changes.",
+    "Features Spanner Data Boost, letting analytical queries run on independent resources without affecting transactional instances.",
+    "Requires no failover management, as replication, failover, and balancing are handled natively by the platform.",
+    "Billed based on node count (or fractional processing units), storage size, and outbound network traffic.",
+    "Integrates with Datastream to capture relational updates and stream them into BigQuery.",
+    "Supports generated columns and check constraints to enforce business rules inside database tables.",
+    "Ideal for global financial books, inventory tracking, and payment processing systems requiring high consistency."
+  ],
+  "scenarios": [
     {
-      "name": "ACID Compliance & Transactions",
-      "description": "Guarantees strong transactional consistency and integrity for relational schemas across zonal or global deployments."
+      "scenario": "A global credit card processor requires a transactional database that scales writes horizontally, guarantees SQL ACID compliance, and guarantees 99.999% availability.",
+      "solution": "Deploy the transaction ledger on Cloud Spanner in a multi-regional configuration."
     },
     {
-      "name": "Automated Backups & PITR",
-      "description": "Enables point-in-time recovery (PITR) to restore database states back to a specific millisecond in case of corruption."
-    },
-    {
-      "name": "High Availability Failover",
-      "description": "Deploys active-passive synchronous replication across zones, executing automatic failover during outages."
+      "scenario": "A database architect notices Spanner write operations are bottlenecked because the primary key is a sequential timestamp column.",
+      "solution": "Refactor the table primary key to use a hashed UUID or apply a bit-reverse function to the sequence to distribute writes."
     }
   ],
-  "iamRoles": [
+  "commands": [
     {
-      "role": "roles/cloudsql.admin",
-      "description": "Full access to administer Cloud SQL instances, backups, and user credentials."
+      "description": "Create a regional Cloud Spanner instance with 1 node configuration",
+      "command": "gcloud spanner instances create prod-spanner \\\n  --config=regional-us-central1 \\\n  --nodes=1 \\\n  --description=\"Prod Spanner Database\""
     },
     {
-      "role": "roles/spanner.databaseAdmin",
-      "description": "Full administrative permissions over Cloud Spanner Spanner instances, schemas, and queries."
+      "description": "Create a database inside the Spanner instance",
+      "command": "gcloud spanner databases create orders-db \\\n  --instance=prod-spanner"
     }
-  ],
-  "cliExamples": [
-    {
-      "description": "Create a high-availability Spanner deployment",
-      "command": "gcloud sql instances create spanner-db \\\n  --database-version=POSTGRES_15 \\\n  --tier=db-custom-2-7680 \\\n  --region=us-central1 \\\n  --availability-type=REGIONAL"
-    },
-    {
-      "description": "List all read replicas attached to database instances",
-      "command": "gcloud sql instances list --filter=\"settings.tier:db-*\""
-    }
-  ],
-  "keyPoints": {
-    "design": [
-      "Relational databases are chosen when workloads require full ACID transactional guarantees and complex table joins.",
-      "Cloud SQL supports standard MySQL, PostgreSQL, and SQL Server, scaling vertically through custom machine types.",
-      "Cloud Spanner is designed for global relational scalability, offering horizontal writes and transactional consistency.",
-      "For Cloud Spanner, primary key design must avoid sequential values (like timestamps) to prevent partition hotspots.",
-      "AlloyDB is a PostgreSQL-compatible analytical and transactional database built for high-performance enterprise engines.",
-      "Database schema migrations require executing Schema Conversion Tool and Database Migration Service (DMS).",
-      "Read replicas offload read-heavy dashboard query traffic from the primary transactional instance.",
-      "Use database connection pools to prevent exhausting database thread connection limits."
-    ],
-    "security": [
-      "Connect securely to Cloud SQL using the Cloud SQL Auth Proxy, which whitelists connections without public IPs.",
-      "Database IAM Authentication allows users and service accounts to login using Google credentials instead of static passwords.",
-      "Enforce private IP configurations using Serverless VPC Access or Private Service Connect for database interaction.",
-      "Always encrypt database backups and transaction logs using Customer-Managed Encryption Keys (CMEK) via KMS.",
-      "VPC Service Controls protect databases from data exfiltration by creating a secure network boundary.",
-      "Enable SSL/TLS configurations on client connection strings to secure data in transit.",
-      "Database administration actions (e.g. changing root password, backups) are audited in Cloud Audit Logs.",
-      "Implement row-level and column-level database security to restrict unauthorized service accounts from reading sensitive tables."
-    ],
-    "reliability": [
-      "HA configurations use synchronous replication to a standby instance in a different zone in the same region.",
-      "Standard read replicas replicate asynchronously, which may lead to replication lag during high write spikes.",
-      "Point-in-time recovery (PITR) uses write-ahead logging (WAL) to enable restores to any timestamp within the log retention window.",
-      "Perform regular automated daily backups, setting retention policies to match regulatory compliance needs.",
-      "Cross-region replicas provide disaster recovery, enabling prompt promote-to-primary actions during region failure.",
-      "Cloud Spanner provides an availability SLA of 99.999% for multi-regional instances using Paxos-based replication.",
-      "Establish monitoring metrics on database CPU usage, memory usage, and storage growth rate.",
-      "Auto-resize storage triggers disk expansion automatically, preventing database crashes due to full disks."
-    ],
-    "cost": [
-      "Relational databases charge for provisioned compute (vCPUs/RAM), database storage (GB/month), and backup storage.",
-      "Read replicas are billed as full independent database instances, increasing compute cost.",
-      "Storage is billed on provisioned capacity, not active database contents; size disks carefully.",
-      "Configure storage auto-resize with a safety threshold to prevent runaway disk storage billing.",
-      "Use committed use discounts (CUDs) for database instances running continuously in production environments.",
-      "Schedule development database shutdowns (e.g., stopping non-HA instances overnight) to minimize off-hour billing.",
-      "Review Recommender suggestions to downsize database instances with low historical CPU and memory utilization.",
-      "Prune old, unused database snapshots and test backups to minimize storage cost leaks."
-    ]
-  }
+  ]
 }

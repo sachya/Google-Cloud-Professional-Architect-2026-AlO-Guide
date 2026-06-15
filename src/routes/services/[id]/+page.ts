@@ -22,10 +22,9 @@ export async function load({ params }: any) {
         return {
             service: {
                 ...serviceSummary,
-                keyPoints: { design: [], security: [], reliability: [], cost: [] },
-                features: [],
-                iamRoles: [],
-                cliExamples: []
+                keyPoints: [],
+                scenarios: [],
+                commands: []
             }
         };
     }

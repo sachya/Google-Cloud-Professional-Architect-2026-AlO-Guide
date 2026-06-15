@@ -36,11 +36,10 @@ A premium, interactive documentation and study portal tailored for the **Google 
 ## 🚀 Key Features
 
 *   **Collapsible & Filterable Navigation**: Browse 191 GCP offerings categorized under 7 major architectural domains. Features real-time search filtering across names, descriptions, and categories.
-*   **4-Pillar High-Yield Exam Points**: Every single GCP offering features 32-40 study notes split across key exam focus areas:
-    1.  *Solution Design & Architecture*
-    2.  *Security, IAM & Compliance*
-    3.  *Reliability & High Availability*
-    4.  *Cost & Performance Optimization*
+*   **Deep Service Exam Sheets**: Every single one of the 191 GCP offerings features a customized, high-yield study sheet including:
+    1.  *Key Exam Points*: 15 to 30 highly technical, service-specific points covering architecture, security, scaling, and anti-patterns.
+    2.  *Use-Case Scenarios*: Real-world customer/business problems mapped directly to the correct architectural solutions using that service.
+    3.  *Related CLI Commands*: Direct gcloud, bq, or gsutil commands with copy helpers to build operational command knowledge.
 *   **Practice Exam Simulator**: Includes 5 distinct practice sets consisting of 90 advanced, scenario-based questions each. Enforces a strict 65% single-select / 35% multi-select split with full random shuffling of question orders and option lists. Features an active ticking timer, question mapping dashboard, and a domain-wise performance breakdown showing focus areas.
 *   **Case Studies Study Section**: Interactive breakdowns of the 4 official PCA case studies (*Altostrat Media*, *Cymbal Retail*, *EHR Healthcare*, *KnightMotives Automotive*). Maps business and technical requirements to specific, architect-approved GCP solutions.
 *   **Bidirectional Service Linking**: Click on GCP service badges within any case study solution to jump directly to that service's comprehensive exam study notes.
@@ -66,7 +65,7 @@ This project is built using modern, type-safe frontend tools and a Python-powere
 ### Python Data Pipeline
 *   **Python**: `v3.13.x`
 *   **Libraries**: `pypdf`, `python-docx` (for parsing source certification files)
-*   **Enrichment Engine (`enrich_all.py`)**: Merges structured overrides and subcategory-based templates dynamically without overwriting manually edited details in `src/lib/data/details/[id].json`.
+*   **Enrichment Engine (`enrich_all.py`)**: Compiles 15-30 highly specific key points, business scenarios, and related CLI commands for all 191 services dynamically.
 
 ---
 
@@ -74,9 +73,8 @@ This project is built using modern, type-safe frontend tools and a Python-powere
 
 Data is structured modularly to avoid monolithic file bloat and optimize client bundles:
 *   `src/lib/data/services.json`: High-level service list metadata (ID, name, category) loaded instantly for sidebar navigation.
-*   `src/lib/data/details/[id].json`: Asynchronously fetched deep-dive study sheets for individual offerings (only loaded when a user views that service page).
+*   `src/lib/data/details/[id].json`: Asynchronously fetched deep-dive study sheets containing key points, scenarios, and commands for individual offerings (only loaded when a user views that service page).
 *   `src/lib/data/casestudies.json`: Requirements-to-solutions JSON mappings for the 4 exam case studies.
-*   `src/lib/data/templates/`: Central configuration rules (`subcategory_rules.json`, `core_overrides.json`, `category_templates.json`) driving python data enrichment.
 
 ---
 
