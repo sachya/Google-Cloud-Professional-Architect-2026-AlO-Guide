@@ -52,6 +52,7 @@
   let activeCaseStudyId = $derived(isCaseStudyRoute ? $page.params.id : null);
   let isWafRoute = $derived($page.url.pathname.startsWith('/waf'));
   let isLinksRoute = $derived($page.url.pathname.startsWith('/links'));
+  let isPracticeRoute = $derived($page.url.pathname.startsWith('/practice'));
   
   let activeService = $derived(data.services.find((s: any) => s.id === activeServiceId));
   let activeCategory = $derived(isCaseStudyRoute ? 'GCP Case Studies' : (activeService?.category || ''));
@@ -120,6 +121,7 @@
         <a href="/casestudies" class="text-sm font-medium px-3 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors {isCaseStudyRoute ? 'text-blue-600 dark:text-blue-400 font-semibold bg-slate-100 dark:bg-slate-800' : 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400'}">Case Studies</a>
         <a href="/waf" class="text-sm font-medium px-3 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors {isWafRoute ? 'text-blue-600 dark:text-blue-400 font-semibold bg-slate-100 dark:bg-slate-800' : 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400'}">Well-Architected</a>
         <a href="/links" class="text-sm font-medium px-3 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors {isLinksRoute ? 'text-blue-600 dark:text-blue-400 font-semibold bg-slate-100 dark:bg-slate-800' : 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400'}">Links</a>
+        <a href="/practice" class="text-sm font-medium px-3 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors {isPracticeRoute ? 'text-blue-600 dark:text-blue-400 font-semibold bg-slate-100 dark:bg-slate-800' : 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400'}">Practice Exams</a>
       </nav>
     </div>
   </header>
@@ -165,6 +167,20 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
             </svg>
             <span>Study Links & Resources</span>
+          </a>
+        </div>
+
+        <!-- Practice Exams (Mobile) -->
+        <div class="space-y-1 pb-2 border-b border-slate-100 dark:border-slate-800/60">
+          <a 
+            href="/practice" 
+            onclick={closeMobileSidebar}
+            class="w-full flex items-center gap-2.5 py-2 px-3 rounded-lg font-semibold text-xs uppercase tracking-wider transition-colors {isPracticeRoute ? 'bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 font-semibold border-l-2 border-blue-500 shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/40'}"
+          >
+            <svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span>Practice Exams</span>
           </a>
         </div>
 
@@ -263,6 +279,19 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
             </svg>
             <span>Study Links & Resources</span>
+          </a>
+        </div>
+
+        <!-- Practice Exams (Desktop) -->
+        <div class="border-b border-slate-100 dark:border-slate-800/60 pb-3">
+          <a 
+            href="/practice" 
+            class="w-full flex items-center gap-2.5 py-2 px-3 rounded-lg font-bold text-[11px] uppercase tracking-wider transition-colors {isPracticeRoute ? 'bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 font-semibold border-l-2 border-blue-500 shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/40'}"
+          >
+            <svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span>Practice Exams</span>
           </a>
         </div>
 

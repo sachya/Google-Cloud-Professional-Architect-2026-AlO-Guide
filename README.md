@@ -15,13 +15,17 @@ A premium, interactive documentation and study portal tailored for the **Google 
 <div align="center">
   <table border="0">
     <tr>
-      <td width="50%" align="center">
-        <p><b>Services Dashboard & Collapsible Sidebar</b></p>
+      <td width="33%" align="center">
+        <p><b>Services Dashboard</b></p>
         <img src="static/git-roll1.png" alt="GCP Architect Hub - Services & Collapsible Navigation" width="100%" style="border-radius: 8px; border: 1px solid #e2e8f0;" />
       </td>
-      <td width="50%" align="center">
+      <td width="33%" align="center">
         <p><b>Case Studies Mapping</b></p>
         <img src="static/git-roll2.png" alt="GCP Architect Hub - Case Studies Mapping" width="100%" style="border-radius: 8px; border: 1px solid #e2e8f0;" />
+      </td>
+      <td width="33%" align="center">
+        <p><b>Practice Exam Simulator</b></p>
+        <img src="static/git-roll3.png" alt="GCP Architect Hub - Practice Exam Simulator" width="100%" style="border-radius: 8px; border: 1px solid #e2e8f0;" />
       </td>
     </tr>
   </table>
@@ -37,6 +41,7 @@ A premium, interactive documentation and study portal tailored for the **Google 
     2.  *Security, IAM & Compliance*
     3.  *Reliability & High Availability*
     4.  *Cost & Performance Optimization*
+*   **Practice Exam Simulator**: Includes 5 distinct practice sets consisting of 90 advanced, scenario-based questions each. Enforces a strict 65% single-select / 35% multi-select split with full random shuffling of question orders and option lists. Features an active ticking timer, question mapping dashboard, and a domain-wise performance breakdown showing focus areas.
 *   **Case Studies Study Section**: Interactive breakdowns of the 4 official PCA case studies (*Altostrat Media*, *Cymbal Retail*, *EHR Healthcare*, *KnightMotives Automotive*). Maps business and technical requirements to specific, architect-approved GCP solutions.
 *   **Bidirectional Service Linking**: Click on GCP service badges within any case study solution to jump directly to that service's comprehensive exam study notes.
 *   **Well-Architected Framework Guide**: Outlines core design principles and recommendations across Operational Excellence, Security, Reliability, Performance, and Cost Optimization.
