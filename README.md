@@ -32,6 +32,10 @@ A premium, interactive documentation and study portal tailored for the **Google 
 </div>
 
 ---
+## 🚀 Updates
+*   **10-06-2026**: Updated all case studies and services to match the latest exam guide and GCP offerings.
+*   **15-06-2026**: Added 210 new tricky questions to practice exam. Total 450 questions in practice exam (5 sets of 90 questions).
+*   **21-06-2026**: Added a new UPDATE.md which can be used by your agent to update the resources. Do not naturally accept the changes, keep a human-in-the-loop to verify the changes.
 
 ## 🚀 Key Features
 
